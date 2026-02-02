@@ -1,0 +1,27 @@
+*.npy
+*.pt
+*.pyc
+*.pt
+*.npz
+*.npy
+__pycache__/
+ddpm_pdg_out*/
+old/mask/
+
+# generated artifacts
+old/
+ddpm_pdg_out*/
+*.pt
+*.npz
+*.npy
+__pycache__/
+
+# Large generated artifacts
+old/ddpm_pdg_out_background/
+old/mask/
+*.pt
+*.npz
+
+# Large generated artifacts
+*old/
+*.pt
