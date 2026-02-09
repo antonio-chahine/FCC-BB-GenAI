@@ -2,7 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-outdir = "mc_gen1_model_stdchange"
+outdir = "guineapig_raw_trimmed_1"
 
 train = np.load(os.path.join(outdir, "train_losses.npy"))
 val   = np.load(os.path.join(outdir, "val_losses.npy"))
