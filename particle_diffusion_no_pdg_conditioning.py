@@ -62,7 +62,7 @@ def make_linear_beta_schedule(T: int, beta_start: float, beta_end: float, device
 @dataclass
 class CFG:
     data_path: str = "mc_gen1.npy"
-    outdir: str = "mc_gen1_model_diffusingpdg_2"
+    outdir: str = "mc_gen1_model_diffusingpdg_3"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
     max_particles: int = 1050
@@ -178,7 +178,7 @@ class MCPDataset(Dataset):
         x0[:K,  3]    = charge
         mask[:K]      = True
 
-        return torch.from_numpy(pdg_ids), torch.from_numpy(x0), torch.from_numpy(mask), torch.tensor(K, dtype=torch.long)
+        return torch.from_numpy(pdg_ids), torch.from_numpy(x0), torch.from_numpy(mask)
 
 
 
@@ -238,7 +238,7 @@ class ParticleDenoiser(nn.Module):
         )
 
 
-    def forward(self, x_t, t, mask, K_event):
+    def forward(self, x_t, t, mask):
         B, K, _ = x_t.shape
 
         t_emb = self.time_emb(t)          # (B, d_model)
@@ -250,10 +250,11 @@ class ParticleDenoiser(nn.Module):
         h = t_emb + mom_emb
         src_key_padding_mask = ~mask
 
-        # Continuous multiplicity conditioning: embed log(K)
-        k = torch.log(K_event.float().clamp(min=1)).unsqueeze(-1)  # (B,1)
-        k_emb = self.k_mlp(k).unsqueeze(1)                         # (B,1,d_model)
-        h = h + k_emb                                              # broadcast to (B,K,d_model)
+        # Continuous multiplicity conditioning: embed log(K) (K from mask)
+        K_event = mask.sum(dim=1)                                # (B,)
+        k = torch.log(K_event.float().clamp(min=1)).unsqueeze(-1) # (B,1)
+        k_emb = self.k_mlp(k).unsqueeze(1)                       # (B,1,d_model)
+        h = h + k_emb                                            # broadcast to (B,K,d_model)
 
 
         h_in = h
@@ -293,8 +294,9 @@ class DDPM:
         b = self.sqrt_1m_acp[t].view(B, 1, 1)
         return a * x0 + b * noise
     
-    def p_sample(self, x_t, t, mask, K_event):
-        eps_hat = self.model(x_t, t, mask, K_event)
+    def p_sample(self, x_t, t, mask):
+        eps_hat = self.model(x_t, t, mask)
+
         B = x_t.shape[0]
 
         beta_t  = self.betas[t].view(B, 1, 1)
@@ -313,13 +315,13 @@ class DDPM:
         return x_prev * mask.unsqueeze(-1)
 
     @torch.no_grad()
-    def sample(self, mask, K_event):
+    def sample(self, mask):
         B, K = mask.shape
         x = torch.randn((B, K, 4), device=self.device) * mask.unsqueeze(-1)
 
         for ti in reversed(range(self.T)):
             t = torch.full((B,), ti, device=self.device, dtype=torch.long)
-            x = self.p_sample(x, t, mask, K_event)
+            x = self.p_sample(x, t, mask)
 
         return x
 
@@ -416,8 +418,7 @@ def train(args):
         total_train = 0.0
         n_train = 0
         
-        for pdg_id, x0, mask, K_event in dl_train:
-            K_event = K_event.to(cfg.device)
+        for pdg_id, x0, mask in dl_train:
             pdg_id = pdg_id.to(cfg.device)
             x0     = x0.to(cfg.device)
             mask   = mask.to(cfg.device)
@@ -428,7 +429,7 @@ def train(args):
             noise = torch.randn_like(x0) * mask.unsqueeze(-1)
             x_t = ddpm.q_sample(x0, t, noise)
             
-            eps_hat = model(x_t, t, mask, K_event)
+            eps_hat = model(x_t, t, mask)
                         
             mse = (eps_hat - noise).pow(2)
             mse[..., 3] *= 2.0   # upweight charge channel
@@ -453,8 +454,7 @@ def train(args):
         n_val = 0
         
         with torch.no_grad():
-            for pdg_id, x0, mask, K_event in dl_val:
-                K_event = K_event.to(cfg.device)
+            for pdg_id, x0, mask in dl_val:
 
                 pdg_id = pdg_id.to(cfg.device)
                 x0     = x0.to(cfg.device)
@@ -466,7 +466,7 @@ def train(args):
                 noise = torch.randn_like(x0) * mask.unsqueeze(-1)
                 x_t = ddpm.q_sample(x0, t, noise)
                 
-                eps_hat = model(x_t, t, mask, K_event)
+                eps_hat = model(x_t, t, mask)
                                 
                 mse = (eps_hat - noise).pow(2)
                 mse[..., 3] *= 2.0
@@ -548,8 +548,8 @@ def sample_one_event(meta: dict, ddpm: DDPM, device: str):
 
     # one diffusion sample only
     with torch.no_grad():
-        K_event_t = torch.tensor([K], device=device, dtype=torch.long)
-        x_gen = ddpm.sample(mask_t, K_event_t)[0].detach().cpu().numpy()  # (Kmax,4)
+        x_gen = ddpm.sample(mask_t)[0].detach().cpu().numpy()
+
 
     x_gen = x_gen[:K]
     mom_norm = x_gen[:, :3]

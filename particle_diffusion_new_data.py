@@ -63,7 +63,7 @@ def make_linear_beta_schedule(T: int, beta_start: float, beta_end: float, device
 @dataclass
 class CFG:
     data_path: str = "guineapig_raw_trimmed.npy"
-    outdir: str = "guineapig_raw_trimmed_2"
+    outdir: str = "guineapig_raw_trimmed_3"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
     max_particles: int = 1300
@@ -216,6 +216,13 @@ class ParticleDenoiser(nn.Module):
             nn.Linear(d_model, d_model),
         )
 
+        # NEW: multiplicity conditioning MLP
+        self.k_mlp = nn.Sequential(
+            nn.Linear(1, d_model),
+            nn.SiLU(),
+            nn.Linear(d_model, d_model),
+        )
+
     def forward(self, x_t, t, mask):
         B, K, _ = x_t.shape
 
@@ -226,6 +233,13 @@ class ParticleDenoiser(nn.Module):
         mom_emb = self.mom_proj(x_t)      # (B, K, d_model)
 
         h = t_emb + mom_emb
+
+        # NEW: multiplicity conditioning from mask
+        K_event = mask.sum(dim=1)                                  # (B,)
+        k = torch.log(K_event.float().clamp(min=1)).unsqueeze(-1)   # (B,1)
+        k_emb = self.k_mlp(k).unsqueeze(1)                          # (B,1,d_model)
+        h = h + k_emb                                               # broadcast to (B,K,d_model)
+
 
         src_key_padding_mask = ~mask
 
@@ -657,8 +671,11 @@ def sanitize_event(ev, me=0.000511):
         y = ev[:, 5].astype(np.float64, copy=False)
         z = ev[:, 6].astype(np.float64, copy=False)
 
-        # Do NOT infer PDG from sign (that was forcing the split).
+        # Infer "charge species" from sign so we can plot e− vs e+
+        # Convention: E_signed < 0 => e− (PDG 11), E_signed > 0 => e+ (PDG -11)
         pdg = np.zeros(len(E_signed), dtype=np.int64)
+        pdg[E_signed < 0] = 11
+        pdg[E_signed > 0] = -11
 
         Eabs = np.maximum(np.abs(E_signed), me)
 
@@ -715,11 +732,14 @@ def extract_species(events, pdgs=None, me=0.000511):
     p_all  = np.sqrt(px_all**2 + py_all**2 + pz_all**2)
     pt_all = np.sqrt(px_all**2 + py_all**2)
 
+    E_signed_all = cat_or_empty(Esigned_list)
+
     return {
         "mult": mult,
         "px": px_all, "py": py_all, "pz": pz_all, "p": p_all, "pt": pt_all,
-        "E": cat_or_empty(E_list),
-        "E_signed": cat_or_empty(Esigned_list),
+        "E": cat_or_empty(E_list),                 # this is already |E| (Eabs)
+        "E_abs": cat_or_empty(E_list),             # alias, for clarity in plotting
+        "E_signed": E_signed_all,
         "beta_mag": cat_or_empty(bmag_list),
         "x": cat_or_empty(x_list), "y": cat_or_empty(y_list), "z": cat_or_empty(z_list),
         "betax": cat_or_empty(bx_list),
@@ -728,28 +748,6 @@ def extract_species(events, pdgs=None, me=0.000511):
     }
 
 
-    def cat_or_empty(lst):
-        return np.concatenate(lst) if len(lst) else np.array([], dtype=np.float64)
-
-    px_all = cat_or_empty(px_list)
-    py_all = cat_or_empty(py_list)
-    pz_all = cat_or_empty(pz_list)
-    p_all  = np.sqrt(px_all**2 + py_all**2 + pz_all**2)
-    pt_all = np.sqrt(px_all**2 + py_all**2)
-
-    return {
-        "mult": mult,
-        "px": px_all, "py": py_all, "pz": pz_all, "p": p_all, "pt": pt_all,
-        "E": cat_or_empty(E_list),
-        "beta_mag": cat_or_empty(bmag_list),
-        "x": cat_or_empty(x_list), "y": cat_or_empty(y_list), "z": cat_or_empty(z_list),
-        "betax": cat_or_empty(bx_list),
-        "betay": cat_or_empty(by_list),
-        "betaz": cat_or_empty(bz_list),
-        "E": cat_or_empty(E_list),
-        "E_signed": cat_or_empty(Esigned_list),
-
-    }
 
 
 
@@ -985,12 +983,15 @@ def evaluate(args):
 
     # ALWAYS do e-, e+, and total (all)
     species_list = [
-        {"name": "all", "pdgs": None, "tag": "all"},
+        {"name": "e−",  "pdgs": [11],   "tag": "eminus"},
+        {"name": "e+",  "pdgs": [-11],  "tag": "eplus"},
+        {"name": "all", "pdgs": None,   "tag": "all"},
     ]
+
 
     # What to plot (key -> xlabel)
     # These are computed in extract_species() from sanitize_event()
-    plot_keys = [
+    plot_keys_all = [
         ("E_signed", "E (signed) [GeV]"),
         ("betax", r"$\beta_x$"),
         ("betay", r"$\beta_y$"),
@@ -998,13 +999,28 @@ def evaluate(args):
         ("x", "x [nm]"),
         ("y", "y [nm]"),
         ("z", "z [nm]"),
-        # derived momentum too:
         ("px", "p_x [GeV]"),
         ("py", "p_y [GeV]"),
         ("pz", "p_z [GeV]"),
         ("pt", "p_T [GeV]"),
         ("p",  "|p| [GeV]"),
     ]
+
+    plot_keys_charge = [
+        ("E_abs", "|E| [GeV]"),
+        ("betax", r"$\beta_x$"),
+        ("betay", r"$\beta_y$"),
+        ("betaz", r"$\beta_z$"),
+        ("x", "x [nm]"),
+        ("y", "y [nm]"),
+        ("z", "z [nm]"),
+        ("px", "p_x [GeV]"),
+        ("py", "p_y [GeV]"),
+        ("pz", "p_z [GeV]"),
+        ("pt", "p_T [GeV]"),
+        ("p",  "|p| [GeV]"),
+    ]
+
 
 
     for sp in species_list:
@@ -1023,6 +1039,7 @@ def evaluate(args):
         )
 
         # Distributions (all requested metrics)
+        plot_keys = plot_keys_all if sp["tag"] == "all" else plot_keys_charge
         for key, xlabel in plot_keys:
             # positions may be missing if input format is (K,4)
             if key not in real_sp or key not in gen_sp:
