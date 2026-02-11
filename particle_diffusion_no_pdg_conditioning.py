@@ -25,7 +25,6 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 
 
 # ============================================================
@@ -62,11 +61,11 @@ def make_linear_beta_schedule(T: int, beta_start: float, beta_end: float, device
 # ============================================================
 @dataclass
 class CFG:
-    data_path: str = "guineapig_raw_trimmed.npy"
-    outdir: str = "guineapig_raw_trimmed_2"
+    data_path: str = "mc_gen1.npy"
+    outdir: str = "mc_gen1_model_diffusingpdg_2"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
-    max_particles: int = 1300
+    max_particles: int = 1050
     min_particles: int = 1
     keep_fraction: float = 1.0
     
@@ -74,97 +73,112 @@ class CFG:
     beta_start: float = 1e-4
     beta_end: float = 2e-2
     
-    d_model = 64
-    nhead = 4
-    num_layers = 2
+    d_model = 192
+    nhead = 6
+    num_layers = 4
     dropout = 0.1
     
-    batch_size: int = 4
+    batch_size: int = 16
     lr: float = 2e-4
     epochs: int = 50
-    num_workers: int = 8
+    num_workers: int = 2
     grad_clip: float = 1.0
     seed: int = 123
 
     frac_range = 0.80
 
-    feat_dim: int = 7
-    me: float = 0.000511  # GeV
-
-
 # ============================================================
 # DATASET
 # ============================================================
 class MCPDataset(Dataset):
-    """
-    Diffuses 7 features directly, WITHOUT PDG conditioning:
-      x = [E_signed, betax, betay, betaz, x, y, z]
-
-    Uses a single global normalisation (mean/std per feature).
-    """
     def __init__(self, path, max_particles=64, min_particles=1, keep_fraction=1.0):
         raw = np.load(path, allow_pickle=True)
-
+        
         if keep_fraction < 1.0:
             raw = raw[: int(len(raw) * keep_fraction)]
-
+        
         events = []
         for ev in raw:
             if ev is None:
                 continue
-            ev = np.asarray(ev)
-            if ev.ndim != 2 or ev.shape[1] < 7:
-                continue
             if len(ev) < min_particles:
                 continue
-            events.append(ev.astype(np.float32))
-
+            events.append(ev)
+        
         if len(events) == 0:
             raise RuntimeError("No events left after filtering")
-
+        
         self.events = events
         self.max_particles = max_particles
-        self.feat_dim = 7
+        
+        # Build PDG vocabulary
+        all_pdgs = np.concatenate([ev[:, 0].astype(np.int64) for ev in events], axis=0)
+        uniq_pdgs = np.unique(all_pdgs)
+        
+        self.pdg_to_id = {int(p): i for i, p in enumerate(uniq_pdgs.tolist())}
+        self.id_to_pdg = {i: int(p) for p, i in self.pdg_to_id.items()}
+        self.vocab_size = len(self.pdg_to_id)
+        
+        # Momentum normalisation (per PDG)
+        all_mom = np.concatenate([ev[:, 1:4].astype(np.float32) for ev in events], axis=0)
+        
+        self.mom_mean_by_id = np.zeros((self.vocab_size, 3), dtype=np.float32)
+        self.mom_std_by_id  = np.zeros((self.vocab_size, 3), dtype=np.float32)
+        
+        for pdg_code in uniq_pdgs.tolist():
+            pdg_code = int(pdg_code)
+            sel = (all_pdgs == pdg_code)
+            m = all_mom[sel]
+            
+            mean = m.mean(axis=0).astype(np.float32)
+            std = m.std(axis=0).astype(np.float32)
+            std = np.maximum(std, 1e-6)
 
-        # Build the raw diffusion features: [E_signed, betax, betay, betaz, x, y, z]
-        all_feats = np.concatenate(
-            [ev[:, :7].astype(np.float32) for ev in events],
-            axis=0
-        )
-
-        self.feat_mean = all_feats.mean(axis=0).astype(np.float32)
-        self.feat_std  = all_feats.std(axis=0).astype(np.float32)
-        self.feat_std  = np.maximum(self.feat_std, 1e-6)
-
+            vid = self.pdg_to_id[pdg_code]
+            self.mom_mean_by_id[vid] = mean
+            self.mom_std_by_id[vid]  = std
+        
         self.multiplicities = np.array([len(ev) for ev in events], dtype=np.int64)
-
+        self.pdg_pool = all_pdgs
+    
     def __len__(self):
         return len(self.events)
-
+    
     def __getitem__(self, idx):
         ev = self.events[idx]
         N = int(len(ev))
         Kmax = self.max_particles
-
+        
         if N <= Kmax:
             chosen = np.arange(N)
         else:
             chosen = torch.randperm(N)[:Kmax].numpy()
-
-        rows = ev[chosen]          # (K, >=7)
+        
+        rows = ev[chosen]
         K = rows.shape[0]
+        
+        pdg_codes = rows[:, 0].astype(np.int64)
+        mom = rows[:, 1:4].astype(np.float32)
 
-        feats = rows[:, :7].astype(np.float32)      # [E_signed, betax, betay, betaz, x, y, z]
-        feats_norm = (feats - self.feat_mean) / self.feat_std
+        # per-PDG momentum normalisation (keep as you already do)
+        pdg_ids_real = np.array([self.pdg_to_id[int(x)] for x in pdg_codes], dtype=np.int64)
+        mean = self.mom_mean_by_id[pdg_ids_real]
+        std  = self.mom_std_by_id[pdg_ids_real]
+        mom_norm = (mom - mean) / std
 
-        x0   = np.zeros((Kmax, self.feat_dim), dtype=np.float32)
-        mask = np.zeros((Kmax,), dtype=np.bool_)
+        # charge: -1 for e- (PDG 11), +1 for e+ (PDG -11)
+        charge = np.where(pdg_codes == 11, -1.0, +1.0).astype(np.float32)
 
-        x0[:K] = feats_norm
-        mask[:K] = True
+        pdg_ids = np.full((Kmax,), self.vocab_size, dtype=np.int64)
+        x0      = np.zeros((Kmax, 4), dtype=np.float32)
+        mask    = np.zeros((Kmax,), dtype=np.bool_)
 
-        return torch.from_numpy(x0), torch.from_numpy(mask)
+        pdg_ids[:K]   = pdg_ids_real
+        x0[:K, :3]    = mom_norm
+        x0[:K,  3]    = charge
+        mask[:K]      = True
 
+        return torch.from_numpy(pdg_ids), torch.from_numpy(x0), torch.from_numpy(mask), torch.tensor(K, dtype=torch.long)
 
 
 
@@ -195,7 +209,13 @@ class ParticleDenoiser(nn.Module):
         self.d_model = d_model
 
         self.time_emb = SinusoidalTimeEmbedding(d_model)
-        self.mom_proj = nn.Linear(7, d_model)
+        self.t_mlp = nn.Sequential(
+            nn.Linear(d_model, d_model),
+            nn.SiLU(),
+            nn.Linear(d_model, d_model),
+        )
+
+        self.mom_proj = nn.Linear(4, d_model)
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model,
@@ -208,26 +228,33 @@ class ParticleDenoiser(nn.Module):
         )
         self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
 
-        self.output = nn.Linear(d_model, 7)
+        self.output   = nn.Linear(d_model, 4)
 
-        self.t_mlp = nn.Sequential(
-            nn.Linear(d_model, d_model),
+        # Continuous multiplicity conditioning (no buckets)
+        self.k_mlp = nn.Sequential(
+            nn.Linear(1, d_model),
             nn.SiLU(),
             nn.Linear(d_model, d_model),
         )
 
-    def forward(self, x_t, t, mask):
+
+    def forward(self, x_t, t, mask, K_event):
         B, K, _ = x_t.shape
 
         t_emb = self.time_emb(t)          # (B, d_model)
         t_emb = self.t_mlp(t_emb)         # (B, d_model)
         t_emb = t_emb.unsqueeze(1).expand(B, K, self.d_model)
 
-        mom_emb = self.mom_proj(x_t)      # (B, K, d_model)
+        mom_emb = self.mom_proj(x_t)
 
         h = t_emb + mom_emb
-
         src_key_padding_mask = ~mask
+
+        # Continuous multiplicity conditioning: embed log(K)
+        k = torch.log(K_event.float().clamp(min=1)).unsqueeze(-1)  # (B,1)
+        k_emb = self.k_mlp(k).unsqueeze(1)                         # (B,1,d_model)
+        h = h + k_emb                                              # broadcast to (B,K,d_model)
+
 
         h_in = h
         h = self.transformer(h, src_key_padding_mask=src_key_padding_mask)
@@ -236,7 +263,6 @@ class ParticleDenoiser(nn.Module):
         eps_hat = self.output(h)
         eps_hat = eps_hat * mask.unsqueeze(-1)
         return eps_hat
-
 
         
 
@@ -267,10 +293,9 @@ class DDPM:
         b = self.sqrt_1m_acp[t].view(B, 1, 1)
         return a * x0 + b * noise
     
-    def p_sample(self, x_t, t, mask):
+    def p_sample(self, x_t, t, mask, K_event):
+        eps_hat = self.model(x_t, t, mask, K_event)
         B = x_t.shape[0]
-
-        eps_hat = self.model(x_t, t, mask)
 
         beta_t  = self.betas[t].view(B, 1, 1)
         alpha_t = self.alphas[t].view(B, 1, 1)
@@ -287,18 +312,16 @@ class DDPM:
         x_prev = mu + torch.sqrt(var) * z
         return x_prev * mask.unsqueeze(-1)
 
-    
     @torch.no_grad()
-    def sample(self, mask):
+    def sample(self, mask, K_event):
         B, K = mask.shape
-        x = torch.randn((B, K, 7), device=self.device) * mask.unsqueeze(-1)
+        x = torch.randn((B, K, 4), device=self.device) * mask.unsqueeze(-1)
 
         for ti in reversed(range(self.T)):
             t = torch.full((B,), ti, device=self.device, dtype=torch.long)
-            x = self.p_sample(x, t, mask)
+            x = self.p_sample(x, t, mask, K_event)
 
         return x
-
 
 
 # ============================================================
@@ -306,11 +329,6 @@ class DDPM:
 # ============================================================
 def train(args):
     cfg = CFG()
-
-    print("Using device:", cfg.device)
-    print("CUDA available:", torch.cuda.is_available())
-    print("GPU:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "none")
-
     
     if args.data_path:
         cfg.data_path = args.data_path
@@ -366,13 +384,13 @@ def train(args):
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr)
     
     meta = {
+        "pdg_to_id": ds_full.pdg_to_id,
+        "id_to_pdg": ds_full.id_to_pdg,
+        "vocab_size": ds_full.vocab_size,
         "multiplicities": ds_full.multiplicities,
-        "feat_mean": ds_full.feat_mean,
-        "feat_std": ds_full.feat_std,
-        "feat_dim": ds_full.feat_dim,
-        "me": cfg.me,
-
-
+        "pdg_pool": ds_full.pdg_pool,
+        "mom_mean_by_id": ds_full.mom_mean_by_id,
+        "mom_std_by_id": ds_full.mom_std_by_id,
         "max_particles": cfg.max_particles,
         "T": cfg.T,
         "beta_start": cfg.beta_start,
@@ -398,24 +416,25 @@ def train(args):
         total_train = 0.0
         n_train = 0
         
-        pbar = tqdm(dl_train, desc=f"Epoch {epoch+1:03d}/{cfg.epochs} [train]", leave=False)
-        for x0, mask in pbar:
-            x0   = x0.to(cfg.device)
-            mask = mask.to(cfg.device)
-
+        for pdg_id, x0, mask, K_event in dl_train:
+            K_event = K_event.to(cfg.device)
+            pdg_id = pdg_id.to(cfg.device)
+            x0     = x0.to(cfg.device)
+            mask   = mask.to(cfg.device)
+            
             B = x0.shape[0]
             t = torch.randint(0, cfg.T, (B,), device=cfg.device)
-
+            
             noise = torch.randn_like(x0) * mask.unsqueeze(-1)
             x_t = ddpm.q_sample(x0, t, noise)
-
-            eps_hat = model(x_t, t, mask)
-
-                    
-            mse = (eps_hat - noise).pow(2).sum(dim=-1)
+            
+            eps_hat = model(x_t, t, mask, K_event)
+                        
+            mse = (eps_hat - noise).pow(2)
+            mse[..., 3] *= 2.0   # upweight charge channel
+            mse = mse.sum(dim=-1)
             masked = mse[mask]
             loss = masked.mean() if masked.numel() > 0 else torch.tensor(0.0, device=cfg.device)
-            
             
             opt.zero_grad(set_to_none=True)
             loss.backward()
@@ -425,9 +444,6 @@ def train(args):
             
             total_train += loss.item()
             n_train += 1
-
-            pbar.set_postfix(loss=f"{loss.item():.4f}")
-
         
         train_loss = total_train / max(n_train, 1)
         
@@ -437,28 +453,28 @@ def train(args):
         n_val = 0
         
         with torch.no_grad():
-            pbarv = tqdm(dl_val, desc=f"Epoch {epoch+1:03d}/{cfg.epochs} [val]", leave=False)
-            for x0, mask in pbarv:
-                x0   = x0.to(cfg.device)
-                mask = mask.to(cfg.device)
+            for pdg_id, x0, mask, K_event in dl_val:
+                K_event = K_event.to(cfg.device)
 
+                pdg_id = pdg_id.to(cfg.device)
+                x0     = x0.to(cfg.device)
+                mask   = mask.to(cfg.device)
+                
                 B = x0.shape[0]
                 t = torch.randint(0, cfg.T, (B,), device=cfg.device)
-
+                
                 noise = torch.randn_like(x0) * mask.unsqueeze(-1)
                 x_t = ddpm.q_sample(x0, t, noise)
-
-                eps_hat = model(x_t, t, mask)
-
                 
-                mse = (eps_hat - noise).pow(2).sum(dim=-1)
+                eps_hat = model(x_t, t, mask, K_event)
+                                
+                mse = (eps_hat - noise).pow(2)
+                mse[..., 3] *= 2.0
+                mse = mse.sum(dim=-1)
                 loss = mse[mask].mean()
                 
                 total_val += loss.item()
                 n_val += 1
-
-                pbarv.set_postfix(loss=f"{loss.item():.4f}")
-
         
         val_loss = total_val / max(n_val, 1)
         
@@ -498,6 +514,7 @@ def load_meta_and_model(outdir: str, device: str):
         dropout=meta["dropout"],
     ).to(device)
 
+
     
     ckpt_path = os.path.join(outdir, "ckpt_last.pt")
     ckpt = torch.load(ckpt_path, map_location=device)
@@ -523,24 +540,44 @@ def sample_one_event(meta: dict, ddpm: DDPM, device: str):
     Kmax = int(meta["max_particles"])
     K = max(1, min(K, Kmax))
 
-    # mask only (no PDGs)
+
+
     mask = np.zeros((Kmax,), dtype=np.bool_)
     mask[:K] = True
     mask_t = torch.from_numpy(mask).unsqueeze(0).to(device)
 
+    # one diffusion sample only
     with torch.no_grad():
-        x_norm = ddpm.sample(mask_t)[0].detach().cpu().numpy()  # (Kmax,7)
-    x_norm = x_norm[:K]  # (K,7)
+        K_event_t = torch.tensor([K], device=device, dtype=torch.long)
+        x_gen = ddpm.sample(mask_t, K_event_t)[0].detach().cpu().numpy()  # (Kmax,4)
 
-    mean = np.asarray(meta["feat_mean"], dtype=np.float32)
-    std  = np.asarray(meta["feat_std"], dtype=np.float32)
-    feats = x_norm * std + mean   # (K,7)
+    x_gen = x_gen[:K]
+    mom_norm = x_gen[:, :3]
 
-    # just return the de-normalised model output
-    event = feats.astype(np.float32, copy=False)
-    return event
+    q_hat = x_gen[:, 3]  # continuous "charge score"
+
+    # No forced balance: assign by sign
+    # Convention: q<0 => e- (11), q>=0 => e+ (-11)
+    pdg_vals = np.where(q_hat < 0.0, 11, -11).astype(np.int64)
 
 
+    # (optional) make charge exactly ±1 if you want to store/debug it
+    # charge = np.empty(K, dtype=np.float32)
+    # charge[order[:half]] = -1.0
+    # charge[order[half:]] = +1.0
+
+    # denormalise momenta using per-PDG stats
+    pdg_to_id = meta["pdg_to_id"]
+    pdg_ids = np.array([pdg_to_id[int(p)] for p in pdg_vals], dtype=np.int64)
+
+    mean = meta["mom_mean_by_id"][pdg_ids]
+    std  = meta["mom_std_by_id"][pdg_ids]
+    mom  = mom_norm * std + mean
+
+    event_rows = np.zeros((K, 4), dtype=np.float32)
+    event_rows[:, 0] = pdg_vals.astype(np.float32)
+    event_rows[:, 1:4] = mom.astype(np.float32)
+    return event_rows
 
 
 
@@ -608,149 +645,58 @@ def load_events(path: str):
     raise ValueError(f"Unrecognized format in {path}")
 
 
-def sanitize_event(ev, me=0.000511):
-    """
-    Supports:
-      - (K,4): [pdg, px, py, pz]
-      - (K,7+): [E_signed, betax, betay, betaz, x, y, z, ...]
-    Always returns 13 arrays:
-      pdg, px, py, pz, Eabs, E_signed, beta_mag, x, y, z, betax, betay, betaz
-    """
-    empty_f = np.array([], dtype=np.float64)
-    empty_i = np.array([], dtype=np.int64)
-
-    if ev is None:
-        return (empty_i, empty_f, empty_f, empty_f, empty_f, empty_f, empty_f,
-                empty_f, empty_f, empty_f, empty_f, empty_f, empty_f)
-
+def sanitize_event(ev):
+    if ev is None or (isinstance(ev, np.ndarray) and ev.size == 0):
+        return (np.array([], dtype=np.int64), np.array([], dtype=np.float64),
+                np.array([], dtype=np.float64), np.array([], dtype=np.float64))
+    
     ev = np.asarray(ev)
-    if ev.size == 0:
-        return (empty_i, empty_f, empty_f, empty_f, empty_f, empty_f, empty_f,
-                empty_f, empty_f, empty_f, empty_f, empty_f, empty_f)
-
-    # ---- Old format: [pdg, px, py, pz] ----
-    if ev.ndim == 2 and ev.shape[1] >= 4 and ev.shape[1] < 7:
-        pdg = ev[:, 0].astype(np.int64, copy=False)
-        px  = ev[:, 1].astype(np.float64, copy=False)
-        py  = ev[:, 2].astype(np.float64, copy=False)
-        pz  = ev[:, 3].astype(np.float64, copy=False)
-
-        p2 = px*px + py*py + pz*pz
-        Eabs = np.sqrt(p2 + me*me)
-
-        # no sign info in this format -> just treat as positive
-        E_signed = Eabs.copy()
-
-        beta_mag = np.sqrt(p2) / np.maximum(Eabs, 1e-12)
-
-        return (pdg, px, py, pz, Eabs, E_signed, beta_mag,
-                empty_f, empty_f, empty_f, empty_f, empty_f, empty_f)
-
-    # ---- New format: [E_signed, betax, betay, betaz, x, y, z, ...] ----
-    if ev.ndim == 2 and ev.shape[1] >= 7:
-        E_signed = ev[:, 0].astype(np.float64, copy=False)
-        betax = ev[:, 1].astype(np.float64, copy=False)
-        betay = ev[:, 2].astype(np.float64, copy=False)
-        betaz = ev[:, 3].astype(np.float64, copy=False)
-
-        x = ev[:, 4].astype(np.float64, copy=False)
-        y = ev[:, 5].astype(np.float64, copy=False)
-        z = ev[:, 6].astype(np.float64, copy=False)
-
-        # Do NOT infer PDG from sign (that was forcing the split).
-        pdg = np.zeros(len(E_signed), dtype=np.int64)
-
-        Eabs = np.maximum(np.abs(E_signed), me)
-
-        beta = np.stack([betax, betay, betaz], axis=1)
-        beta_mag = np.linalg.norm(beta, axis=1)
-
-        # Momentum from (E, beta): p = Eabs * beta (keeps magnitude physical)
-        pvec = Eabs[:, None] * beta
-        px, py, pz = pvec[:, 0], pvec[:, 1], pvec[:, 2]
-
-        return (pdg, px, py, pz, Eabs, E_signed, beta_mag,
-                x, y, z, betax, betay, betaz)
-
-    raise ValueError(f"Unrecognized event shape {ev.shape}")
+    if ev.ndim != 2 or ev.shape[1] < 4:
+        raise ValueError(f"Each event must be (K,4+). Got shape={ev.shape}")
+    
+    pdg = ev[:, 0].astype(np.int64, copy=False)
+    px  = ev[:, 1].astype(np.float64, copy=False)
+    py  = ev[:, 2].astype(np.float64, copy=False)
+    pz  = ev[:, 3].astype(np.float64, copy=False)
+    return pdg, px, py, pz
 
 
-
-
-def extract_species(events, pdgs=None, me=0.000511):
+def extract_species(events, pdgs=None):
     mult = np.zeros(len(events), dtype=np.int64)
     px_list, py_list, pz_list = [], [], []
-    E_list, Esigned_list, bmag_list = [], [], []
-    x_list, y_list, z_list = [], [], []
-    bx_list, by_list, bz_list = [], [], []
-
+    
     for i, ev in enumerate(events):
-        pdg, px, py, pz, Eabs, E_signed, bmag, x, y, z, betax, betay, betaz = sanitize_event(ev, me=me)
-
+        pdg, px, py, pz = sanitize_event(ev)
+        
         if pdgs is None:
-            sel = np.ones(len(px), dtype=bool)
+            sel = np.ones_like(pdg, dtype=bool)
         else:
-            sel = np.zeros(len(px), dtype=bool)
+            sel = np.zeros_like(pdg, dtype=bool)
             for code in pdgs:
                 sel |= (pdg == code)
-
+        
         mult[i] = int(np.sum(sel))
-
         if np.any(sel):
-            px_list.append(px[sel]); py_list.append(py[sel]); pz_list.append(pz[sel])
-            E_list.append(Eabs[sel])
-            Esigned_list.append(E_signed[sel])
-            bmag_list.append(bmag[sel])
-            bx_list.append(betax[sel]); by_list.append(betay[sel]); bz_list.append(betaz[sel])
-
-            if x.size:
-                x_list.append(x[sel]); y_list.append(y[sel]); z_list.append(z[sel])
-
-    def cat_or_empty(lst):
-        return np.concatenate(lst) if len(lst) else np.array([], dtype=np.float64)
-
-    px_all = cat_or_empty(px_list)
-    py_all = cat_or_empty(py_list)
-    pz_all = cat_or_empty(pz_list)
-    p_all  = np.sqrt(px_all**2 + py_all**2 + pz_all**2)
+            px_list.append(px[sel])
+            py_list.append(py[sel])
+            pz_list.append(pz[sel])
+    
+    if px_list:
+        px_all = np.concatenate(px_list)
+        py_all = np.concatenate(py_list)
+        pz_all = np.concatenate(pz_list)
+    else:
+        px_all = np.array([], dtype=np.float64)
+        py_all = np.array([], dtype=np.float64)
+        pz_all = np.array([], dtype=np.float64)
+    
+    p_all = np.sqrt(px_all**2 + py_all**2 + pz_all**2)
     pt_all = np.sqrt(px_all**2 + py_all**2)
-
+    
     return {
-        "mult": mult,
-        "px": px_all, "py": py_all, "pz": pz_all, "p": p_all, "pt": pt_all,
-        "E": cat_or_empty(E_list),
-        "E_signed": cat_or_empty(Esigned_list),
-        "beta_mag": cat_or_empty(bmag_list),
-        "x": cat_or_empty(x_list), "y": cat_or_empty(y_list), "z": cat_or_empty(z_list),
-        "betax": cat_or_empty(bx_list),
-        "betay": cat_or_empty(by_list),
-        "betaz": cat_or_empty(bz_list),
+        "mult": mult, "px": px_all, "py": py_all,
+        "pz": pz_all, "p": p_all, "pt": pt_all,
     }
-
-
-    def cat_or_empty(lst):
-        return np.concatenate(lst) if len(lst) else np.array([], dtype=np.float64)
-
-    px_all = cat_or_empty(px_list)
-    py_all = cat_or_empty(py_list)
-    pz_all = cat_or_empty(pz_list)
-    p_all  = np.sqrt(px_all**2 + py_all**2 + pz_all**2)
-    pt_all = np.sqrt(px_all**2 + py_all**2)
-
-    return {
-        "mult": mult,
-        "px": px_all, "py": py_all, "pz": pz_all, "p": p_all, "pt": pt_all,
-        "E": cat_or_empty(E_list),
-        "beta_mag": cat_or_empty(bmag_list),
-        "x": cat_or_empty(x_list), "y": cat_or_empty(y_list), "z": cat_or_empty(z_list),
-        "betax": cat_or_empty(bx_list),
-        "betay": cat_or_empty(by_list),
-        "betaz": cat_or_empty(bz_list),
-        "E": cat_or_empty(E_list),
-        "E_signed": cat_or_empty(Esigned_list),
-
-    }
-
 
 
 def peak_centered_range(x, y, bins=400, frac=0.995, min_width=1e-12):
@@ -970,84 +916,58 @@ def two_panel_dist(real, gen, outpath, xlabel, title, species_name, bins=80, rat
 
 def evaluate(args):
     setup_style()
-    cfg = CFG()
+    cfg = CFG()  # reads CFG.frac_range
 
+    
+    # If no outdir specified, use the directory of the generated data
     if args.outdir is None:
         args.outdir = os.path.dirname(args.gen_path)
+    
     os.makedirs(args.outdir, exist_ok=True)
-
+    
     real_events = load_events(args.real_path)
     gen_events  = load_events(args.gen_path)
-
+    
     n_real = len(real_events)
     n_gen  = len(gen_events)
+    
     print(f"Loaded {n_real} real events and {n_gen} generated events")
-
-    # ALWAYS do e-, e+, and total (all)
+    
     species_list = [
-        {"name": "all", "pdgs": None, "tag": "all"},
+    
+        {"name": "e−", "pdgs": [11],      "tag": "eminus"},
+        {"name": "e+", "pdgs": [-11],     "tag": "eplus"},
     ]
-
-    # What to plot (key -> xlabel)
-    # These are computed in extract_species() from sanitize_event()
-    plot_keys = [
-        ("E_signed", "E (signed) [GeV]"),
-        ("betax", r"$\beta_x$"),
-        ("betay", r"$\beta_y$"),
-        ("betaz", r"$\beta_z$"),
-        ("x", "x [nm]"),
-        ("y", "y [nm]"),
-        ("z", "z [nm]"),
-        # derived momentum too:
-        ("px", "p_x [GeV]"),
-        ("py", "p_y [GeV]"),
-        ("pz", "p_z [GeV]"),
-        ("pt", "p_T [GeV]"),
-        ("p",  "|p| [GeV]"),
-    ]
-
-
+    
+    if args.include_all:
+        species_list.append({"name": "all", "pdgs": None, "tag": "all"})
+    
     for sp in species_list:
         print(f"Processing species: {sp['name']}")
-        real_sp = extract_species(real_events, sp["pdgs"], me=cfg.me)
-        gen_sp  = extract_species(gen_events,  sp["pdgs"], me=cfg.me)
-
-        # Multiplicity
+        real_sp = extract_species(real_events, sp["pdgs"])
+        gen_sp  = extract_species(gen_events,  sp["pdgs"])
+        
         plot_multiplicity(
             real_sp["mult"], gen_sp["mult"],
             outpath=os.path.join(args.outdir, f"multiplicity_{sp['tag']}.png"),
-            species_name=sp["name"],
-            n_real=n_real, n_gen=n_gen,
-            bins=args.mult_bins,
-            logy=False,
+            species_name=sp["name"], n_real=n_real, n_gen=n_gen,
+            bins=args.mult_bins, logy=False,
         )
-
-        # Distributions (all requested metrics)
-        for key, xlabel in plot_keys:
-            # positions may be missing if input format is (K,4)
-            if key not in real_sp or key not in gen_sp:
-                continue
-            if real_sp[key].size == 0 or gen_sp[key].size == 0:
-                continue
-
-            # Use a wider frac_range for positions (tails can be huge)
-            frac = cfg.frac_range
-            if key in ("x", "y", "z"):
-                frac = 0.98
-
+        
+        for key in ["px", "py", "pz", "pt"]:
             two_panel_dist(
                 real_sp[key], gen_sp[key],
                 outpath=os.path.join(args.outdir, f"{key}_{sp['tag']}.png"),
-                xlabel=xlabel,
+                xlabel=("p_T" if key == "pt" else key),
                 title=f"Comparison of {key} | real={n_real} gen={n_gen}",
                 species_name=sp["name"],
                 bins=args.mom_bins,
                 ratio_min_count=args.ratio_min_count,
-                frac_range=frac,
+                frac_range=cfg.frac_range,
             )
 
+    
     print(f"Evaluation complete. Plots saved to: {args.outdir}/")
-
 
 
 # ============================================================
