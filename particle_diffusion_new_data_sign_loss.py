@@ -83,13 +83,23 @@ def w_to_beta(w_xyz: np.ndarray, eps: float = 1e-12) -> np.ndarray:
     return w / (1.0 + np.maximum(wmag, eps))
 
 
+def torch_w_to_beta(w: torch.Tensor, eps: float = 1e-12) -> torch.Tensor:
+    # w: (B,K,3)
+    wmag = torch.linalg.norm(w, dim=-1, keepdim=True)  # (B,K,1)
+    return w / (1.0 + torch.clamp(wmag, min=eps))
+
+def torch_beta_mag_from_w(w: torch.Tensor, eps: float = 1e-12) -> torch.Tensor:
+    beta = torch_w_to_beta(w, eps=eps)
+    return torch.linalg.norm(beta, dim=-1)  # (B,K)
+
+
 # ============================================================
 # CONFIG
 # ============================================================
 @dataclass
 class CFG:
     data_path: str = "guineapig_raw_trimmed.npy"
-    outdir: str = "new_5"
+    outdir: str = "new_8"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
     max_particles: int = 1300
@@ -115,7 +125,12 @@ class CFG:
     frac_range = 0.80
 
     feat_dim: int = 7
-    me: float = 0.000511  # GeV
+    me: float = 0.00051099895069 # GeV
+
+    lambda_mass: float = 0.1   # start small; tune 0.01–1.0
+
+    lambda_sign: float = 0.05   # try 0.01–0.2
+    sign_margin: float = 0.0    # 0 is fine; >0 makes it stricter
 
 
 
@@ -257,6 +272,8 @@ class ParticleDenoiser(nn.Module):
             nn.Linear(d_model, d_model),
         )
 
+        self.skip_alpha = nn.Parameter(torch.tensor(0.2))   # start < 1
+
     def forward(self, x_t, t, mask):
         B, K, _ = x_t.shape
 
@@ -279,7 +296,9 @@ class ParticleDenoiser(nn.Module):
 
         h_in = h
         h = self.transformer(h, src_key_padding_mask=src_key_padding_mask)
-        h = h + h_in
+        h = h + self.skip_alpha * h_in
+        h = h * mask.unsqueeze(-1)
+
 
         eps_hat = self.output(h)
         eps_hat = eps_hat * mask.unsqueeze(-1)
@@ -464,11 +483,59 @@ def train(args):
 
             eps_hat = model(x_t, t, mask)
 
-                    
+
+            # --- reconstruct x0 estimate from predicted noise ---
+            # x0_hat = (x_t - sqrt(1-acp_t)*eps_hat) / sqrt(acp_t)
+            sqrt_acp_t    = ddpm.sqrt_acp[t].view(B, 1, 1)
+            sqrt_1m_acp_t = ddpm.sqrt_1m_acp[t].view(B, 1, 1)
+            x0_hat = (x_t - sqrt_1m_acp_t * eps_hat) / torch.clamp(sqrt_acp_t, min=1e-12)
+
+            # de-normalise to physical feature space
+            feats_hat = x0_hat * feat_std_t + feat_mean_t  # (B,K,7)
+
+            # true signed energy (physical space)
+            feats_true = x0 * feat_std_t + feat_mean_t
+            E_true = feats_true[..., 0]          # (B,K)
+
+            # predicted signed energy
+            E_hat = feats_hat[..., 0]            # (B,K)
+
+            # target: 1 for positive, 0 for negative
+            y_sign = (E_true > 0).float()
+
+            # classify sign using E_hat as the logit
+            sign_loss = F.binary_cross_entropy_with_logits(E_hat, y_sign, reduction="none")
+            sign_loss = sign_loss[mask].mean() if mask.any() else torch.tensor(0.0, device=cfg.device)
+
+
+
+            E_signed = feats_hat[..., 0]
+            Eabs = torch.clamp(E_signed.abs(), min=cfg.me)  # treat as total energy magnitude
+
+            w = feats_hat[..., 1:4]                         # (B,K,3)
+            beta = torch_w_to_beta(w)                       # (B,K,3)
+            beta2 = (beta ** 2).sum(dim=-1)                 # (B,K)
+
+            # mass-shell: m^2 = E^2 (1 - beta^2)
+            m2_hat = (Eabs ** 2) * torch.clamp(1.0 - beta2, min=0.0)
+            m2_true = (cfg.me ** 2)
+
+            # only apply on real particles
+            mse_m = ((m2_hat - m2_true) / (m2_true + 1e-12)) ** 2 #can be huge at high energies, make it relative so it doesn't dominate
+            mass_loss = mse_m[mask].mean() if mask.any() else torch.tensor(0.0, device=cfg.device)
+
+            # your original diffusion loss
+            mse = (eps_hat - noise).pow(2).sum(dim=-1)
+            diff_loss = mse[mask].mean() if mask.any() else torch.tensor(0.0, device=cfg.device)
+
+            loss = diff_loss + cfg.lambda_mass * mass_loss + cfg.lambda_sign * sign_loss
+
+
+            '''        
             mse = (eps_hat - noise).pow(2).sum(dim=-1)
             masked = mse[mask]
             loss = masked.mean() if masked.numel() > 0 else torch.tensor(0.0, device=cfg.device)
-            
+            '''
 
             
             opt.zero_grad(set_to_none=True)
@@ -504,11 +571,60 @@ def train(args):
 
                 eps_hat = model(x_t, t, mask)
 
+
+
+                # --- reconstruct x0 estimate from predicted noise ---
+                # x0_hat = (x_t - sqrt(1-acp_t)*eps_hat) / sqrt(acp_t)
+                sqrt_acp_t    = ddpm.sqrt_acp[t].view(B, 1, 1)
+                sqrt_1m_acp_t = ddpm.sqrt_1m_acp[t].view(B, 1, 1)
+                x0_hat = (x_t - sqrt_1m_acp_t * eps_hat) / torch.clamp(sqrt_acp_t, min=1e-12)
+
+                # de-normalise to physical feature space
+                feats_hat = x0_hat * feat_std_t + feat_mean_t  # (B,K,7)
+
+                # true signed energy (physical space)
+                feats_true = x0 * feat_std_t + feat_mean_t
+                E_true = feats_true[..., 0]          # (B,K)
+
+                # predicted signed energy
+                E_hat = feats_hat[..., 0]            # (B,K)
+
+                # target: 1 for positive, 0 for negative
+                y_sign = (E_true > 0).float()
+
+                # classify sign using E_hat as the logit
+                sign_loss = F.binary_cross_entropy_with_logits(E_hat, y_sign, reduction="none")
+                sign_loss = sign_loss[mask].mean() if mask.any() else torch.tensor(0.0, device=cfg.device)
+
+
+
+                E_signed = feats_hat[..., 0]
+                Eabs = torch.clamp(E_signed.abs(), min=cfg.me)  # treat as total energy magnitude
+
+                w = feats_hat[..., 1:4]                         # (B,K,3)
+                beta = torch_w_to_beta(w)                       # (B,K,3)
+                beta2 = (beta ** 2).sum(dim=-1)                 # (B,K)
+
+                # mass-shell: m^2 = E^2 (1 - beta^2)
+                m2_hat = (Eabs ** 2) * torch.clamp(1.0 - beta2, min=0.0)
+                m2_true = (cfg.me ** 2)
+
+                # only apply on real particles
+                mse_m = ((m2_hat - m2_true) / (m2_true + 1e-12)) ** 2 #can be huge at high energies, make it relative so it doesn't dominate
+                mass_loss = mse_m[mask].mean() if mask.any() else torch.tensor(0.0, device=cfg.device)
+
+                # your original diffusion loss
+                mse = (eps_hat - noise).pow(2).sum(dim=-1)
+                diff_loss = mse[mask].mean() if mask.any() else torch.tensor(0.0, device=cfg.device)
+
+                loss = diff_loss + cfg.lambda_mass * mass_loss + cfg.lambda_sign * sign_loss
                 
+
+                '''
                 mse = (eps_hat - noise).pow(2).sum(dim=-1)
                 masked = mse[mask]                          # (N_kept,)
                 loss = masked.mean() if masked.numel() > 0 else torch.tensor(0.0, device=cfg.device)
-                
+                '''
 
 
 

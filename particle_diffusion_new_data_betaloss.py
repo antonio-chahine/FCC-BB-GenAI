@@ -61,27 +61,67 @@ def make_linear_beta_schedule(T: int, beta_start: float, beta_end: float, device
     acp_prev = torch.cat([torch.ones(1, device=device), acp[:-1]])
     return betas, alphas, acp, acp_prev
 
-def beta_to_w(beta_xyz: np.ndarray, eps: float = 1e-6) -> np.ndarray:
-    """
-    beta (N,3) with ||beta||<1  -> w (N,3) in R^3
-    Inverse of w_to_beta using: beta = w/(1+||w||)
-    """
-    beta = np.asarray(beta_xyz, dtype=np.float32)
-    bmag = np.linalg.norm(beta, axis=1, keepdims=True)
-    # Clamp bmag into [0, 1-eps] to avoid blow-ups and sign issues
-    bmag = np.clip(bmag, 0.0, 1.0 - eps)
+def make_linear_gamma_schedule(T: int, g0: float, g1: float, device: str):
+    return torch.linspace(g0, g1, T, device=device)
 
-    scale = 1.0 / (1.0 - bmag)
-    return beta * scale
+def q_sample_pdg(pdg0: torch.Tensor, t: torch.Tensor, gammas: torch.Tensor,
+                 n_classes: int, mask: torch.Tensor):
+    # pdg0: (B,K) long, mask: (B,K) bool
+    B, K = pdg0.shape
+    g = gammas[t].view(B, 1)  # (B,1)
+    u = torch.rand((B, K), device=pdg0.device)
+    flip = (u < g) & mask
+    pdg_t = pdg0.clone()
+    if flip.any():
+        pdg_t[flip] = torch.randint(0, n_classes, (int(flip.sum()),), device=pdg0.device)
+    return pdg_t
 
-def w_to_beta(w_xyz: np.ndarray, eps: float = 1e-12) -> np.ndarray:
-    """
-    w (N,3) in R^3 -> beta (N,3) with ||beta||<1
-    """
-    w = np.asarray(w_xyz, dtype=np.float32)
-    wmag = np.linalg.norm(w, axis=1, keepdims=True)
-    return w / (1.0 + np.maximum(wmag, eps))
 
+def predict_x0_from_eps(ddpm, x_t, t, eps_hat):
+    B = x_t.shape[0]
+    sqrt_acp_t    = ddpm.sqrt_acp[t].view(B, 1, 1)
+    sqrt_1m_acp_t = ddpm.sqrt_1m_acp[t].view(B, 1, 1)
+    return (x_t - sqrt_1m_acp_t * eps_hat) / sqrt_acp_t.clamp(min=1e-12)
+
+def beta_penalty_from_x0hat(x0_hat_norm, feat_mean_t, feat_std_t, mask, margin=1e-4):
+    x0_hat = x0_hat_norm * feat_std_t + feat_mean_t     # (B,K,7) real units
+    beta = x0_hat[..., 1:4]
+    beta_mag = torch.linalg.norm(beta, dim=-1)
+    excess = F.relu(beta_mag - (1.0 - margin))
+    return (excess * mask).sum() / mask.sum().clamp(min=1)
+
+def mass_penalty_from_x0hat(x0_hat_norm, feat_mean_t, feat_std_t, mask, me=0.000511):
+    x0_hat = x0_hat_norm * feat_std_t + feat_mean_t
+    logE = x0_hat[..., 0]
+    E = torch.exp(logE).clamp(min=1e-12)
+
+    beta = x0_hat[..., 1:4]
+    beta2 = (beta**2).sum(dim=-1).clamp(max=1.5)  # stabiliser early on
+
+    m2_hat = (E**2) * (1.0 - beta2)
+    target = me**2
+    loss_tok = (m2_hat - target).abs()
+    return (loss_tok * mask).sum() / mask.sum().clamp(min=1)
+
+def physics_loss_from_x0hat(cfg, x0_hat_norm, feat_mean_t, feat_std_t, mask):
+    mode = (cfg.phys_mode or "none").lower()
+    if mode not in ("none", "beta", "mass", "both"):
+        raise ValueError(f"Unknown phys_mode={cfg.phys_mode} (use none|beta|mass|both)")
+
+    beta_term = torch.tensor(0.0, device=x0_hat_norm.device)
+    mass_term = torch.tensor(0.0, device=x0_hat_norm.device)
+
+    if mode in ("beta", "both"):
+        beta_term = beta_penalty_from_x0hat(
+            x0_hat_norm, feat_mean_t, feat_std_t, mask, margin=cfg.beta_margin
+        )
+
+    if mode in ("mass", "both"):
+        mass_term = mass_penalty_from_x0hat(
+            x0_hat_norm, feat_mean_t, feat_std_t, mask, me=cfg.me
+        )
+
+    return cfg.lambda_beta * beta_term + cfg.lambda_mass * mass_term, beta_term, mass_term
 
 # ============================================================
 # CONFIG
@@ -89,7 +129,7 @@ def w_to_beta(w_xyz: np.ndarray, eps: float = 1e-12) -> np.ndarray:
 @dataclass
 class CFG:
     data_path: str = "guineapig_raw_trimmed.npy"
-    outdir: str = "new_5"
+    outdir: str = "new_13"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
     max_particles: int = 1300
@@ -100,9 +140,9 @@ class CFG:
     beta_start: float = 1e-4
     beta_end: float = 2e-2
     
-    d_model = 64
-    nhead = 4
-    num_layers = 2
+    d_model = 128
+    nhead = 8
+    num_layers = 4
     dropout = 0.1
     
     batch_size: int = 4
@@ -114,9 +154,27 @@ class CFG:
 
     frac_range = 0.80
 
-    feat_dim: int = 7
-    me: float = 0.000511  # GeV
+    me: float = 0.00051099895069 # GeV
 
+
+    feat_dim: int = 7            # stays 7 (logE + u(3) + xyz)
+    n_pdg: int = 2               # start with e-, e+
+    lambda_pdg: float = 1.0
+
+    gamma_start: float = 1e-4
+    gamma_end: float = 0.2
+
+
+    n_events = 500
+
+
+    # physics losses: none | beta | mass | both
+    phys_mode: str = "mass"
+
+    lambda_beta: float = 1.0
+    beta_margin: float = 1e-4
+
+    lambda_mass: float = 1e-3   # start tiny
 
 
 # ============================================================
@@ -124,58 +182,89 @@ class CFG:
 # ============================================================
 class MCPDataset(Dataset):
     """
-    Diffuses 7 features directly, WITHOUT PDG conditioning:
-      x = [E_signed, betax, betay, betaz, x, y, z]
+    Input rows (7 cols):
+        [E_signed, betax, betay, betaz, x, y, z]
 
-    Uses a single global normalisation (mean/std per feature).
+    PDG inferred from sign(E):
+        E > 0  -> electron (11)
+        E < 0  -> positron (-11)
+
+    Continuous features:
+        [log|E|, u_x, u_y, u_z, x, y, z]
     """
+
     def __init__(self, path, max_particles=64, min_particles=1, keep_fraction=1.0):
         raw = np.load(path, allow_pickle=True)
 
         if keep_fraction < 1.0:
             raw = raw[: int(len(raw) * keep_fraction)]
 
-        events = []
+        self.pdg_to_idx = {11: 0, -11: 1}
+        self.idx_to_pdg = {0: 11, 1: -11}
+
+        events_cont = []
+        events_pdg  = []
+
         for ev in raw:
             if ev is None:
                 continue
+
             ev = np.asarray(ev)
+
             if ev.ndim != 2 or ev.shape[1] < 7:
                 continue
+
             if len(ev) < min_particles:
                 continue
 
             ev = ev.astype(np.float32)
 
-            # Convert beta -> w ONCE and store it
+            # --- Columns ---
+            E_signed = ev[:, 0]
             beta = ev[:, 1:4]
-            ev[:, 1:4] = beta_to_w(beta)
+            pos  = ev[:, 4:7]
 
-            events.append(ev)
+            # --- Infer PDG from sign(E) ---
+            pdg = np.where(E_signed >= 0.0, 11, -11)
+            pdg_idx = np.where(pdg == 11, 0, 1).astype(np.int64)
+
+            # --- Continuous features ---
+            Eabs = np.maximum(np.abs(E_signed), 1e-12)
+            logE = np.log(Eabs)
+
+            u = beta
 
 
-        if len(events) == 0:
-            raise RuntimeError("No events left after filtering")
+            cont = np.concatenate(
+                [logE[:, None], u, pos],
+                axis=1
+            ).astype(np.float32)
 
-        self.events = events
+            events_cont.append(cont)
+            events_pdg.append(pdg_idx)
+
+        if len(events_cont) == 0:
+            raise RuntimeError("No events left — check that .npy contains (K,7) arrays.")
+
+        self.events_cont = events_cont
+        self.events_pdg  = events_pdg
         self.max_particles = max_particles
         self.feat_dim = 7
 
-        all_feats = np.concatenate([ev[:, :7] for ev in events], axis=0)
-
-
+        all_feats = np.concatenate(events_cont, axis=0)
         self.feat_mean = all_feats.mean(axis=0).astype(np.float32)
-        self.feat_std  = all_feats.std(axis=0).astype(np.float32)
-        self.feat_std  = np.maximum(self.feat_std, 1e-6)
+        self.feat_std  = np.maximum(all_feats.std(axis=0), 1e-6).astype(np.float32)
 
-        self.multiplicities = np.array([len(ev) for ev in events], dtype=np.int64)
+        self.multiplicities = np.array([len(ev) for ev in events_cont], dtype=np.int64)
 
     def __len__(self):
-        return len(self.events)
+        return len(self.events_cont)
 
     def __getitem__(self, idx):
-        ev = self.events[idx]
-        N = int(len(ev))
+        cont = self.events_cont[idx]
+        pdg  = self.events_pdg[idx]
+
+        N = len(cont)
         Kmax = self.max_particles
 
         if N <= Kmax:
@@ -183,21 +272,21 @@ class MCPDataset(Dataset):
         else:
             chosen = torch.randperm(N)[:Kmax].numpy()
 
-        rows = ev[chosen]          # (K, >=7)
-        K = rows.shape[0]
+        cont = cont[chosen]
+        pdg  = pdg[chosen]
+        K = cont.shape[0]
 
-        feats = rows[:, :7].astype(np.float32)
-        feats_norm = (feats - self.feat_mean) / self.feat_std
-
-
+        cont_norm = (cont - self.feat_mean) / self.feat_std
 
         x0   = np.zeros((Kmax, self.feat_dim), dtype=np.float32)
+        pdg0 = np.zeros((Kmax,), dtype=np.int64)
         mask = np.zeros((Kmax,), dtype=np.bool_)
 
-        x0[:K] = feats_norm
+        x0[:K] = cont_norm
+        pdg0[:K] = pdg
         mask[:K] = True
 
-        return torch.from_numpy(x0), torch.from_numpy(mask)
+        return torch.from_numpy(x0), torch.from_numpy(pdg0), torch.from_numpy(mask)
 
 
 
@@ -224,7 +313,7 @@ class SinusoidalTimeEmbedding(nn.Module):
 
 
 class ParticleDenoiser(nn.Module):
-    def __init__(self, d_model=128, nhead=4, num_layers=3, dropout=0.1):
+    def __init__(self, d_model=128, nhead=4, num_layers=3, dropout=0.1, n_pdg=2):
         super().__init__()
         self.d_model = d_model
 
@@ -257,34 +346,39 @@ class ParticleDenoiser(nn.Module):
             nn.Linear(d_model, d_model),
         )
 
-    def forward(self, x_t, t, mask):
+
+        self.pdg_emb = nn.Embedding(n_pdg, d_model)
+        self.pdg_head = nn.Linear(d_model, n_pdg)
+        self.skip_alpha = 0.2  # make it constant if you prefer
+
+    def forward(self, x_t, t, pdg_t, mask):
         B, K, _ = x_t.shape
 
-        t_emb = self.time_emb(t)          # (B, d_model)
-        t_emb = self.t_mlp(t_emb)         # (B, d_model)
-        t_emb = t_emb.unsqueeze(1).expand(B, K, self.d_model)
+        t_emb = self.time_emb(t)
+        t_emb = self.t_mlp(t_emb).unsqueeze(1).expand(B, K, self.d_model)
 
-        mom_emb = self.mom_proj(x_t)      # (B, K, d_model)
+        mom_emb = self.mom_proj(x_t)
 
-        h = t_emb + mom_emb
+        pdg_emb = self.pdg_emb(pdg_t.clamp(0, self.pdg_emb.num_embeddings - 1))
+        
+        h = t_emb + mom_emb + pdg_emb
 
-        # NEW: multiplicity conditioning from mask
-        K_event = mask.sum(dim=1)                                  # (B,)
-        k = torch.log(K_event.float().clamp(min=1)).unsqueeze(-1)   # (B,1)
-        k_emb = self.k_mlp(k).unsqueeze(1)                          # (B,1,d_model)
-        h = h + k_emb                                               # broadcast to (B,K,d_model)
-
+        # multiplicity conditioning (keep)
+        K_event = mask.sum(dim=1)
+        k = torch.log(K_event.float().clamp(min=1)).unsqueeze(-1)
+        k_emb = self.k_mlp(k).unsqueeze(1)
+        h = h + k_emb
 
         src_key_padding_mask = ~mask
-
         h_in = h
         h = self.transformer(h, src_key_padding_mask=src_key_padding_mask)
-        h = h + h_in
+        h = h + self.skip_alpha * h_in
+        h = h * mask.unsqueeze(-1)
 
-        eps_hat = self.output(h)
-        eps_hat = eps_hat * mask.unsqueeze(-1)
-        return eps_hat
+        eps_hat = self.output(h) * mask.unsqueeze(-1)
+        pdg_logits = self.pdg_head(h)  # (B,K,C)
 
+        return eps_hat, pdg_logits
 
         
 
@@ -315,10 +409,10 @@ class DDPM:
         b = self.sqrt_1m_acp[t].view(B, 1, 1)
         return a * x0 + b * noise
     
-    def p_sample(self, x_t, t, mask):
+    def p_sample(self, x_t, t, pdg_t, mask):
         B = x_t.shape[0]
 
-        eps_hat = self.model(x_t, t, mask)
+        eps_hat, _ = self.model(x_t, t, pdg_t, mask)
 
         beta_t  = self.betas[t].view(B, 1, 1)
         alpha_t = self.alphas[t].view(B, 1, 1)
@@ -337,15 +431,22 @@ class DDPM:
 
     
     @torch.no_grad()
-    def sample(self, mask):
+    def sample(self, mask, pdg_init):
         B, K = mask.shape
         x = torch.randn((B, K, 7), device=self.device) * mask.unsqueeze(-1)
+        pdg = pdg_init.clone()
 
         for ti in reversed(range(self.T)):
             t = torch.full((B,), ti, device=self.device, dtype=torch.long)
-            x = self.p_sample(x, t, mask)
+            x = self.p_sample(x, t, pdg, mask)
 
-        return x
+            # denoise PDG at each step (simple)
+            _, logits = self.model(x, t, pdg, mask)
+            probs = torch.softmax(logits, dim=-1)
+            samp = torch.multinomial(probs.view(-1, probs.size(-1)), 1).view(B, K)
+            pdg = torch.where(mask, samp, pdg)
+
+        return x, pdg
 
 
 
@@ -411,6 +512,7 @@ def train(args):
 
     
     ddpm = DDPM(model, cfg.T, cfg.beta_start, cfg.beta_end, cfg.device)
+    gammas = make_linear_gamma_schedule(cfg.T, cfg.gamma_start, cfg.gamma_end, cfg.device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr)
 
 
@@ -424,7 +526,8 @@ def train(args):
         "feat_std": ds_full.feat_std,
         "feat_dim": ds_full.feat_dim,
         "me": cfg.me,
-
+        "n_pdg": cfg.n_pdg,
+        "idx_to_pdg": ds_full.idx_to_pdg,
 
         "max_particles": cfg.max_particles,
         "T": cfg.T,
@@ -439,6 +542,10 @@ def train(args):
         "n_events": len(ds_full),
         "n_train_events": len(train_idx),
         "n_val_events": len(val_idx),
+        "phys_mode": cfg.phys_mode,
+        "lambda_beta": cfg.lambda_beta,
+        "beta_margin": cfg.beta_margin,
+        "lambda_mass": cfg.lambda_mass,
     }
     torch.save(meta, os.path.join(cfg.outdir, "meta.pt"))
     
@@ -452,8 +559,11 @@ def train(args):
         n_train = 0
         
         pbar = tqdm(dl_train, desc=f"Epoch {epoch+1:03d}/{cfg.epochs} [train]", leave=False)
-        for x0, mask in pbar:
-            x0   = x0.to(cfg.device)
+        for x0, pdg0, mask in pbar:
+
+
+            x0 = x0.to(cfg.device)
+            pdg0 = pdg0.to(cfg.device)
             mask = mask.to(cfg.device)
 
             B = x0.shape[0]
@@ -462,13 +572,29 @@ def train(args):
             noise = torch.randn_like(x0) * mask.unsqueeze(-1)
             x_t = ddpm.q_sample(x0, t, noise)
 
-            eps_hat = model(x_t, t, mask)
+            pdg_t = q_sample_pdg(pdg0, t, gammas, cfg.n_pdg, mask)
 
-                    
+            eps_hat, pdg_logits = model(x_t, t, pdg_t, mask)
+
+            # diffusion loss (token-normalised)
+            mse = (eps_hat - noise).pow(2).sum(dim=-1)
+            diff_loss = (mse * mask).sum() / mask.sum().clamp(min=1)
+
+            # pdg CE loss
+            pdg_loss = F.cross_entropy(pdg_logits[mask], pdg0[mask])
+
+            x0_hat_norm = predict_x0_from_eps(ddpm, x_t, t, eps_hat)
+            phys_term, beta_term, mass_term = physics_loss_from_x0hat(
+                cfg, x0_hat_norm, feat_mean_t, feat_std_t, mask
+            )
+
+            loss = diff_loss + cfg.lambda_pdg * pdg_loss + phys_term
+
+            '''        
             mse = (eps_hat - noise).pow(2).sum(dim=-1)
             masked = mse[mask]
             loss = masked.mean() if masked.numel() > 0 else torch.tensor(0.0, device=cfg.device)
-            
+            '''
 
             
             opt.zero_grad(set_to_none=True)
@@ -492,8 +618,11 @@ def train(args):
         
         with torch.no_grad():
             pbarv = tqdm(dl_val, desc=f"Epoch {epoch+1:03d}/{cfg.epochs} [val]", leave=False)
-            for x0, mask in pbarv:
-                x0   = x0.to(cfg.device)
+            for x0, pdg0, mask in pbarv:
+
+
+                x0 = x0.to(cfg.device)
+                pdg0 = pdg0.to(cfg.device)
                 mask = mask.to(cfg.device)
 
                 B = x0.shape[0]
@@ -502,13 +631,29 @@ def train(args):
                 noise = torch.randn_like(x0) * mask.unsqueeze(-1)
                 x_t = ddpm.q_sample(x0, t, noise)
 
-                eps_hat = model(x_t, t, mask)
+                pdg_t = q_sample_pdg(pdg0, t, gammas, cfg.n_pdg, mask)
 
-                
+                eps_hat, pdg_logits = model(x_t, t, pdg_t, mask)
+
+                # diffusion loss (token-normalised)
+                mse = (eps_hat - noise).pow(2).sum(dim=-1)
+                diff_loss = (mse * mask).sum() / mask.sum().clamp(min=1)
+
+                # pdg CE loss
+                pdg_loss = F.cross_entropy(pdg_logits[mask], pdg0[mask])
+
+                x0_hat_norm = predict_x0_from_eps(ddpm, x_t, t, eps_hat)
+                phys_term, beta_term, mass_term = physics_loss_from_x0hat(
+                    cfg, x0_hat_norm, feat_mean_t, feat_std_t, mask
+                )
+
+                loss = diff_loss + cfg.lambda_pdg * pdg_loss + phys_term                    
+
+                '''
                 mse = (eps_hat - noise).pow(2).sum(dim=-1)
                 masked = mse[mask]                          # (N_kept,)
                 loss = masked.mean() if masked.numel() > 0 else torch.tensor(0.0, device=cfg.device)
-                
+                '''
 
 
 
@@ -583,27 +728,39 @@ def sample_one_event(meta: dict, ddpm: DDPM, device: str):
     Kmax = int(meta["max_particles"])
     K = max(1, min(K, Kmax))
 
-    # mask only (no PDGs)
     mask = np.zeros((Kmax,), dtype=np.bool_)
     mask[:K] = True
     mask_t = torch.from_numpy(mask).unsqueeze(0).to(device)
 
+    # init PDG uniformly
+    n_pdg = int(meta["n_pdg"])
+    pdg_init = torch.randint(0, n_pdg, (1, Kmax), device=device)
+    pdg_init = pdg_init * mask_t.long()
+
     with torch.no_grad():
-        x_norm = ddpm.sample(mask_t)[0].detach().cpu().numpy()  # (Kmax,7)
-    x_norm = x_norm[:K]  # (K,7)
+        x_norm, pdg_idx = ddpm.sample(mask_t, pdg_init)
+
+    x_norm = x_norm[0].cpu().numpy()[:K]        # (K,7)
+    pdg_idx = pdg_idx[0].cpu().numpy()[:K]      # (K,)
 
     mean = np.asarray(meta["feat_mean"], dtype=np.float32)
-    std  = np.asarray(meta["feat_std"], dtype=np.float32)
-    feats = x_norm * std + mean   # (K,7)
+    std  = np.asarray(meta["feat_std"],  dtype=np.float32)
+    cont = x_norm * std + mean                   # (K,7)
 
-    w = feats[:, 1:4].astype(np.float32)
-    beta = w_to_beta(w)
-    feats[:, 1:4] = beta
+    logE = cont[:, 0]
+    u = cont[:, 1:4]
+    pos = cont[:, 4:7]
 
+    E = np.exp(logE)
+    beta = u
 
-    # just return the de-normalised model output
-    event = feats.astype(np.float32, copy=False)
-    return event
+    # convert pdg_idx -> actual pdg
+    idx_to_pdg = meta["idx_to_pdg"]
+    pdg = np.array([idx_to_pdg[int(i)] for i in pdg_idx], dtype=np.int64)
+
+    # output format (K,8): [pdg, E, betax, betay, betaz, x, y, z]
+    out = np.concatenate([pdg[:,None], E[:,None], beta, pos], axis=1).astype(np.float32)
+    return out
 
 
 
@@ -655,7 +812,7 @@ def _subsample_rows(X, max_points=40000, seed=123):
     return X[idx]
 
 
-def _clip_cols_quantile(X, q_lo=0.01, q_hi=0.99):
+def _clip_cols_quantile(X, q_lo=0.10, q_hi=0.90):
     """Clip each column to [q_lo, q_hi] to stop huge tails wrecking the corner plot."""
     X = np.asarray(X, dtype=np.float64)
     out = X.copy()
@@ -726,8 +883,14 @@ def plot_corner_overlay(
     # per-dim robust ranges shared across real+gen
     ranges = []
     for d in range(D):
+
+        k = keys[d]
+        if k == "betaz":
+            ranges.append((-1.0, 1.0))
+            continue
         z = np.concatenate([R[:, d], G[:, d]])
         r = robust_range_1d(z, q_lo=q_lo, q_hi=q_hi)
+
         if r is None:
             lo, hi = float(np.min(z)), float(np.max(z))
             if not np.isfinite(lo) or not np.isfinite(hi) or lo >= hi:
@@ -852,46 +1015,39 @@ def load_events(path: str):
 
 
 def sanitize_event(ev, me=0.000511):
-    """
-    Supports:
-      - (K,4): [pdg, px, py, pz]
-      - (K,7+): [E_signed, betax, betay, betaz, x, y, z, ...]
-    Always returns 13 arrays:
-      pdg, px, py, pz, Eabs, E_signed, beta_mag, x, y, z, betax, betay, betaz
-    """
-    empty_f = np.array([], dtype=np.float64)
-    empty_i = np.array([], dtype=np.int64)
-
-    if ev is None:
-        return (empty_i, empty_f, empty_f, empty_f, empty_f, empty_f, empty_f,
-                empty_f, empty_f, empty_f, empty_f, empty_f, empty_f)
-
     ev = np.asarray(ev)
-    if ev.size == 0:
-        return (empty_i, empty_f, empty_f, empty_f, empty_f, empty_f, empty_f,
-                empty_f, empty_f, empty_f, empty_f, empty_f, empty_f)
 
-    # ---- Old format: [pdg, px, py, pz] ----
-    if ev.ndim == 2 and ev.shape[1] >= 4 and ev.shape[1] < 7:
+    # Case A: generated / explicit PDG format: [pdg, E, betax, betay, betaz, x, y, z]
+    if ev.ndim == 2 and ev.shape[1] >= 8:
         pdg = ev[:, 0].astype(np.int64, copy=False)
-        px  = ev[:, 1].astype(np.float64, copy=False)
-        py  = ev[:, 2].astype(np.float64, copy=False)
-        pz  = ev[:, 3].astype(np.float64, copy=False)
 
-        p2 = px*px + py*py + pz*pz
-        Eabs = np.sqrt(p2 + me*me)
+        # generator stores positive E; keep it positive here
+        Eabs = np.abs(ev[:, 1].astype(np.float64, copy=False))
 
-        # no sign info in this format -> just treat as positive
-        E_signed = Eabs.copy()
+        betax = ev[:, 2].astype(np.float64, copy=False)
+        betay = ev[:, 3].astype(np.float64, copy=False)
+        betaz = ev[:, 4].astype(np.float64, copy=False)
 
-        beta_mag = np.sqrt(p2) / np.maximum(Eabs, 1e-12)
+        x = ev[:, 5].astype(np.float64, copy=False)
+        y = ev[:, 6].astype(np.float64, copy=False)
+        z = ev[:, 7].astype(np.float64, copy=False)
+
+        beta = np.stack([betax, betay, betaz], axis=1)
+        beta_mag = np.linalg.norm(beta, axis=1)
+
+        pvec = Eabs[:, None] * beta
+        px, py, pz = pvec[:, 0], pvec[:, 1], pvec[:, 2]
+
+        # if you want a signed-energy proxy for "all", use PDG sign
+        E_signed = np.where(pdg == -11, -Eabs, Eabs)
 
         return (pdg, px, py, pz, Eabs, E_signed, beta_mag,
-                empty_f, empty_f, empty_f, empty_f, empty_f, empty_f)
+                x, y, z, betax, betay, betaz)
 
-    # ---- New format: [E_signed, betax, betay, betaz, x, y, z, ...] ----
+    # Case B: real guineapig format (7 cols): [E_signed, betax, betay, betaz, x, y, z]
     if ev.ndim == 2 and ev.shape[1] >= 7:
         E_signed = ev[:, 0].astype(np.float64, copy=False)
+
         betax = ev[:, 1].astype(np.float64, copy=False)
         betay = ev[:, 2].astype(np.float64, copy=False)
         betaz = ev[:, 3].astype(np.float64, copy=False)
@@ -900,25 +1056,29 @@ def sanitize_event(ev, me=0.000511):
         y = ev[:, 5].astype(np.float64, copy=False)
         z = ev[:, 6].astype(np.float64, copy=False)
 
-        # Infer "charge species" from sign so we can plot e− vs e+
-        # Convention: E_signed < 0 => e− (PDG 11), E_signed > 0 => e+ (PDG -11)
-        pdg = np.zeros(len(E_signed), dtype=np.int64)
-        pdg[E_signed > 0] = 11
-        pdg[E_signed < 0] = -11
+        # PDG inferred from sign(E): + => e- (11), - => e+ (-11)
+        pdg = np.where(E_signed >= 0.0, 11, -11).astype(np.int64)
 
-        Eabs = np.maximum(np.abs(E_signed), me)
+        Eabs = np.abs(E_signed)
 
         beta = np.stack([betax, betay, betaz], axis=1)
         beta_mag = np.linalg.norm(beta, axis=1)
 
-        # Momentum from (E, beta): p = Eabs * beta (keeps magnitude physical)
         pvec = Eabs[:, None] * beta
         px, py, pz = pvec[:, 0], pvec[:, 1], pvec[:, 2]
 
         return (pdg, px, py, pz, Eabs, E_signed, beta_mag,
                 x, y, z, betax, betay, betaz)
 
-    raise ValueError(f"Unrecognized event shape {ev.shape}")
+    # fallback: empty
+    empty = np.array([], dtype=np.float64)
+    return (
+        empty.astype(np.int64),
+        empty, empty, empty,
+        empty, empty, empty,
+        empty, empty, empty,
+        empty, empty, empty
+    )
 
 
 
@@ -980,7 +1140,8 @@ def extract_species(events, pdgs=None, me=0.000511):
 
 
 
-def peak_centered_range(x, y, bins=400, frac=0.995, min_width=1e-12):
+def peak_centered_range(x, y, bins=400, frac=0.995, min_width=1e-12,
+                        q_lo=0.001, q_hi=0.999):
     vals = []
     for arr in (x, y):
         arr = np.asarray(arr, dtype=np.float64)
@@ -989,41 +1150,40 @@ def peak_centered_range(x, y, bins=400, frac=0.995, min_width=1e-12):
             vals.append(arr)
     if not vals:
         return None
-    
+
     z = np.concatenate(vals)
     if z.size < 2:
         return None
-    
-    zmin = float(np.min(z))
-    zmax = float(np.max(z))
+
+    # ROBUST range instead of min/max
+    zmin = float(np.quantile(z, q_lo))
+    zmax = float(np.quantile(z, q_hi))
+
     if not np.isfinite(zmin) or not np.isfinite(zmax) or (zmax - zmin) < min_width:
         return None
-    
+
     counts, edges = np.histogram(z, bins=bins, range=(zmin, zmax))
     tot = counts.sum()
     if tot == 0:
         return None
-    
+
     i0 = int(np.argmax(counts))
     lo_i = hi_i = i0
     cum = int(counts[i0])
-    
+
     target = frac * tot
     while cum < target and (lo_i > 0 or hi_i < len(counts) - 1):
-        if lo_i > 0 and hi_i < len(counts) - 1:
-            if counts[lo_i - 1] > counts[hi_i + 1]:
-                lo_i -= 1
-                cum += counts[lo_i]
-            else:
-                hi_i += 1
-                cum += counts[hi_i]
-        elif lo_i > 0:
+        left = counts[lo_i - 1] if lo_i > 0 else -1
+        right = counts[hi_i + 1] if hi_i < len(counts) - 1 else -1
+        if left >= right and lo_i > 0:
             lo_i -= 1
             cum += counts[lo_i]
-        else:
+        elif hi_i < len(counts) - 1:
             hi_i += 1
             cum += counts[hi_i]
-    
+        else:
+            break
+
     lo = float(edges[lo_i])
     hi = float(edges[hi_i + 1])
     return (lo, hi)
@@ -1116,7 +1276,7 @@ def plot_multiplicity(real_mult, gen_mult, outpath, species_name, n_real, n_gen,
     savefig(fig, outpath)
 
 
-def two_panel_dist(real, gen, outpath, xlabel, title, species_name, bins=80, ratio_min_count=10, frac_range=0.80):
+def two_panel_dist(real, gen, outpath, xlabel, title, species_name, bins=80, ratio_min_count=10, frac_range=0.80, fixed_range=None):
     fig = plt.figure(figsize=(7.6, 6.2), constrained_layout=True)
     gs = fig.add_gridspec(2, 1, height_ratios=[3, 1], hspace=0.06)
     
@@ -1124,15 +1284,27 @@ def two_panel_dist(real, gen, outpath, xlabel, title, species_name, bins=80, rat
     ax_bot = fig.add_subplot(gs[1], sharex=ax_top)
     ax_top.tick_params(labelbottom=False)
     
-    rng = peak_centered_range(real, gen, bins=600, frac=frac_range)
-    if rng is None:
-        ax_top.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax_top.transAxes)
-        ax_top.set_axis_off()
-        ax_bot.set_axis_off()
-        savefig(fig, outpath)
-        return
-    
-    lo, hi = rng
+
+    if fixed_range is not None:
+        lo, hi = fixed_range
+    else:
+        # ENERGY: use CDF quantile range, not peak-centred
+        if xlabel.startswith("|E|"):
+            z = np.concatenate([real, gen])
+            z = z[np.isfinite(z)]
+            lo = 0.0
+            hi = float(np.quantile(z, frac_range))
+            if not np.isfinite(hi) or hi <= lo:
+                hi = float(np.quantile(z, 0.99))
+        else:
+            rng = peak_centered_range(real, gen, bins=600, frac=frac_range)
+            if rng is None:
+                ax_top.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax_top.transAxes)
+                ax_top.set_axis_off()
+                ax_bot.set_axis_off()
+                savefig(fig, outpath)
+                return
+            lo, hi = rng
     
     real_use = clamp_to_range(real, lo, hi)
     gen_use  = clamp_to_range(gen,  lo, hi)
@@ -1306,8 +1478,13 @@ def evaluate(args):
 
             # Use a wider frac_range for positions (tails can be huge)
             frac = cfg.frac_range
+
             if key in ("x", "y", "z"):
                 frac = 0.98
+            if key in ("E_signed", "E_abs"):
+                frac = 0.4 
+
+            fixed = (-1.0, 1.0) if key == "betaz" else None
 
             two_panel_dist(
                 real_sp[key], gen_sp[key],
@@ -1318,6 +1495,7 @@ def evaluate(args):
                 bins=args.mom_bins,
                 ratio_min_count=args.ratio_min_count,
                 frac_range=frac,
+                fixed_range=fixed,
             )
 
     print(f"Evaluation complete. Plots saved to: {args.outdir}/")
@@ -1356,7 +1534,7 @@ Examples:
     # Sample
     sample_parser = subparsers.add_parser('sample', help='Generate synthetic events')
     sample_parser.add_argument('--outdir', type=str, default=cfg.outdir, help='Model directory')
-    sample_parser.add_argument('--n_events', type=int, default=1247, help='Number of events')
+    sample_parser.add_argument('--n_events', type=int, default=cfg.n_events, help='Number of events')
     
     # Evaluate
     eval_parser = subparsers.add_parser('evaluate', help='Evaluate distributions')

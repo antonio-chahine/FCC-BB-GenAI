@@ -89,7 +89,7 @@ def w_to_beta(w_xyz: np.ndarray, eps: float = 1e-12) -> np.ndarray:
 @dataclass
 class CFG:
     data_path: str = "guineapig_raw_trimmed.npy"
-    outdir: str = "new_5"
+    outdir: str = "new_6"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
     max_particles: int = 1300
@@ -257,6 +257,8 @@ class ParticleDenoiser(nn.Module):
             nn.Linear(d_model, d_model),
         )
 
+        self.skip_alpha = nn.Parameter(torch.tensor(0.2))   # start < 1
+
     def forward(self, x_t, t, mask):
         B, K, _ = x_t.shape
 
@@ -279,7 +281,9 @@ class ParticleDenoiser(nn.Module):
 
         h_in = h
         h = self.transformer(h, src_key_padding_mask=src_key_padding_mask)
-        h = h + h_in
+        h = h + self.skip_alpha * h_in
+        h = h * mask.unsqueeze(-1)
+
 
         eps_hat = self.output(h)
         eps_hat = eps_hat * mask.unsqueeze(-1)
