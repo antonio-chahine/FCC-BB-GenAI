@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#events = np.load("/work/submit/anton100/msci-project/FCC-BB-GenAI/guineapig_raw_trimmed_3/generated_events.npy", allow_pickle=True)
-events = np.load("guineapig_raw_trimmed.npy", allow_pickle=True)
+events = np.load("/work/submit/anton100/msci-project/FCC-BB-GenAI/new_14/generated_events.npy", allow_pickle=True)
+#events = np.load("guineapig_raw_trimmed.npy", allow_pickle=True)
 
 
 beta = []

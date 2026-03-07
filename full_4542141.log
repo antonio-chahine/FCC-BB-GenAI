@@ -1,0 +1,8 @@
+=== TRAINING ===
+Using device: cuda
+CUDA available: True
+GPU: NVIDIA A30
+Resuming from new_25_before/ckpt_last.pt at epoch 50
+Training complete. Outputs saved to: new_25_before
+=== SAMPLING ===
+Generating batches:   0%|          | 0/313 [00:00<?, ?it/s]Generating batches:   0%|          | 1/313 [00:24<2:08:53, 24.79s/it]Generating batches:   1%|          | 2/313 [00:49<2:07:21, 24.57s/it]Generating batches:   1%|          | 3/313 [01:13<2:06:48, 24.54s/it]Generating batches:   1%|▏         | 4/313 [01:38<2:06:26, 24.55s/it]Generating batches:   2%|▏         | 5/313 [02:02<2:06:08, 24.57s/it]Generating batches:   2%|▏         | 6/313 [02:27<2:05:53, 24.60s/it]Generating batches:   2%|▏         | 7/313 [02:52<2:05:36, 24.63s/it]Generating batches:   3%|▎         | 8/313 [03:16<2:05:17, 24.65s/it][2026-03-07T08:39:57.236] error: *** JOB 4542141 ON submit21-1 CANCELLED AT 2026-03-07T08:39:57 DUE to SIGNAL Terminated ***

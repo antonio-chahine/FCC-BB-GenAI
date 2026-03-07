@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-events = np.load("guineapig_raw_trimmed.npy", allow_pickle=True)
+simulated_events = np.load("/work/submit/anton100/msci-project/FCC-BB-GenAI/guineapig_raw_trimmed.npy", allow_pickle=True)
+generated_events = np.load("/work/submit/anton100/msci-project/FCC-BB-GenAI/new_10/generated_events.npy", allow_pickle=True)
 
 # collect per-particle masses across all events
 all_m = []
@@ -68,6 +69,7 @@ rel_err = (all_m - m_true) / m_true
 plt.hist(rel_err, bins=200)
 plt.xlim(-0.1, 0.1)
 plt.title("Relative mass error")
+plt.savefig("mass_relative_error.png")
 plt.show()
 
 print("std rel err:", rel_err.std())

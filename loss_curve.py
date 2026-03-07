@@ -2,7 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-outdir = "new_4"
+outdir = "new_28"
 
 train = np.load(os.path.join(outdir, "train_losses.npy"))
 val   = np.load(os.path.join(outdir, "val_losses.npy"))

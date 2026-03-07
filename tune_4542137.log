@@ -1,0 +1,33 @@
+[I 2026-03-07 06:52:55,955] Using an existing study with name 'particle_diff_v2' instead of creating a new one.
+
+============================================================
+GPU CHECK
+============================================================
+CUDA available     : True
+Device count       : 1
+GPU 0              : NVIDIA A30
+  VRAM total       : 23.6 GB
+  VRAM allocated   : 0.00 GB
+  Compute cap.     : 8.0
+  Matmul test      : PASSED  (2048x2048 op completed OK)
+
+  Active device    : NVIDIA A30
+============================================================
+
+  0%|          | 0/30 [00:00<?, ?it/s]  Trial   1 | Epoch  1/20 | train=2.32349 | val=1.92144 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  2/20 | train=1.83930 | val=1.78741 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  3/20 | train=1.77189 | val=1.78821 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  4/20 | train=1.76725 | val=1.73003 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  5/20 | train=1.75715 | val=1.75917 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  6/20 | train=1.74403 | val=1.72158 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  7/20 | train=1.74626 | val=1.73710 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  8/20 | train=1.73513 | val=1.74239 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch  9/20 | train=1.74293 | val=1.74146 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 10/20 | train=1.72035 | val=1.73693 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 11/20 | train=1.72938 | val=1.69332 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 12/20 | train=1.72527 | val=1.70177 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 13/20 | train=1.70560 | val=1.64363 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 14/20 | train=1.72109 | val=1.65818 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 15/20 | train=1.71425 | val=1.66725 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 16/20 | train=1.71279 | val=1.72651 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 17/20 | train=1.70226 | val=1.68348 | VRAM alloc=0.02GB reserved=1.49GB

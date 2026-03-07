@@ -100,3 +100,29 @@ worst_xy = np.argsort(abs_delta_xy)[-k:][::-1]
 print("\nWorst events by |sum_px - sum_py|:")
 for idx in worst_xy:
     print(f"  i={idx:6d}  |dxy|={abs_delta_xy[idx]:9.3f}  dxy={delta_xy[idx]: .3f}  phi={phi[idx]: .3f}  (px,py)=({sum_px[idx]:.3f},{sum_py[idx]:.3f})  mult={len(events[idx])}")
+
+
+# ==========================================
+# Distribution of summed momentum components
+# ==========================================
+
+fig, axs = plt.subplots(1, 3, figsize=(15,5))
+
+components = [
+    (sum_px, r"$\sum p_x$"),
+    (sum_py, r"$\sum p_y$"),
+    (sum_pz, r"$\sum p_z$")
+]
+
+for ax, (data, label) in zip(axs, components):
+    ax.grid(True, alpha=0.1)
+    ax.hist(data, bins=50, density=True)
+    ax.set_xlabel(label)
+    ax.set_ylabel("Density")
+
+plt.suptitle("Momentum Distributions")
+plt.tight_layout()
+plt.savefig("momentum_component_distributions.png")
+plt.show()
+
+

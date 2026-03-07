@@ -10,7 +10,7 @@ FILES = glob.glob(
 FILES = [f for f in FILES if "/output_" in f and "/output0_" not in f]
 FILES = sorted(FILES)
 
-OUTFILE = "guineapig_raw_trimmed.npy"
+OUTFILE = "processes.npy"
 
 all_events = []
 skipped = []
@@ -20,7 +20,7 @@ for f in tqdm(FILES, desc="Reading .pairs", unit="event"):
         d = np.loadtxt(f, dtype=np.float32)
 
         # keep only raw kinematics + vertex
-        d = d[:, :7]
+        d = d[:, :8]
 
         all_events.append(d)
 
@@ -29,7 +29,6 @@ for f in tqdm(FILES, desc="Reading .pairs", unit="event"):
         continue
 
     except OSError as e:
-        # catches other filesystem weirdness
         skipped.append(f)
         continue
 
@@ -39,3 +38,6 @@ np.save(OUTFILE, events, allow_pickle=True)
 print(f"Saved {len(events)} events")
 print(f"Skipped {len(skipped)} files")
 print("Example event shape:", events[0].shape)
+
+
+print("Unique process values:", np.unique(events[0][:, 7]))
