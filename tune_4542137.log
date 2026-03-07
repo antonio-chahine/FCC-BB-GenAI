@@ -31,3 +31,4 @@ GPU 0              : NVIDIA A30
   Trial   1 | Epoch 15/20 | train=1.71425 | val=1.66725 | VRAM alloc=0.02GB reserved=1.49GB
   Trial   1 | Epoch 16/20 | train=1.71279 | val=1.72651 | VRAM alloc=0.02GB reserved=1.49GB
   Trial   1 | Epoch 17/20 | train=1.70226 | val=1.68348 | VRAM alloc=0.02GB reserved=1.49GB
+  Trial   1 | Epoch 18/20 | train=1.71181 | val=1.67141 | VRAM alloc=0.02GB reserved=1.49GB
