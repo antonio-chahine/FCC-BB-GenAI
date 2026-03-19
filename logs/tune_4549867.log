@@ -1,0 +1,21 @@
+[I 2026-03-09 06:32:47,867] Using an existing study with name 'particle_diff_new' instead of creating a new one.
+
+============================================================
+GPU CHECK
+============================================================
+CUDA available     : True
+Device count       : 1
+GPU 0              : NVIDIA A30
+  VRAM total       : 23.6 GB
+  VRAM allocated   : 0.00 GB
+  Compute cap.     : 8.0
+  Matmul test      : PASSED  (2048x2048 op completed OK)
+
+  Active device    : NVIDIA A30
+============================================================
+
+  0%|          | 0/40 [00:00<?, ?it/s][2026-03-09T06:33:11.042] error: StepId=4549867.batch exceeded memory limit (34659762176 > 34359738368), being killed
+[2026-03-09T06:33:11.048] error: Exceeded job memory limit
+[2026-03-09T06:33:11.048] error: *** JOB 4549867 ON submit21-1 CANCELLED AT 2026-03-09T06:33:11 DUE to SIGNAL Killed ***
+[2026-03-09T06:33:11.055] error: StepId=4549867.batch exceeded memory limit (34659762176 > 34359738368), being killed
+[2026-03-09T06:33:11.070] error: Exceeded job memory limit

@@ -1,0 +1,19 @@
+Best val loss: 1.448995
+Best trial:    #3
+
+lr = 0.0004064644058668378
+batch_size = 4
+d_model = 256
+nhead = 4
+num_layers = 2
+dropout = 0.21397343616689848
+T = 1000
+beta_start = 9.718319944817387e-05
+beta_end = 0.016661067877731174
+lambda_pdg = 2.1949509899568933
+lambda_charge = 0.011241862095793064
+gamma_end = 0.09855114214698701
+grad_clip = 0.6414313355903041
+gamma_start = 0.0008113929572637835
+pct_start = 0.09715339716144901
+div_factor = 32.253042671791206

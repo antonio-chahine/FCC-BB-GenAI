@@ -1,0 +1,15 @@
+==============================
+Job ID:   4632985
+Node:     submit71
+Started:  Sat Mar 14 13:03:43 EDT 2026
+==============================
+
+>>> Building graph cache...
+
+>>> Running GNN classifier + feature ablation...
+
+Device: cpu
+
+==============================
+Finished: Sat Mar 14 13:03:59 EDT 2026
+==============================

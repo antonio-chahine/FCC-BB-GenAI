@@ -1,0 +1,132 @@
+==============================
+Job ID:   4642629
+Node:     submit60
+Started:  Sun Mar 15 07:47:21 EDT 2026
+==============================
+
+>>> Preparing classifier data...
+Found: ['T=25', 'T=50', 'T=100', 'T=250', 'T=500']
+Loading real events...
+  20726 real events
+
+── Preparing RF data ──
+  T=25: 20726 real  |  10000 gen
+  T=50: 20726 real  |  10000 gen
+  T=100: 20726 real  |  10000 gen
+  T=250: 20726 real  |  10000 gen
+  T=500: 20726 real  |  10000 gen
+
+Done.
+
+>>> Running RF classifiers...
+Found: ['T=25', 'T=50', 'T=100', 'T=250', 'T=500']
+Loading real events...
+  20726 real events
+
+── Running RF classifiers ──
+    RF run 1/10  AUC=0.5954
+    RF run 2/10  AUC=0.5904
+    RF run 3/10  AUC=0.5959
+    RF run 4/10  AUC=0.5996
+    RF run 5/10  AUC=0.5907
+    RF run 6/10  AUC=0.5922
+    RF run 7/10  AUC=0.6034
+    RF run 8/10  AUC=0.6001
+    RF run 9/10  AUC=0.5917
+    RF run 10/10  AUC=0.5886
+  RF T=25: 0.5948 ± 0.0047
+    RF run 1/10  AUC=0.5719
+    RF run 2/10  AUC=0.5838
+    RF run 3/10  AUC=0.5847
+    RF run 4/10  AUC=0.5728
+    RF run 5/10  AUC=0.5726
+    RF run 6/10  AUC=0.5754
+    RF run 7/10  AUC=0.5743
+    RF run 8/10  AUC=0.5735
+    RF run 9/10  AUC=0.5775
+    RF run 10/10  AUC=0.5787
+  RF T=50: 0.5765 ± 0.0044
+    RF run 1/10  AUC=0.5524
+    RF run 2/10  AUC=0.5550
+    RF run 3/10  AUC=0.5502
+    RF run 4/10  AUC=0.5556
+    RF run 5/10  AUC=0.5596
+    RF run 6/10  AUC=0.5577
+    RF run 7/10  AUC=0.5538
+    RF run 8/10  AUC=0.5529
+    RF run 9/10  AUC=0.5534
+    RF run 10/10  AUC=0.5583
+  RF T=100: 0.5549 ± 0.0028
+    RF run 1/10  AUC=0.5464
+    RF run 2/10  AUC=0.5530
+    RF run 3/10  AUC=0.5485
+    RF run 4/10  AUC=0.5560
+    RF run 5/10  AUC=0.5447
+    RF run 6/10  AUC=0.5468
+    RF run 7/10  AUC=0.5474
+    RF run 8/10  AUC=0.5560
+    RF run 9/10  AUC=0.5560
+    RF run 10/10  AUC=0.5483
+  RF T=250: 0.5503 ± 0.0042
+    RF run 1/10  AUC=0.5501
+    RF run 2/10  AUC=0.5472
+    RF run 3/10  AUC=0.5534
+    RF run 4/10  AUC=0.5471
+    RF run 5/10  AUC=0.5495
+    RF run 6/10  AUC=0.5482
+    RF run 7/10  AUC=0.5536
+    RF run 8/10  AUC=0.5524
+    RF run 9/10  AUC=0.5525
+    RF run 10/10  AUC=0.5506
+  RF T=500: 0.5504 ± 0.0023
+
+Done.
+
+>>> Running GNN classifiers...
+Found: ['T=25', 'T=50', 'T=100', 'T=250', 'T=500']
+Loading real events...
+  20726 real events
+Loaded existing results for T=[25, 50, 100, 250, 500]
+
+── Running GNN classifiers (device=cuda) ──
+  GNN T=25: 10000 graphs (0 skipped)
+    GNN epoch 5/15  AUC=0.9999
+    GNN epoch 10/15  AUC=1.0000
+    GNN epoch 15/15  AUC=1.0000
+  GNN T=25: final AUC=1.0000
+  GNN T=50: 10000 graphs (0 skipped)
+    GNN epoch 5/15  AUC=0.9898
+    GNN epoch 10/15  AUC=0.9969
+    GNN epoch 15/15  AUC=0.9975
+  GNN T=50: final AUC=0.9975
+  GNN T=100: 10000 graphs (0 skipped)
+    GNN epoch 5/15  AUC=0.9481
+    GNN epoch 10/15  AUC=0.9720
+    GNN epoch 15/15  AUC=0.9763
+  GNN T=100: final AUC=0.9763
+  GNN T=250: 10000 graphs (0 skipped)
+    GNN epoch 5/15  AUC=0.9041
+    GNN epoch 10/15  AUC=0.9329
+    GNN epoch 15/15  AUC=0.9429
+  GNN T=250: final AUC=0.9429
+  GNN T=500: 10000 graphs (0 skipped)
+    GNN epoch 5/15  AUC=0.7959
+    GNN epoch 10/15  AUC=0.8628
+    GNN epoch 15/15  AUC=0.8813
+  GNN T=500: final AUC=0.8813
+
+Done.
+
+>>> Plotting combined results...
+Found: ['T=25', 'T=50', 'T=100', 'T=250', 'T=500']
+Loaded existing results for T=[25, 50, 100, 250, 500]
+
+── Plotting ──
+  Saved  /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge/auc_vs_T_combined.png
+  Saved  /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge/roc_combined.png
+
+Done.
+
+==============================
+Finished: Sun Mar 15 08:17:38 EDT 2026
+==============================

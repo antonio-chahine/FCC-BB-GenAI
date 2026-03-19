@@ -2,7 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-outdir = "new_28"
+outdir = "/work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge_t2/T_100"
 
 train = np.load(os.path.join(outdir, "train_losses.npy"))
 val   = np.load(os.path.join(outdir, "val_losses.npy"))

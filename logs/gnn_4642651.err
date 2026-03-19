@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/gnn_classifier.py", line 19, in <module>
+    from torch_geometric.data import Data, DataLoader
+ModuleNotFoundError: No module named 'torch_geometric'
+Traceback (most recent call last):
+  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/gnn_classifier.py", line 19, in <module>
+    from torch_geometric.data import Data, DataLoader
+ModuleNotFoundError: No module named 'torch_geometric'

@@ -1,7 +1,7 @@
 import optuna
 study = optuna.load_study(
-    study_name='particle_diff',
-    storage='sqlite:///tuning.db'
+    study_name='particle_diff_new_2',
+    storage='sqlite:///tuning_new_2.db'
 )
 
 # Best params

@@ -764,8 +764,11 @@ def plot_charge_asymmetry(generated_events, outdir):
     mu       = charge_diff.mean()
     sigma    = charge_diff.std()
 
-    unique_vals = np.unique(charge_diff)
+    lo = float(np.quantile(charge_diff, 0.01))
+    hi = float(np.quantile(charge_diff, 0.99))
+    unique_vals = np.unique(charge_diff[(charge_diff >= lo) & (charge_diff <= hi)])
     bins = np.append(unique_vals - 0.5, unique_vals[-1] + 0.5)
+    charge_diff = charge_diff[(charge_diff >= lo) & (charge_diff <= hi)]
 
     fig, ax = plt.subplots(figsize=(8, 5.5), constrained_layout=True)
     ax.hist(charge_diff, bins=bins, rwidth=1.0, edgecolor="black",

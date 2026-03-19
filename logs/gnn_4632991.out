@@ -1,0 +1,42 @@
+==============================
+Job ID:   4632991
+Node:     submit21-1
+Started:  Sat Mar 14 14:00:43 EDT 2026
+==============================
+
+>>> Running GNN classifier + feature ablation...
+
+Device: cuda
+Loaded 10000 graphs
+
+── Full model (all features) ──
+  Full AUC = 0.8848
+  Saved  /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge/T_1000/gnn_roc.png
+
+── Feature ablation ──
+  Drop E       :  AUC = 0.8638  (drop = +0.0210)
+  Drop px      :  AUC = 0.8609  (drop = +0.0239)
+  Drop py      :  AUC = 0.8600  (drop = +0.0248)
+  Drop pz      :  AUC = 0.8802  (drop = +0.0046)
+  Drop betax   :  AUC = 0.8492  (drop = +0.0356)
+  Drop betay   :  AUC = 0.8289  (drop = +0.0558)
+  Drop betaz   :  AUC = 0.8917  (drop = -0.0069)
+  Saved  /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge/T_1000/gnn_feature_ablation.png
+
+==================================================
+Full model AUC : 0.8848
+==================================================
+Feature importance (by AUC drop):
+  betay   : +0.0558
+  betax   : +0.0356
+  py      : +0.0248
+  px      : +0.0239
+  E       : +0.0210
+  pz      : +0.0046
+  betaz   : -0.0069
+
+Note: AUC~0.5 = indistinguishable, AUC~1.0 = easily separated
+
+==============================
+Finished: Sat Mar 14 14:10:57 EDT 2026
+==============================

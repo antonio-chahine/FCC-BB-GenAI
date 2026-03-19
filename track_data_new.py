@@ -2,15 +2,24 @@ import glob
 import numpy as np
 from tqdm import tqdm
 
-FILES = glob.glob(
-    "/ceph/submit/data/group/fcc/ee/beam_backgrounds/guineapig/"
-    "FCCee_Z_GHC_V25p3_4_FCCee_Z256_2T_grids8/*.pairs"
+import glob
+import numpy as np
+from tqdm import tqdm
+
+FILES = (
+    glob.glob(
+        "/ceph/submit/data/user/b/bmaier/BiB/*.pairs"
+    )
+    + glob.glob(
+        "/ceph/submit/data/group/fcc/ee/beam_backgrounds/guineapig/"
+        "FCCee_Z_GHC_V25p3_4_FCCee_Z256_2T_grids8/*.pairs"
+    )
 )
 
 FILES = [f for f in FILES if "/output_" in f and "/output0_" not in f]
 FILES = sorted(FILES)
 
-OUTFILE = "processes.npy"
+OUTFILE = "extra_data.npy"
 
 all_events = []
 skipped = []
@@ -20,6 +29,7 @@ for f in tqdm(FILES, desc="Reading .pairs", unit="event"):
         d = np.loadtxt(f, dtype=np.float32)
 
         # keep only raw kinematics + vertex
+        d = np.loadtxt(f, dtype=np.float32, ndmin=2)
         d = d[:, :8]
 
         all_events.append(d)

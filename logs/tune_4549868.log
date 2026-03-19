@@ -1,0 +1,279 @@
+[I 2026-03-09 06:35:10,970] Using an existing study with name 'particle_diff_new' instead of creating a new one.
+
+============================================================
+GPU CHECK
+============================================================
+CUDA available     : True
+Device count       : 1
+GPU 0              : NVIDIA A30
+  VRAM total       : 23.6 GB
+  VRAM allocated   : 0.00 GB
+  Compute cap.     : 8.0
+  Matmul test      : PASSED  (2048x2048 op completed OK)
+
+  Active device    : NVIDIA A30
+============================================================
+
+  0%|          | 0/40 [00:00<?, ?it/s]  Trial   4 | Epoch  1/20 | train=4.28933 | val=3.37636 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  2/20 | train=3.17978 | val=2.90384 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  3/20 | train=2.95544 | val=2.77164 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  4/20 | train=2.85288 | val=2.75057 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  5/20 | train=2.80532 | val=2.71492 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  6/20 | train=2.81537 | val=2.74174 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  7/20 | train=2.79506 | val=2.70220 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  8/20 | train=2.78433 | val=2.71164 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch  9/20 | train=2.74642 | val=2.70331 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 10/20 | train=2.74806 | val=2.70185 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 11/20 | train=2.72341 | val=2.69072 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 12/20 | train=2.69850 | val=2.68285 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 13/20 | train=2.69991 | val=2.65511 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 14/20 | train=2.68716 | val=2.64712 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 15/20 | train=2.68683 | val=2.62291 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 16/20 | train=2.68083 | val=2.60651 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 17/20 | train=2.65894 | val=2.60872 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 18/20 | train=2.67427 | val=2.56680 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   4 | Epoch 19/20 | train=2.66018 | val=2.56833 | VRAM alloc=0.05GB reserved=6.12GB
+                                        0%|          | 0/40 [1:11:02<?, ?it/s]Best trial: 4. Best value: 2.5668:   0%|          | 0/40 [1:11:02<?, ?it/s]Best trial: 4. Best value: 2.5668:   2%|▎         | 1/40 [1:11:02<46:10:29, 4262.30s/it]  Trial   4 | Epoch 20/20 | train=2.64353 | val=2.62163 | VRAM alloc=0.05GB reserved=6.12GB
+[I 2026-03-09 07:46:13,260] Trial 4 finished with value: 2.566802412729997 and parameters: {'lr': 0.0008403604888695196, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 4, 'dropout': 0.05411689885916049, 'T': 500, 'cosine_s': 0.00037419406111184985, 'lambda_pdg': 0.2227337188467456, 'lambda_zplane': 0.4484685687215243, 'gamma_end': 0.12606056073988442, 'gamma_start': 0.0007790143126276247, 'grad_clip': 2.1479175279631737, 'pct_start': 0.0936843710297063, 'div_factor': 17.960262498366816}. Best is trial 4 with value: 2.566802412729997.
+  Trial   5 | Epoch  1/20 | train=5.51181 | val=4.08513 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  2/20 | train=3.44394 | val=2.96775 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  3/20 | train=2.93613 | val=2.69764 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  4/20 | train=2.78264 | val=2.66488 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  5/20 | train=2.71454 | val=2.67486 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  6/20 | train=2.67641 | val=2.63427 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  7/20 | train=2.67210 | val=2.63680 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  8/20 | train=2.63788 | val=2.54887 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch  9/20 | train=2.59898 | val=2.51834 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 10/20 | train=2.59691 | val=2.51972 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 11/20 | train=2.57024 | val=2.51413 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 12/20 | train=2.57867 | val=2.54423 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 13/20 | train=2.57263 | val=2.55992 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 14/20 | train=2.56653 | val=2.52693 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 15/20 | train=2.55044 | val=2.47995 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 16/20 | train=2.54860 | val=2.48062 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 17/20 | train=2.53555 | val=2.50185 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 18/20 | train=2.54891 | val=2.51753 | VRAM alloc=0.11GB reserved=22.95GB
+  Trial   5 | Epoch 19/20 | train=2.53995 | val=2.47047 | VRAM alloc=0.06GB reserved=22.95GB
+                                                                                        Best trial: 4. Best value: 2.5668:   2%|▎         | 1/40 [2:18:28<46:10:29, 4262.30s/it]Best trial: 5. Best value: 2.44654:   2%|▎         | 1/40 [2:18:28<46:10:29, 4262.30s/it]Best trial: 5. Best value: 2.44654:   5%|▌         | 2/40 [2:18:28<43:38:57, 4135.19s/it]  Trial   5 | Epoch 20/20 | train=2.52959 | val=2.44654 | VRAM alloc=0.06GB reserved=22.95GB
+[I 2026-03-09 08:53:39,467] Trial 5 finished with value: 2.4465398427211875 and parameters: {'lr': 0.0006066716167545476, 'batch_size': 64, 'd_model': 256, 'nhead': 4, 'num_layers': 4, 'dropout': 0.08410482473745831, 'T': 1000, 'cosine_s': 0.04038423798071561, 'lambda_pdg': 0.8179774807106381, 'lambda_zplane': 0.6787661614294043, 'gamma_end': 0.07441802850159597, 'gamma_start': 0.0014537555576161927, 'grad_clip': 2.160228740609402, 'pct_start': 0.06830573522671683, 'div_factor': 15.393487254899382}. Best is trial 5 with value: 2.4465398427211875.
+  Trial   6 | Epoch  1/20 | train=4.18350 | val=3.15928 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  2/20 | train=2.91545 | val=2.79574 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  3/20 | train=2.70638 | val=2.56167 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  4/20 | train=2.63895 | val=2.55238 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  5/20 | train=2.59985 | val=2.49487 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  6/20 | train=2.57746 | val=2.45102 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  7/20 | train=2.55672 | val=2.49026 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  8/20 | train=2.54828 | val=2.46512 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch  9/20 | train=2.54465 | val=2.47994 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 10/20 | train=2.51650 | val=2.43314 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 11/20 | train=2.52521 | val=2.45083 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 12/20 | train=2.48547 | val=2.38655 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 13/20 | train=2.48052 | val=2.43975 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 14/20 | train=2.47816 | val=2.42155 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 15/20 | train=2.45759 | val=2.45669 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 16/20 | train=2.43991 | val=2.42401 | VRAM alloc=0.30GB reserved=22.95GB
+  Trial   6 | Epoch 17/20 | train=2.46136 | val=2.41012 | VRAM alloc=0.25GB reserved=22.95GB
+  Trial   6 | Epoch 18/20 | train=2.43279 | val=2.40066 | VRAM alloc=0.25GB reserved=22.95GB
+  Trial   6 | Epoch 19/20 | train=2.42028 | val=2.41700 | VRAM alloc=0.25GB reserved=22.95GB
+                                                                                         Best trial: 5. Best value: 2.44654:   5%|▌         | 2/40 [5:49:46<43:38:57, 4135.19s/it]Best trial: 6. Best value: 2.35003:   5%|▌         | 2/40 [5:49:46<43:38:57, 4135.19s/it]Best trial: 6. Best value: 2.35003:   8%|▊         | 3/40 [5:49:46<82:35:39, 8036.20s/it]  Trial   6 | Epoch 20/20 | train=2.43485 | val=2.35003 | VRAM alloc=0.25GB reserved=22.95GB
+[I 2026-03-09 12:24:57,836] Trial 6 finished with value: 2.350034723832057 and parameters: {'lr': 0.0005244136133080424, 'batch_size': 16, 'd_model': 512, 'nhead': 8, 'num_layers': 5, 'dropout': 0.2378997883128378, 'T': 500, 'cosine_s': 0.0307688247430154, 'lambda_pdg': 0.13406787694932354, 'lambda_zplane': 0.47236743859637587, 'gamma_end': 0.06130682222763452, 'gamma_start': 0.0003570478920909981, 'grad_clip': 2.083015934534223, 'pct_start': 0.0907023547660844, 'div_factor': 23.92275706162204}. Best is trial 6 with value: 2.350034723832057.
+  Trial   7 | Epoch  1/20 | train=4.57273 | val=3.45174 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  2/20 | train=3.46526 | val=3.22076 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  3/20 | train=3.21582 | val=3.00826 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  4/20 | train=3.08610 | val=2.85087 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  5/20 | train=3.02907 | val=2.90403 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  6/20 | train=2.97342 | val=2.81693 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  7/20 | train=2.92894 | val=2.83131 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  8/20 | train=2.92179 | val=2.79417 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch  9/20 | train=2.88549 | val=2.76236 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 10/20 | train=2.87964 | val=2.73295 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 11/20 | train=2.87563 | val=2.71731 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 12/20 | train=2.81451 | val=2.73247 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 13/20 | train=2.82428 | val=2.76571 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 14/20 | train=2.81366 | val=2.65065 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 15/20 | train=2.81194 | val=2.69228 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 16/20 | train=2.78018 | val=2.66571 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 17/20 | train=2.79036 | val=2.69638 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 18/20 | train=2.79198 | val=2.64743 | VRAM alloc=0.28GB reserved=22.95GB
+  Trial   7 | Epoch 19/20 | train=2.77559 | val=2.61596 | VRAM alloc=0.28GB reserved=22.95GB
+                                                                                         Best trial: 6. Best value: 2.35003:   8%|▊         | 3/40 [6:16:58<82:35:39, 8036.20s/it]Best trial: 6. Best value: 2.35003:   8%|▊         | 3/40 [6:16:58<82:35:39, 8036.20s/it]Best trial: 6. Best value: 2.35003:  10%|█         | 4/40 [6:16:58<55:04:34, 5507.63s/it]  Trial   7 | Epoch 20/20 | train=2.77775 | val=2.65901 | VRAM alloc=0.28GB reserved=22.95GB
+[I 2026-03-09 12:52:09,239] Trial 7 finished with value: 2.615961525990413 and parameters: {'lr': 0.0008198924913296289, 'batch_size': 32, 'd_model': 256, 'nhead': 2, 'num_layers': 2, 'dropout': 0.21309228569096683, 'T': 1000, 'cosine_s': 0.012068006375483968, 'lambda_pdg': 0.12034241914738585, 'lambda_zplane': 0.7810848842341179, 'gamma_end': 0.07896726488128243, 'gamma_start': 0.002926758115062129, 'grad_clip': 2.4349471902413367, 'pct_start': 0.09963470372789739, 'div_factor': 8.701106159513815}. Best is trial 6 with value: 2.350034723832057.
+                                                                                         Best trial: 6. Best value: 2.35003:  10%|█         | 4/40 [6:17:08<55:04:34, 5507.63s/it]Best trial: 6. Best value: 2.35003:  10%|█         | 4/40 [6:17:08<55:04:34, 5507.63s/it]Best trial: 6. Best value: 2.35003:  12%|█▎        | 5/40 [6:17:08<34:16:23, 3525.23s/it]  Trial 8 OOM during train (batch_size=32, d_model=256, T=1000) — pruning.
+[I 2026-03-09 12:52:19,472] Trial 8 pruned. 
+  Trial   9 | Epoch  1/20 | train=4.87701 | val=3.58207 | VRAM alloc=0.48GB reserved=18.81GB
+  Trial   9 | Epoch  2/20 | train=3.38591 | val=3.08157 | VRAM alloc=0.48GB reserved=18.81GB
+  Trial   9 | Epoch  3/20 | train=3.08808 | val=2.95982 | VRAM alloc=0.48GB reserved=18.81GB
+  Trial   9 | Epoch  4/20 | train=2.98207 | val=2.87093 | VRAM alloc=0.48GB reserved=18.81GB
+  Trial   9 | Epoch  5/20 | train=2.94620 | val=2.85255 | VRAM alloc=0.48GB reserved=18.81GB
+  Trial   9 | Epoch  6/20 | train=2.90368 | val=2.86071 | VRAM alloc=0.48GB reserved=18.81GB
+  Trial   9 | Epoch  7/20 | train=2.90269 | val=2.85256 | VRAM alloc=0.48GB reserved=18.81GB
+  Trial   9 | Epoch  8/20 | train=2.87265 | val=2.77506 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch  9/20 | train=2.83345 | val=2.75648 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 10/20 | train=2.84205 | val=2.76407 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 11/20 | train=2.82739 | val=2.72711 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 12/20 | train=2.80392 | val=2.72925 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 13/20 | train=2.79802 | val=2.72086 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 14/20 | train=2.78679 | val=2.69456 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 15/20 | train=2.76374 | val=2.71616 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 16/20 | train=2.76742 | val=2.67207 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 17/20 | train=2.75462 | val=2.69017 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 18/20 | train=2.76305 | val=2.67242 | VRAM alloc=0.21GB reserved=18.81GB
+  Trial   9 | Epoch 19/20 | train=2.75869 | val=2.67253 | VRAM alloc=0.21GB reserved=18.81GB
+                                                                                         Best trial: 6. Best value: 2.35003:  12%|█▎        | 5/40 [8:31:10<34:16:23, 3525.23s/it]Best trial: 6. Best value: 2.35003:  12%|█▎        | 5/40 [8:31:10<34:16:23, 3525.23s/it]Best trial: 6. Best value: 2.35003:  15%|█▌        | 6/40 [8:31:10<47:47:51, 5060.93s/it]  Trial   9 | Epoch 20/20 | train=2.74855 | val=2.69557 | VRAM alloc=0.21GB reserved=18.81GB
+[I 2026-03-09 15:06:21,473] Trial 9 finished with value: 2.6720693808335523 and parameters: {'lr': 0.000706413323304721, 'batch_size': 32, 'd_model': 512, 'nhead': 4, 'num_layers': 4, 'dropout': 0.22429211803754356, 'T': 500, 'cosine_s': 0.025644247753429144, 'lambda_pdg': 0.5623751298198683, 'lambda_zplane': 1.6341362948117188, 'gamma_end': 0.2740228249808733, 'gamma_start': 0.00034695916603302916, 'grad_clip': 1.665077886791515, 'pct_start': 0.08419027438129126, 'div_factor': 14.06899944010232}. Best is trial 6 with value: 2.350034723832057.
+  Trial  10 | Epoch  1/20 | train=3.93261 | val=2.98290 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  2/20 | train=2.89999 | val=2.74801 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  3/20 | train=2.78502 | val=2.65897 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  4/20 | train=2.74141 | val=2.65477 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  5/20 | train=2.73513 | val=2.60437 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  6/20 | train=2.72052 | val=2.57600 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  7/20 | train=2.68570 | val=2.63038 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  8/20 | train=2.68369 | val=2.61270 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch  9/20 | train=2.64709 | val=2.59473 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 10/20 | train=2.64833 | val=2.59981 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 11/20 | train=2.63261 | val=2.54754 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 12/20 | train=2.62263 | val=2.55645 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 13/20 | train=2.61755 | val=2.52034 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 14/20 | train=2.60190 | val=2.56401 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 15/20 | train=2.60303 | val=2.54366 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 16/20 | train=2.59494 | val=2.56649 | VRAM alloc=0.24GB reserved=18.81GB
+  Trial  10 | Epoch 17/20 | train=2.57455 | val=2.55814 | VRAM alloc=0.04GB reserved=18.81GB
+  Trial  10 | Epoch 18/20 | train=2.57481 | val=2.51997 | VRAM alloc=0.04GB reserved=18.81GB
+  Trial  10 | Epoch 19/20 | train=2.57030 | val=2.50585 | VRAM alloc=0.04GB reserved=18.81GB
+                                                                                         Best trial: 6. Best value: 2.35003:  15%|█▌        | 6/40 [9:51:38<47:47:51, 5060.93s/it]Best trial: 6. Best value: 2.35003:  15%|█▌        | 6/40 [9:51:38<47:47:51, 5060.93s/it]Best trial: 6. Best value: 2.35003:  18%|█▊        | 7/40 [9:51:38<45:41:41, 4984.90s/it]  Trial  10 | Epoch 20/20 | train=2.56692 | val=2.53210 | VRAM alloc=0.04GB reserved=18.81GB
+[I 2026-03-09 16:26:49,833] Trial 10 finished with value: 2.5058460547373844 and parameters: {'lr': 0.0015540463484393125, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 3, 'dropout': 0.15375812434867323, 'T': 500, 'cosine_s': 0.041957605186956, 'lambda_pdg': 0.9643249301950056, 'lambda_zplane': 0.5783863620681918, 'gamma_end': 0.17431212647309635, 'gamma_start': 0.000324476480988986, 'grad_clip': 1.9272607415662013, 'pct_start': 0.05553304210317992, 'div_factor': 17.906016254192004}. Best is trial 6 with value: 2.350034723832057.
+                                                                                         Best trial: 6. Best value: 2.35003:  18%|█▊        | 7/40 [9:51:48<45:41:41, 4984.90s/it]Best trial: 6. Best value: 2.35003:  18%|█▊        | 7/40 [9:51:48<45:41:41, 4984.90s/it]Best trial: 6. Best value: 2.35003:  20%|██        | 8/40 [9:51:48<30:13:50, 3400.94s/it]  Trial 11 OOM during train (batch_size=64, d_model=256, T=1000) — pruning.
+[I 2026-03-09 16:26:59,242] Trial 11 pruned. 
+  Trial  12 | Epoch  1/20 | train=5.35897 | val=3.78891 | VRAM alloc=0.08GB reserved=18.55GB
+  Trial  12 | Epoch  2/20 | train=3.75094 | val=3.49973 | VRAM alloc=0.08GB reserved=18.55GB
+  Trial  12 | Epoch  3/20 | train=3.46358 | val=3.20724 | VRAM alloc=0.08GB reserved=18.55GB
+                                                                                         Best trial: 6. Best value: 2.35003:  20%|██        | 8/40 [10:07:31<30:13:50, 3400.94s/it]Best trial: 6. Best value: 2.35003:  20%|██        | 8/40 [10:07:31<30:13:50, 3400.94s/it]Best trial: 6. Best value: 2.35003:  22%|██▎       | 9/40 [10:07:31<22:40:13, 2632.68s/it]  Trial  12 | Epoch  4/20 | train=3.29696 | val=3.10261 | VRAM alloc=0.08GB reserved=18.55GB
+  Trial 12 pruned at epoch 4.
+[I 2026-03-09 16:42:42,660] Trial 12 pruned. 
+                                                                                          Best trial: 6. Best value: 2.35003:  22%|██▎       | 9/40 [10:07:41<22:40:13, 2632.68s/it]Best trial: 6. Best value: 2.35003:  22%|██▎       | 9/40 [10:07:41<22:40:13, 2632.68s/it]Best trial: 6. Best value: 2.35003:  25%|██▌       | 10/40 [10:07:41<15:11:28, 1822.95s/it]  Trial 13 OOM during train (batch_size=64, d_model=256, T=500) — pruning.
+[I 2026-03-09 16:42:52,492] Trial 13 pruned. 
+  Trial  14 | Epoch  1/20 | train=4.27015 | val=3.34484 | VRAM alloc=0.33GB reserved=21.64GB
+  Trial  14 | Epoch  2/20 | train=3.18019 | val=2.98085 | VRAM alloc=0.33GB reserved=21.64GB
+  Trial  14 | Epoch  3/20 | train=3.02050 | val=3.05560 | VRAM alloc=0.33GB reserved=21.64GB
+                                                                                           Best trial: 6. Best value: 2.35003:  25%|██▌       | 10/40 [10:39:43<15:11:28, 1822.95s/it]Best trial: 6. Best value: 2.35003:  25%|██▌       | 10/40 [10:39:43<15:11:28, 1822.95s/it]Best trial: 6. Best value: 2.35003:  28%|██▊       | 11/40 [10:39:43<14:55:41, 1853.15s/it]  Trial  14 | Epoch  4/20 | train=2.93754 | val=2.92176 | VRAM alloc=0.33GB reserved=21.65GB
+  Trial 14 pruned at epoch 4.
+[I 2026-03-09 17:14:54,107] Trial 14 pruned. 
+                                                                                           Best trial: 6. Best value: 2.35003:  28%|██▊       | 11/40 [10:39:52<14:55:41, 1853.15s/it]Best trial: 6. Best value: 2.35003:  28%|██▊       | 11/40 [10:39:52<14:55:41, 1853.15s/it]Best trial: 6. Best value: 2.35003:  30%|███       | 12/40 [10:39:52<10:03:03, 1292.26s/it]  Trial 15 OOM during train (batch_size=64, d_model=512, T=1000) — pruning.
+[I 2026-03-09 17:15:03,489] Trial 15 pruned. 
+                                                                                           Best trial: 6. Best value: 2.35003:  30%|███       | 12/40 [10:40:02<10:03:03, 1292.26s/it]Best trial: 6. Best value: 2.35003:  30%|███       | 12/40 [10:40:02<10:03:03, 1292.26s/it]Best trial: 6. Best value: 2.35003:  32%|███▎      | 13/40 [10:40:02<6:46:40, 903.73s/it]    Trial 16 OOM during train (batch_size=64, d_model=512, T=500) — pruning.
+[I 2026-03-09 17:15:13,208] Trial 16 pruned. 
+  Trial  17 | Epoch  1/20 | train=3.88987 | val=3.02573 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  2/20 | train=2.89670 | val=2.81661 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  3/20 | train=2.73495 | val=2.67099 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  4/20 | train=2.64598 | val=2.63417 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  5/20 | train=2.64855 | val=2.58332 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  6/20 | train=2.65040 | val=2.63467 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  7/20 | train=2.59822 | val=2.53295 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  8/20 | train=2.60718 | val=2.58186 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch  9/20 | train=2.59057 | val=2.52509 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch 10/20 | train=2.58424 | val=2.53282 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch 11/20 | train=2.55790 | val=2.51591 | VRAM alloc=0.49GB reserved=6.68GB
+  Trial  17 | Epoch 12/20 | train=2.55138 | val=2.49129 | VRAM alloc=0.16GB reserved=6.68GB
+  Trial  17 | Epoch 13/20 | train=2.54308 | val=2.48841 | VRAM alloc=0.16GB reserved=6.68GB
+  Trial  17 | Epoch 14/20 | train=2.52855 | val=2.48404 | VRAM alloc=0.16GB reserved=6.68GB
+  Trial  17 | Epoch 15/20 | train=2.51134 | val=2.49147 | VRAM alloc=0.16GB reserved=6.68GB
+  Trial  17 | Epoch 16/20 | train=2.50050 | val=2.49115 | VRAM alloc=0.16GB reserved=6.68GB
+  Trial  17 | Epoch 17/20 | train=2.49574 | val=2.42069 | VRAM alloc=0.16GB reserved=6.68GB
+  Trial  17 | Epoch 18/20 | train=2.48844 | val=2.40395 | VRAM alloc=0.16GB reserved=6.68GB
+  Trial  17 | Epoch 19/20 | train=2.49963 | val=2.47645 | VRAM alloc=0.16GB reserved=6.68GB
+                                                                                         Best trial: 6. Best value: 2.35003:  32%|███▎      | 13/40 [12:22:29<6:46:40, 903.73s/it]Best trial: 6. Best value: 2.35003:  32%|███▎      | 13/40 [12:22:29<6:46:40, 903.73s/it]Best trial: 6. Best value: 2.35003:  35%|███▌      | 14/40 [12:22:29<17:57:57, 2487.59s/it]  Trial  17 | Epoch 20/20 | train=2.48408 | val=2.49037 | VRAM alloc=0.16GB reserved=6.68GB
+[I 2026-03-09 18:57:40,677] Trial 17 finished with value: 2.4039542033122134 and parameters: {'lr': 0.0011528855413264192, 'batch_size': 16, 'd_model': 512, 'nhead': 4, 'num_layers': 3, 'dropout': 0.11409524207082897, 'T': 1000, 'cosine_s': 0.04976304094942074, 'lambda_pdg': 0.7629541162707888, 'lambda_zplane': 1.0963585075450364, 'gamma_end': 0.09379600694732748, 'gamma_start': 0.0006039037404403287, 'grad_clip': 2.1083663734066094, 'pct_start': 0.07476149063715587, 'div_factor': 21.643773188772318}. Best is trial 6 with value: 2.350034723832057.
+  Trial  18 | Epoch  1/20 | train=4.21033 | val=3.33604 | VRAM alloc=0.26GB reserved=6.68GB
+  Trial  18 | Epoch  2/20 | train=3.32829 | val=3.14823 | VRAM alloc=0.26GB reserved=6.68GB
+  Trial  18 | Epoch  3/20 | train=3.12576 | val=3.04143 | VRAM alloc=0.26GB reserved=6.68GB
+                                                                                           Best trial: 6. Best value: 2.35003:  35%|███▌      | 14/40 [12:35:47<17:57:57, 2487.59s/it]Best trial: 6. Best value: 2.35003:  35%|███▌      | 14/40 [12:35:47<17:57:57, 2487.59s/it]Best trial: 6. Best value: 2.35003:  38%|███▊      | 15/40 [12:35:47<13:44:13, 1978.16s/it]  Trial  18 | Epoch  4/20 | train=3.04858 | val=2.89048 | VRAM alloc=0.26GB reserved=6.68GB
+  Trial 18 pruned at epoch 4.
+[I 2026-03-09 19:10:58,211] Trial 18 pruned. 
+  Trial  19 | Epoch  1/20 | train=4.32254 | val=3.59793 | VRAM alloc=0.42GB reserved=6.68GB
+  Trial  19 | Epoch  2/20 | train=3.39456 | val=3.24002 | VRAM alloc=0.42GB reserved=6.68GB
+  Trial  19 | Epoch  3/20 | train=3.22290 | val=3.04563 | VRAM alloc=0.42GB reserved=6.68GB
+                                                                                           Best trial: 6. Best value: 2.35003:  38%|███▊      | 15/40 [12:56:24<13:44:13, 1978.16s/it]Best trial: 6. Best value: 2.35003:  38%|███▊      | 15/40 [12:56:24<13:44:13, 1978.16s/it]Best trial: 6. Best value: 2.35003:  40%|████      | 16/40 [12:56:24<11:42:05, 1755.22s/it]  Trial  19 | Epoch  4/20 | train=3.07211 | val=3.00878 | VRAM alloc=0.42GB reserved=6.68GB
+  Trial 19 pruned at epoch 4.
+[I 2026-03-09 19:31:35,723] Trial 19 pruned. 
+  Trial  20 | Epoch  1/20 | train=3.97691 | val=3.16518 | VRAM alloc=0.57GB reserved=10.22GB
+  Trial  20 | Epoch  2/20 | train=3.08346 | val=2.83496 | VRAM alloc=0.57GB reserved=10.22GB
+  Trial  20 | Epoch  3/20 | train=2.87897 | val=2.73264 | VRAM alloc=0.57GB reserved=10.22GB
+                                                                                           Best trial: 6. Best value: 2.35003:  40%|████      | 16/40 [13:22:15<11:42:05, 1755.22s/it]Best trial: 6. Best value: 2.35003:  40%|████      | 16/40 [13:22:15<11:42:05, 1755.22s/it]Best trial: 6. Best value: 2.35003:  42%|████▎     | 17/40 [13:22:15<10:49:17, 1693.82s/it]  Trial  20 | Epoch  4/20 | train=2.83490 | val=2.79281 | VRAM alloc=0.57GB reserved=10.22GB
+  Trial 20 pruned at epoch 4.
+[I 2026-03-09 19:57:26,754] Trial 20 pruned. 
+  Trial  21 | Epoch  1/20 | train=4.11417 | val=3.41455 | VRAM alloc=0.68GB reserved=10.22GB
+  Trial  21 | Epoch  2/20 | train=3.19192 | val=2.95707 | VRAM alloc=0.68GB reserved=10.22GB
+  Trial  21 | Epoch  3/20 | train=2.96752 | val=2.82532 | VRAM alloc=0.68GB reserved=10.22GB
+                                                                                           Best trial: 6. Best value: 2.35003:  42%|████▎     | 17/40 [13:39:48<10:49:17, 1693.82s/it]Best trial: 6. Best value: 2.35003:  42%|████▎     | 17/40 [13:39:48<10:49:17, 1693.82s/it]Best trial: 6. Best value: 2.35003:  45%|████▌     | 18/40 [13:39:48<9:10:26, 1501.21s/it]   Trial  21 | Epoch  4/20 | train=2.88635 | val=2.75278 | VRAM alloc=0.68GB reserved=10.22GB
+  Trial 21 pruned at epoch 4.
+[I 2026-03-09 20:14:59,591] Trial 21 pruned. 
+  Trial  22 | Epoch  1/20 | train=4.27975 | val=3.47720 | VRAM alloc=0.83GB reserved=10.23GB
+  Trial  22 | Epoch  2/20 | train=3.32863 | val=3.14570 | VRAM alloc=0.16GB reserved=10.23GB
+  Trial  22 | Epoch  3/20 | train=3.15249 | val=3.06417 | VRAM alloc=0.16GB reserved=10.23GB
+                                                                                          Best trial: 6. Best value: 2.35003:  45%|████▌     | 18/40 [14:00:31<9:10:26, 1501.21s/it]Best trial: 6. Best value: 2.35003:  45%|████▌     | 18/40 [14:00:31<9:10:26, 1501.21s/it]Best trial: 6. Best value: 2.35003:  48%|████▊     | 19/40 [14:00:31<8:18:15, 1423.61s/it]  Trial  22 | Epoch  4/20 | train=3.05285 | val=3.07039 | VRAM alloc=0.16GB reserved=10.23GB
+  Trial 22 pruned at epoch 4.
+[I 2026-03-09 20:35:42,414] Trial 22 pruned. 
+  Trial  23 | Epoch  1/20 | train=4.13849 | val=3.36889 | VRAM alloc=0.26GB reserved=10.23GB
+  Trial  23 | Epoch  2/20 | train=3.32516 | val=3.31450 | VRAM alloc=0.26GB reserved=10.23GB
+  Trial  23 | Epoch  3/20 | train=3.18475 | val=3.09099 | VRAM alloc=0.26GB reserved=10.23GB
+                                                                                          Best trial: 6. Best value: 2.35003:  48%|████▊     | 19/40 [14:13:54<8:18:15, 1423.61s/it]Best trial: 6. Best value: 2.35003:  48%|████▊     | 19/40 [14:13:54<8:18:15, 1423.61s/it]Best trial: 6. Best value: 2.35003:  50%|█████     | 20/40 [14:13:54<6:52:24, 1237.22s/it]  Trial  23 | Epoch  4/20 | train=3.10817 | val=2.86675 | VRAM alloc=0.26GB reserved=10.23GB
+  Trial 23 pruned at epoch 4.
+[I 2026-03-09 20:49:05,213] Trial 23 pruned. 
+  Trial  24 | Epoch  1/20 | train=3.99477 | val=3.14882 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  2/20 | train=2.87689 | val=2.85799 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  3/20 | train=2.69540 | val=2.57835 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  4/20 | train=2.62170 | val=2.53858 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  5/20 | train=2.59104 | val=2.50297 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  6/20 | train=2.57014 | val=2.45469 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  7/20 | train=2.55424 | val=2.51190 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  8/20 | train=2.55200 | val=2.52028 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch  9/20 | train=2.54316 | val=2.50354 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch 10/20 | train=2.51758 | val=2.44834 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch 11/20 | train=2.52842 | val=2.49542 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch 12/20 | train=2.48909 | val=2.40702 | VRAM alloc=0.51GB reserved=15.07GB
+  Trial  24 | Epoch 13/20 | train=2.48211 | val=2.45087 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  24 | Epoch 14/20 | train=2.48049 | val=2.44397 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  24 | Epoch 15/20 | train=2.46207 | val=2.47458 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  24 | Epoch 16/20 | train=2.44243 | val=2.44031 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  24 | Epoch 17/20 | train=2.46319 | val=2.42622 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  24 | Epoch 18/20 | train=2.43430 | val=2.41611 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  24 | Epoch 19/20 | train=2.42134 | val=2.43112 | VRAM alloc=0.25GB reserved=15.07GB
+                                                                                          Best trial: 6. Best value: 2.35003:  50%|█████     | 20/40 [17:45:21<6:52:24, 1237.22s/it]Best trial: 6. Best value: 2.35003:  50%|█████     | 20/40 [17:45:22<6:52:24, 1237.22s/it]Best trial: 6. Best value: 2.35003:  52%|█████▎    | 21/40 [17:45:22<24:40:11, 4674.31s/it]  Trial  24 | Epoch 20/20 | train=2.43527 | val=2.36407 | VRAM alloc=0.25GB reserved=15.07GB
+[I 2026-03-10 00:20:33,006] Trial 24 finished with value: 2.364071534230159 and parameters: {'lr': 0.0009206900722469939, 'batch_size': 16, 'd_model': 512, 'nhead': 8, 'num_layers': 5, 'dropout': 0.10589139612487407, 'T': 500, 'cosine_s': 0.02541741735137932, 'lambda_pdg': 0.5372506920776189, 'lambda_zplane': 0.419964068553571, 'gamma_end': 0.05087842560904246, 'gamma_start': 0.0004780862422338542, 'grad_clip': 1.736409863637071, 'pct_start': 0.11256783251678755, 'div_factor': 26.12616609179769}. Best is trial 6 with value: 2.350034723832057.
+  Trial  25 | Epoch  1/20 | train=3.98955 | val=3.16512 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  2/20 | train=2.87142 | val=2.83108 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  3/20 | train=2.68951 | val=2.63003 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  4/20 | train=2.61950 | val=2.54078 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  5/20 | train=2.58800 | val=2.49337 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  6/20 | train=2.57480 | val=2.48731 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  7/20 | train=2.54998 | val=2.49778 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  8/20 | train=2.55568 | val=2.48405 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  25 | Epoch  9/20 | train=2.54266 | val=2.49851 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 10/20 | train=2.51665 | val=2.45452 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 11/20 | train=2.52527 | val=2.47587 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 12/20 | train=2.48861 | val=2.39734 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 13/20 | train=2.48218 | val=2.45011 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 14/20 | train=2.48030 | val=2.44290 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 15/20 | train=2.46062 | val=2.47089 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 16/20 | train=2.44187 | val=2.44335 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 17/20 | train=2.46203 | val=2.42572 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 18/20 | train=2.43402 | val=2.41625 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  25 | Epoch 19/20 | train=2.42120 | val=2.43165 | VRAM alloc=0.25GB reserved=15.07GB
+                                                                                           Best trial: 6. Best value: 2.35003:  52%|█████▎    | 21/40 [21:16:29<24:40:11, 4674.31s/it]Best trial: 6. Best value: 2.35003:  52%|█████▎    | 21/40 [21:16:29<24:40:11, 4674.31s/it]Best trial: 6. Best value: 2.35003:  55%|█████▌    | 22/40 [21:16:29<35:21:55, 7073.08s/it]  Trial  25 | Epoch 20/20 | train=2.43493 | val=2.36517 | VRAM alloc=0.25GB reserved=15.07GB
+[I 2026-03-10 03:51:40,101] Trial 25 finished with value: 2.365168223931239 and parameters: {'lr': 0.0009373836361459833, 'batch_size': 16, 'd_model': 512, 'nhead': 8, 'num_layers': 5, 'dropout': 0.10389240762087415, 'T': 500, 'cosine_s': 0.02653175413241529, 'lambda_pdg': 0.5657158175138605, 'lambda_zplane': 0.43920090864079997, 'gamma_end': 0.05360327436980103, 'gamma_start': 0.0005632981863909101, 'grad_clip': 1.7288104953234633, 'pct_start': 0.10959188546256601, 'div_factor': 25.63921308590787}. Best is trial 6 with value: 2.350034723832057.
+  Trial  26 | Epoch  1/20 | train=3.98905 | val=3.09998 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  26 | Epoch  2/20 | train=2.88481 | val=2.90364 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  26 | Epoch  3/20 | train=2.70054 | val=2.56173 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  26 | Epoch  4/20 | train=2.62607 | val=2.56522 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  26 | Epoch  5/20 | train=2.59229 | val=2.51365 | VRAM alloc=0.50GB reserved=15.07GB
+  Trial  26 | Epoch  6/20 | train=2.57549 | val=2.49742 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch  7/20 | train=2.56480 | val=2.52488 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch  8/20 | train=2.55506 | val=2.49284 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch  9/20 | train=2.55085 | val=2.50973 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch 10/20 | train=2.52496 | val=2.47469 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch 11/20 | train=2.53846 | val=2.48640 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch 12/20 | train=2.49665 | val=2.41516 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch 13/20 | train=2.48978 | val=2.45756 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch 14/20 | train=2.48821 | val=2.45957 | VRAM alloc=0.25GB reserved=15.07GB
+  Trial  26 | Epoch 15/20 | train=2.46977 | val=2.48241 | VRAM alloc=0.25GB reserved=15.07GB
+[2026-03-10T06:35:20.011] error: *** JOB 4549868 ON submit21-1 CANCELLED AT 2026-03-10T06:35:20 DUE TO TIME LIMIT ***

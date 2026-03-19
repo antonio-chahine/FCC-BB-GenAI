@@ -1,0 +1,12 @@
+==============================
+Job ID:   4632986
+Node:     submit71
+Started:  Sat Mar 14 13:10:13 EDT 2026
+==============================
+
+>>> Building graph cache...
+Building graphs: 5000 real + 5000 generated
+  10000 graphs built  (0 skipped)
+  Saved to /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge/T_1000/event_graphs.pt
+
+>>> Running GNN classifier + feature ablation...
