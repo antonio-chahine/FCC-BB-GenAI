@@ -124,10 +124,14 @@ def plot_single_three_zoom(real, gen, outpath, xlabel, title, species_name,
                            n_real=0, n_gen=0, bins=80, ratio_min_count=10,
                            fixed_range=None,
                            slight_zoom_frac=0.05,
-                           tight_zoom_frac=0.005):
+                           tight_zoom_frac=0.005,
+                           tight_zoom_range=None):
     """
     Three zoom levels arranged VERTICALLY (3 rows × 1 col).
-    Sized to fit half a PowerPoint slide vertically (~16:9 half = tall portrait).
+
+    tight_zoom_range : (lo, hi) tuple to explicitly set the tight zoom x-limits.
+                       If None, the range is computed automatically from
+                       tight_zoom_frac via _peak_zoom_range.
     """
     real = np.asarray(real, dtype=np.float64); real = real[np.isfinite(real)]
     gen  = np.asarray(gen,  dtype=np.float64); gen  = gen[np.isfinite(gen)]
@@ -146,10 +150,14 @@ def plot_single_three_zoom(real, gen, outpath, xlabel, title, species_name,
     gen_full  = clamp_to_range(gen,  lo, hi)
     # Use unclamped data for zoom range so zoom_frac is relative to full data extent
     combined_full = np.concatenate([real[np.isfinite(real)], gen[np.isfinite(gen)]])
-    combined      = np.concatenate([real_full, gen_full])
 
     slight_rng = _peak_zoom_range(combined_full, zoom_frac=slight_zoom_frac)
-    tight_rng  = _peak_zoom_range(combined_full, zoom_frac=tight_zoom_frac)
+
+    # tight zoom: explicit range takes priority over auto-computed one
+    if tight_zoom_range is not None:
+        tight_rng = tight_zoom_range
+    else:
+        tight_rng = _peak_zoom_range(combined_full, zoom_frac=tight_zoom_frac)
 
     rows = [("Full range",   lo, hi, real_full, gen_full)]
     for rng_z, label_z in [(slight_rng, "Slight zoom"), (tight_rng, "Tight zoom")]:
@@ -164,7 +172,6 @@ def plot_single_three_zoom(real, gen, outpath, xlabel, title, species_name,
     nr = n_real if n_real else real_full.size
     ng = n_gen  if n_gen  else gen_full.size
 
-    # Horizontal layout: 3 cols side by side — fits a slide nicely
     fig = plt.figure(figsize=(7.0 * n_rows, 5.5))
     fig.suptitle(
         f"{title}  —  {species_name}  |  "
@@ -245,12 +252,10 @@ def plot_multiplicity_simulated_only(real_mult, outpath, species_name, n_real, b
         return
     lo = float(rm.min()); hi = float(rm.max())
 
-    # Compact figure — easy to embed in a slide
     fig, ax = plt.subplots(figsize=(5, 3.2), constrained_layout=True)
     ax.hist(rm, bins=bins, range=(lo, hi), density=True,
             alpha=0.6, color=C_REAL, edgecolor="none")
 
-    # Stats as clean text inside plot, no legend box
     ax.text(0.97, 0.95,
             rf"$\mu={rm.mean():.1f}$,  $\sigma={rm.std():.1f}$",
             transform=ax.transAxes, ha="right", va="top",
@@ -264,7 +269,6 @@ def plot_multiplicity_simulated_only(real_mult, outpath, species_name, n_real, b
     if logy:
         ax.set_yscale("log")
     savefig(fig, outpath)
-
 
 
 def _plot_single_panel(real, gen, outpath, xlabel, title,
@@ -360,11 +364,6 @@ def three_panel_three_zoom(real_dict, gen_dict,
                             fixed_ranges=None,
                             slight_zoom_frac=0.05,
                             tight_zoom_frac=0.005):
-    """
-    3 variables × 3 zoom levels in a VERTICAL layout (9 rows × 1 col effectively
-    arranged as 3 zoom-level blocks, each containing 3 variable columns side-by-side).
-    Actually: 3 zoom rows × 3 variable cols — kept as is since it's a grouped plot.
-    """
     assert len(keys) == 3
     if fixed_ranges is None:
         fixed_ranges = [None, None, None]
@@ -382,7 +381,6 @@ def three_panel_three_zoom(real_dict, gen_dict,
     n_zoom = len(row_defs)
     n_cols = 3
 
-    # Vertical portrait: 3 zoom levels stacked, 3 variables side by side
     fig = plt.figure(figsize=(18, 7.5 * n_zoom))
     fig.suptitle(full_title, fontsize=20, y=1.002)
 
@@ -442,8 +440,6 @@ def three_panel_three_zoom(real_dict, gen_dict,
             ax_h.hist(g_data, bins=edges, density=True, histtype="step",
                       linewidth=2.2, color=C_GEN, label="Generated" if first_cell else "_nolegend_")
 
-            # Title: zoom label on top row, variable name always
-            panel_title = f"{row_label}\n{xlabel}" if zoom_idx == 0 else f"{row_label}\n{xlabel}"
             ax_h.set_title(xlabel if zoom_idx > 0 else f"{row_label}  ·  {xlabel}",
                            fontsize=17, pad=5)
 
@@ -486,7 +482,6 @@ def plot_mass(simulated_events, generated_events, outdir,
             E_list.append(E); p_list.append(p)
         if not E_list: return np.array([])
         E_all = np.concatenate(E_list); p_all = np.concatenate(p_list)
-        # 99th percentile clip
         E_max = float(np.quantile(E_all, 0.99)); p_max = float(np.quantile(p_all, 0.99))
         sel = (E_all <= E_max) & (p_all <= p_max)
         return np.sqrt(np.clip(E_all[sel]**2 - p_all[sel]**2, 0, None))
@@ -503,7 +498,6 @@ def plot_mass(simulated_events, generated_events, outdir,
     gen_m  = extract_m(generated_events, True)
     if real_m.size == 0 or gen_m.size == 0: return
 
-    # Fixed range to show peak clearly
     hi_q  = 0.0009
     edges = np.linspace(0, hi_q, bins + 1)
 
@@ -541,13 +535,11 @@ def plot_mass(simulated_events, generated_events, outdir,
     ax.set_xlim(0, hi_q)
     ax.legend(loc="upper right", fontsize=13)
 
-    # Print stats
     for arr, lbl in [(real_m, "Sim"), (gen_m, "Gen")]:
         peak = find_peak(arr, edges)
         print(f"    {lbl}  peak={peak*1e3:.4f} MeV  mean={arr.mean()*1e3:.4f} MeV  std={arr.std()*1e3:.4f} MeV")
 
     savefig(fig, os.path.join(outdir, "mass.png"))
-
 
 
 # ── Per-event summed momentum comparison ──────────────────────────────────────
@@ -690,8 +682,6 @@ def plot_opening_angles(real_sp_eminus, real_sp_eplus,
 
     nr, ng = n_real or len(real_deg), n_gen or len(gen_deg)
 
-
-    # VERTICAL layout: 3 zoom rows stacked
     fig = plt.figure(figsize=(9, 5.0 * len(zoom_cols)))
     fig.suptitle(
         r"Closest $e^+$/$e^-$ pair opening angle  —  all events"
@@ -701,7 +691,6 @@ def plot_opening_angles(real_sp_eminus, real_sp_eplus,
     outer = gridspec.GridSpec(len(zoom_cols), 1, figure=fig,
                               left=0.08, right=0.98,
                               top=0.94, bottom=0.04, hspace=0.22)
-
 
     for row_idx, (lo, hi, sub_title) in enumerate(zoom_cols):
         r_data = clamp_to_range(real_deg, lo, hi)
@@ -731,12 +720,10 @@ def plot_opening_angles(real_sp_eminus, real_sp_eplus,
 
         _ratio_panel(ax_r, ctrs, r_cnt, g_cnt, ratio_min_count, show_ylabel=True)
         if row_idx == len(zoom_cols) - 1:
-            ax_r.set_xlabel(r"$	heta$ [deg]", fontsize=14)
+            ax_r.set_xlabel(r"$\theta$ [deg]", fontsize=14)
         else:
             ax_r.set_xlabel("")
         ax_r.set_xlim(lo, hi)
-
-    fig.align_ylabels()
 
     fig.align_ylabels()
     savefig(fig, os.path.join(outdir, "opening_angle.png"))
@@ -904,7 +891,8 @@ def evaluate(args):
                     species_name=sp["name"], n_real=n_real, n_gen=n_gen,
                     bins=mom_bins, ratio_min_count=ratio_min,
                     fixed_range=(-1, 1),
-                    slight_zoom_frac=0.15, tight_zoom_frac=0.005,
+                    slight_zoom_frac=0.15, tight_zoom_frac=0.003,
+                    tight_zoom_range=(-0.0025, 0.0025),  # explicit tight x-limits for beta
                 )
 
         # 4) Momentum grouped
@@ -919,7 +907,6 @@ def evaluate(args):
             )
 
         # 5) Position — x,y in um; z in mm
-        # x, y — 3 zoom levels
         for key, xlabel, scale in [("x", "x [μm]", 1e-3), ("y", "y [μm]", 1e-3)]:
             if real_sp[key].size and gen_sp[key].size:
                 plot_single_three_zoom(
@@ -928,9 +915,9 @@ def evaluate(args):
                     xlabel=xlabel, title=f"Position {key}",
                     species_name=sp["name"], n_real=n_real, n_gen=n_gen,
                     bins=mom_bins, ratio_min_count=ratio_min,
-                    slight_zoom_frac=0.15, tight_zoom_frac=0.02,
+                    slight_zoom_frac=0.15, tight_zoom_frac=0.005,
                 )
-        # z — 2 panels only: full range + slight zoom (tight zoom not useful for discrete peaks)
+        # z — full range + slight zoom (tight zoom not useful for discrete peaks)
         if real_sp["z"].size and gen_sp["z"].size:
             r_z = real_sp["z"] * 1e-6; g_z = gen_sp["z"] * 1e-6
             plot_single_three_zoom(
@@ -941,7 +928,6 @@ def evaluate(args):
                 bins=mom_bins, ratio_min_count=ratio_min,
                 slight_zoom_frac=0.02, tight_zoom_frac=0.0,
             )
-
 
         # 6) Corner plots
         corner_sets = [

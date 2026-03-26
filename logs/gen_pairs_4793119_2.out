@@ -1,0 +1,13 @@
+============================================
+SLURM job       : 4793122
+Array task      : 2
+Node            : submit22.mit.edu
+GPU             : NVIDIA A30
+Events this task: 10000
+Start index     : 20000
+Seed            : 1002
+Output dir      : 
+============================================
+Device        : cuda
+GPU           : NVIDIA A30
+Task 2 finished with exit code 1

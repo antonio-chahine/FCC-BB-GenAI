@@ -1,0 +1,788 @@
+[I 2026-03-22 13:28:21,923] A new study created in RDB with name: particle_diff_sinh_zplane_v2
+
+============================================================
+GPU CHECK
+============================================================
+CUDA available     : True
+Device count       : 1
+GPU 0              : NVIDIA A30
+  VRAM total       : 23.6 GB
+  VRAM allocated   : 0.00 GB
+  Compute cap.     : 8.0
+  Matmul test      : PASSED  (2048x2048 op completed OK)
+
+  Active device    : NVIDIA A30
+============================================================
+
+  0%|          | 0/100 [00:00<?, ?it/s]  Trial   0 | Epoch  1/10 | train=11.73447 | val=3.12682 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  2/10 | train=3.16932 | val=2.76218 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  3/10 | train=2.90565 | val=2.39991 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  4/10 | train=2.72612 | val=2.33218 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  5/10 | train=2.39737 | val=2.23043 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  6/10 | train=2.26293 | val=2.33096 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  7/10 | train=2.14617 | val=2.11757 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  8/10 | train=2.09794 | val=2.03626 | VRAM alloc=0.05GB reserved=6.12GB
+  Trial   0 | Epoch  9/10 | train=2.04552 | val=2.04871 | VRAM alloc=0.05GB reserved=6.12GB
+                                         0%|          | 0/100 [35:11<?, ?it/s]  1%|          | 1/100 [35:11<58:03:43, 2111.35s/it]  Trial   0 | Epoch 10/10 | train=2.04470 | val=2.00159 | VRAM alloc=0.05GB reserved=6.12GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.41 GiB already allocated; 265.44 MiB free; 22.99 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 0 | best_val=2.00159 | peak_score=1.00000
+[I 2026-03-22 14:03:33,279] Trial 0 finished with values: [2.0015868911376367, 1.0] and parameters: {'lr': 0.0008403604888695196, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 4, 'dropout': 0.05411689885916049, 'T': 500, 'cosine_s': 0.00037419406111184985, 'lambda_pdg': 0.2227337188467456, 'lambda_zplane': 0.4484685687215243, 'lambda_charge': 0.0040596116104843075, 'gamma_end': 0.18118910790805948, 'gamma_start': 0.0005418282319533242, 'grad_clip': 1.9368437102970628, 'pct_start': 0.14177793420835694, 'div_factor': 9.619750864088367, 'use_asinh': False}.
+  Trial   1 | Epoch  1/10 | train=6.89038 | val=2.83241 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  2/10 | train=2.80470 | val=2.80875 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  3/10 | train=2.70116 | val=2.40521 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  4/10 | train=2.62548 | val=2.38062 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  5/10 | train=2.50628 | val=2.38467 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  6/10 | train=2.40655 | val=2.24053 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  7/10 | train=2.33597 | val=2.22243 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  8/10 | train=2.27052 | val=2.21355 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial   1 | Epoch  9/10 | train=2.23786 | val=2.13227 | VRAM alloc=0.06GB reserved=23.06GB
+                                                      1%|          | 1/100 [1:13:44<58:03:43, 2111.35s/it]  2%|▏         | 2/100 [1:13:44<60:42:03, 2229.83s/it]  Trial   1 | Epoch 10/10 | train=2.23010 | val=2.15185 | VRAM alloc=0.06GB reserved=23.06GB
+  Trial 1 | best_val=2.13227 | peak_score=0.11135
+[I 2026-03-22 14:42:06,051] Trial 1 finished with values: [2.132274191196148, 0.11135024142243974] and parameters: {'lr': 0.0009409173896915724, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.24312640661491186, 'T': 500, 'cosine_s': 0.00018349072049055458, 'lambda_pdg': 0.700021375186549, 'lambda_zplane': 0.9362897381052424, 'lambda_charge': 0.0017541893487450805, 'gamma_end': 0.17379422752781754, 'gamma_start': 0.00011439974749291271, 'grad_clip': 2.863980603118173, 'pct_start': 0.08881699724000255, 'div_factor': 19.20430053485883, 'use_asinh': False}.
+  Trial   2 | Epoch  1/10 | train=18.73212 | val=3.63859 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  2/10 | train=3.48127 | val=2.89662 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  3/10 | train=3.21119 | val=2.87163 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  4/10 | train=2.83324 | val=2.55674 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  5/10 | train=2.82683 | val=2.38470 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  6/10 | train=2.69678 | val=2.41939 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  7/10 | train=2.43810 | val=2.39230 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  8/10 | train=2.33781 | val=2.33676 | VRAM alloc=0.09GB reserved=23.06GB
+  Trial   2 | Epoch  9/10 | train=2.30251 | val=2.24446 | VRAM alloc=0.09GB reserved=23.06GB
+                                                        2%|▏         | 2/100 [1:31:29<60:42:03, 2229.83s/it]  3%|▎         | 3/100 [1:31:29<45:45:31, 1698.26s/it]  Trial   2 | Epoch 10/10 | train=2.29706 | val=2.24276 | VRAM alloc=0.09GB reserved=23.06GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.20 GiB already allocated; 981.44 MiB free; 22.29 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 2 | best_val=2.24276 | peak_score=1.00000
+[I 2026-03-22 14:59:51,739] Trial 2 finished with values: [2.2427609296945423, 1.0] and parameters: {'lr': 0.0010668967455808357, 'batch_size': 32, 'd_model': 256, 'nhead': 4, 'num_layers': 2, 'dropout': 0.05904545778210762, 'T': 1000, 'cosine_s': 0.0005399616272305192, 'lambda_pdg': 0.8373006336943328, 'lambda_zplane': 0.7778313207178196, 'lambda_charge': 0.0036464395589807202, 'gamma_end': 0.18567402078956213, 'gamma_start': 0.000173550564698551, 'grad_clip': 2.7032954711310593, 'pct_start': 0.06118259655196563, 'div_factor': 29.484512147624983, 'use_asinh': True, 'asinh_scale_xy': 0.005128781987092827}.
+  Trial   3 | Epoch  1/10 | train=115.91158 | val=8.37644 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  2/10 | train=10.35936 | val=7.08718 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  3/10 | train=6.36233 | val=5.58708 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  4/10 | train=5.42885 | val=6.02345 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  5/10 | train=5.13765 | val=5.15152 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  6/10 | train=4.54937 | val=3.72651 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  7/10 | train=2.72871 | val=2.66344 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  8/10 | train=2.78463 | val=2.77054 | VRAM alloc=0.25GB reserved=22.32GB
+  Trial   3 | Epoch  9/10 | train=2.55063 | val=2.48319 | VRAM alloc=0.25GB reserved=22.32GB
+                                                        3%|▎         | 3/100 [2:21:05<45:45:31, 1698.26s/it]  4%|▍         | 4/100 [2:21:05<58:44:09, 2202.60s/it]  Trial   3 | Epoch 10/10 | train=2.37191 | val=2.33912 | VRAM alloc=0.25GB reserved=22.32GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 14.31 GiB already allocated; 1.74 GiB free; 21.51 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 3 | best_val=2.33912 | peak_score=1.00000
+[I 2026-03-22 15:49:27,483] Trial 3 finished with values: [2.339122252030806, 1.0] and parameters: {'lr': 0.0015485552498964404, 'batch_size': 64, 'd_model': 512, 'nhead': 4, 'num_layers': 3, 'dropout': 0.06271167005720474, 'T': 1000, 'cosine_s': 0.009315049998499168, 'lambda_pdg': 0.6556795977874524, 'lambda_zplane': 1.7857042108950205, 'lambda_charge': 0.008798929749689027, 'gamma_end': 0.07989856148457543, 'gamma_start': 0.0016284765129487649, 'grad_clip': 2.641177572925346, 'pct_start': 0.13419157963542444, 'div_factor': 22.16405681115619, 'use_asinh': False}.
+  Trial   4 | Epoch  1/10 | train=231.95105 | val=11.31270 | VRAM alloc=0.29GB reserved=21.54GB
+  Trial   4 | Epoch  2/10 | train=15.62351 | val=11.60021 | VRAM alloc=0.29GB reserved=21.55GB
+  Trial   4 | Epoch  3/10 | train=16.92434 | val=7.57800 | VRAM alloc=0.29GB reserved=21.55GB
+  Trial   4 | Epoch  4/10 | train=5.86140 | val=5.28932 | VRAM alloc=0.04GB reserved=21.55GB
+  Trial   4 | Epoch  5/10 | train=5.07060 | val=5.25529 | VRAM alloc=0.04GB reserved=21.55GB
+  Trial   4 | Epoch  6/10 | train=4.35186 | val=9.63094 | VRAM alloc=0.04GB reserved=21.55GB
+  Trial   4 | Epoch  7/10 | train=4.40671 | val=2.78430 | VRAM alloc=0.04GB reserved=21.55GB
+  Trial   4 | Epoch  8/10 | train=2.89207 | val=2.57671 | VRAM alloc=0.04GB reserved=21.55GB
+  Trial   4 | Epoch  9/10 | train=2.67029 | val=2.51963 | VRAM alloc=0.04GB reserved=21.55GB
+                                                        4%|▍         | 4/100 [2:47:08<58:44:09, 2202.60s/it]  5%|▌         | 5/100 [2:47:08<52:02:29, 1972.10s/it]  Trial   4 | Epoch 10/10 | train=2.61925 | val=2.54447 | VRAM alloc=0.04GB reserved=21.55GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.15 GiB already allocated; 1.82 GiB free; 21.43 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 4 | best_val=2.51963 | peak_score=1.00000
+[I 2026-03-22 16:15:30,887] Trial 4 finished with values: [2.51962618461022, 1.0] and parameters: {'lr': 0.0009044308052173172, 'batch_size': 32, 'd_model': 256, 'nhead': 4, 'num_layers': 3, 'dropout': 0.20111022770860976, 'T': 500, 'cosine_s': 0.0006053833609355686, 'lambda_pdg': 0.2031602228913042, 'lambda_zplane': 1.8664255394508888, 'lambda_charge': 0.04132765459466366, 'gamma_end': 0.20835093912760588, 'gamma_start': 0.00302402517740569, 'grad_clip': 2.705508115348672, 'pct_start': 0.07798550883290538, 'div_factor': 26.028357336440052, 'use_asinh': False}.
+  Trial   5 | Epoch  1/10 | train=92.53074 | val=8.95441 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  2/10 | train=13.43872 | val=9.00658 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  3/10 | train=11.18223 | val=9.77767 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  4/10 | train=11.20374 | val=8.02895 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  5/10 | train=17.97549 | val=8.85848 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  6/10 | train=16.90306 | val=11.13200 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  7/10 | train=5.43432 | val=2.97239 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  8/10 | train=3.23694 | val=2.59223 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial   5 | Epoch  9/10 | train=2.55867 | val=2.64278 | VRAM alloc=0.19GB reserved=21.46GB
+/work/submit/anton100/msci-project/venv/lib64/python3.9/site-packages/numpy/linalg/linalg.py:2556: RuntimeWarning: overflow encountered in multiply
+  s = (x.conj() * x).real
+/work/submit/anton100/msci-project/venv/lib64/python3.9/site-packages/numpy/linalg/linalg.py:2557: RuntimeWarning: overflow encountered in reduce
+  return sqrt(add.reduce(s, axis=axis, keepdims=keepdims))
+                                                        5%|▌         | 5/100 [3:51:11<52:02:29, 1972.10s/it]  6%|▌         | 6/100 [3:51:11<68:05:50, 2607.98s/it]  Trial   5 | Epoch 10/10 | train=2.45695 | val=2.35073 | VRAM alloc=0.19GB reserved=21.46GB
+  Trial 5 | best_val=2.35073 | peak_score=0.45341
+[I 2026-03-22 17:19:33,233] Trial 5 finished with values: [2.3507287135491004, 0.4534130660691549] and parameters: {'lr': 0.001731692294985305, 'batch_size': 16, 'd_model': 512, 'nhead': 2, 'num_layers': 3, 'dropout': 0.09442156209414605, 'T': 1000, 'cosine_s': 0.035065901428687866, 'lambda_pdg': 0.35704278541971746, 'lambda_zplane': 1.0857021813123955, 'lambda_charge': 0.025470526233391178, 'gamma_end': 0.14090740059482348, 'gamma_start': 0.004477427984113198, 'grad_clip': 2.943670942413167, 'pct_start': 0.08776734437380462, 'div_factor': 15.435694595435717, 'use_asinh': True, 'asinh_scale_xy': 0.005925757830021555}.
+  Trial   6 | Epoch  1/10 | train=41.71315 | val=6.11064 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  2/10 | train=7.90027 | val=3.11683 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  3/10 | train=6.02133 | val=14.35366 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  4/10 | train=7.12180 | val=3.10008 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  5/10 | train=3.72567 | val=13.65842 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  6/10 | train=4.61492 | val=2.95566 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  7/10 | train=3.12304 | val=3.33800 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  8/10 | train=2.76759 | val=2.31967 | VRAM alloc=0.22GB reserved=21.48GB
+  Trial   6 | Epoch  9/10 | train=2.49335 | val=2.36294 | VRAM alloc=0.22GB reserved=21.48GB
+                                                        6%|▌         | 6/100 [4:18:31<68:05:50, 2607.98s/it]  7%|▋         | 7/100 [4:18:31<59:11:43, 2291.44s/it]  Trial   6 | Epoch 10/10 | train=2.41643 | val=2.34799 | VRAM alloc=0.22GB reserved=21.48GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.29 GiB already allocated; 6.81 GiB free; 16.44 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 6 | best_val=2.31967 | peak_score=1.00000
+[I 2026-03-22 17:46:52,966] Trial 6 finished with values: [2.3196668478158804, 1.0] and parameters: {'lr': 0.0011640303447894484, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 2, 'dropout': 0.18442710948117574, 'T': 500, 'cosine_s': 0.009234940072815249, 'lambda_pdg': 0.3993939760832905, 'lambda_zplane': 1.301381078127801, 'lambda_charge': 0.018495216589727265, 'gamma_end': 0.18394367101868964, 'gamma_start': 0.0001423638128723575, 'grad_clip': 2.752953743383857, 'pct_start': 0.09811700974576038, 'div_factor': 10.236640320397326, 'use_asinh': False}.
+  Trial   7 | Epoch  1/10 | train=98.20618 | val=11.06395 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  2/10 | train=16.84805 | val=13.49485 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  3/10 | train=14.54826 | val=38.96606 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  4/10 | train=8.25393 | val=3.47293 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  5/10 | train=6.73305 | val=3.54384 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  6/10 | train=4.91770 | val=2.66302 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  7/10 | train=2.71523 | val=2.45543 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  8/10 | train=2.80711 | val=2.38858 | VRAM alloc=0.25GB reserved=16.47GB
+  Trial   7 | Epoch  9/10 | train=2.47024 | val=2.37712 | VRAM alloc=0.25GB reserved=16.47GB
+                                                        7%|▋         | 7/100 [4:44:51<59:11:43, 2291.44s/it]  8%|▊         | 8/100 [4:44:51<52:46:26, 2065.07s/it]  Trial   7 | Epoch 10/10 | train=2.38620 | val=2.32791 | VRAM alloc=0.03GB reserved=16.47GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.10 GiB already allocated; 6.86 GiB free; 16.39 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 7 | best_val=2.32791 | peak_score=1.00000
+[I 2026-03-22 18:13:13,352] Trial 7 finished with values: [2.327906430684603, 1.0] and parameters: {'lr': 0.0012790997031651788, 'batch_size': 32, 'd_model': 256, 'nhead': 8, 'num_layers': 2, 'dropout': 0.11821327021005171, 'T': 1000, 'cosine_s': 0.023329885019744315, 'lambda_pdg': 0.2950445463293978, 'lambda_zplane': 1.3539696874649403, 'lambda_charge': 0.043096738082034555, 'gamma_end': 0.1888002028998656, 'gamma_start': 0.0007940730292120072, 'grad_clip': 1.8627784363506774, 'pct_start': 0.06396541517088489, 'div_factor': 26.189058511544047, 'use_asinh': True, 'asinh_scale_xy': 0.023824817710692583}.
+  Trial   8 | Epoch  1/10 | train=108.53416 | val=198.79938 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  2/10 | train=9.50391 | val=5.34942 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  3/10 | train=5.49527 | val=4.29048 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  4/10 | train=3.75204 | val=3.76500 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  5/10 | train=2.78577 | val=2.48081 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  6/10 | train=2.47814 | val=2.34573 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  7/10 | train=2.46567 | val=2.47911 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  8/10 | train=2.37299 | val=2.26760 | VRAM alloc=0.08GB reserved=21.28GB
+  Trial   8 | Epoch  9/10 | train=2.31046 | val=2.21709 | VRAM alloc=0.08GB reserved=21.28GB
+                                                        8%|▊         | 8/100 [5:36:10<52:46:26, 2065.07s/it]  9%|▉         | 9/100 [5:36:10<60:12:46, 2382.05s/it]  Trial   8 | Epoch 10/10 | train=2.28728 | val=2.26757 | VRAM alloc=0.08GB reserved=21.28GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.15 GiB already allocated; 8.63 GiB free; 14.62 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 8 | best_val=2.21709 | peak_score=1.00000
+[I 2026-03-22 19:04:32,364] Trial 8 finished with values: [2.2170886479891263, 1.0] and parameters: {'lr': 0.0008113628482924664, 'batch_size': 32, 'd_model': 256, 'nhead': 8, 'num_layers': 4, 'dropout': 0.05183941032332593, 'T': 1000, 'cosine_s': 0.00010319557208250064, 'lambda_pdg': 0.20276764884662374, 'lambda_zplane': 1.1425941997965137, 'lambda_charge': 0.02419860861453868, 'gamma_end': 0.21299031487565012, 'gamma_start': 0.00024045113403355021, 'grad_clip': 2.568268832021304, 'pct_start': 0.08558736312452002, 'div_factor': 12.299277158505772, 'use_asinh': True, 'asinh_scale_xy': 0.24969901278785359}.
+  Trial   9 | Epoch  1/10 | train=14.76050 | val=13.30778 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  2/10 | train=4.53556 | val=2.30456 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  3/10 | train=2.36465 | val=2.33668 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  4/10 | train=2.33889 | val=2.19285 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  5/10 | train=2.29354 | val=2.27192 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  6/10 | train=2.26757 | val=2.27101 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  7/10 | train=2.22844 | val=2.02958 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  8/10 | train=2.16614 | val=2.14547 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial   9 | Epoch  9/10 | train=2.07123 | val=1.96749 | VRAM alloc=0.13GB reserved=14.67GB
+                                                        9%|▉         | 9/100 [6:11:48<60:12:46, 2382.05s/it] 10%|█         | 10/100 [6:11:48<57:40:07, 2306.75s/it]  Trial   9 | Epoch 10/10 | train=2.01194 | val=1.97531 | VRAM alloc=0.13GB reserved=14.67GB
+  Trial 9 | best_val=1.96749 | peak_score=0.14651
+[I 2026-03-22 19:40:10,504] Trial 9 finished with values: [1.9674856589390681, 0.14651321189553512] and parameters: {'lr': 0.0012442063587952007, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 4, 'dropout': 0.20896226070832968, 'T': 1000, 'cosine_s': 0.002134472098879922, 'lambda_pdg': 0.23548083840814227, 'lambda_zplane': 1.4726590189968602, 'lambda_charge': 0.0036437177217846692, 'gamma_end': 0.05607899160786346, 'gamma_start': 0.0012492175283159127, 'grad_clip': 1.7656660191105735, 'pct_start': 0.19106878765293717, 'div_factor': 28.227656075543113, 'use_asinh': True, 'asinh_scale_xy': 0.005368874316448986}.
+                                                        10%|█         | 10/100 [6:11:57<57:40:07, 2306.75s/it] 11%|█         | 11/100 [6:11:57<39:38:38, 1603.58s/it]  Trial 10 OOM during train (batch_size=64, d_model=512, T=500) — returning worst case.
+[I 2026-03-22 19:40:19,715] Trial 10 finished with values: [inf, inf] and parameters: {'lr': 0.0005407124794089205, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 5, 'dropout': 0.23153295905650356, 'T': 500, 'cosine_s': 0.0001070799146287123, 'lambda_pdg': 0.9530841787287214, 'lambda_zplane': 0.12339122217338105, 'lambda_charge': 0.0011351353929813701, 'gamma_end': 0.28645242999342835, 'gamma_start': 0.00032693745353469907, 'grad_clip': 2.239264538006568, 'pct_start': 0.1636591081988639, 'div_factor': 18.143532281624974, 'use_asinh': False}.
+  Trial  11 | Epoch  1/10 | train=5.78752 | val=2.46293 | VRAM alloc=0.19GB reserved=22.73GB
+  Trial  11 | Epoch  2/10 | train=2.36911 | val=2.16896 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial  11 | Epoch  3/10 | train=2.24903 | val=2.15889 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial  11 | Epoch  4/10 | train=2.18880 | val=2.06396 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial  11 | Epoch  5/10 | train=2.17143 | val=2.11448 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial  11 | Epoch  6/10 | train=2.14248 | val=2.05870 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial  11 | Epoch  7/10 | train=2.11396 | val=2.01934 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial  11 | Epoch  8/10 | train=2.07157 | val=1.98844 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial  11 | Epoch  9/10 | train=2.04302 | val=1.94447 | VRAM alloc=0.06GB reserved=22.73GB
+                                                        11%|█         | 11/100 [6:50:42<39:38:38, 1603.58s/it] 12%|█▏        | 12/100 [6:50:42<44:33:29, 1822.83s/it]  Trial  11 | Epoch 10/10 | train=2.03807 | val=1.96747 | VRAM alloc=0.06GB reserved=22.73GB
+  Trial 11 | best_val=1.94447 | peak_score=0.08696
+[I 2026-03-22 20:19:04,021] Trial 11 finished with values: [1.9444715490707984, 0.08696023642829032] and parameters: {'lr': 0.0006209579806885988, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.24938080856989972, 'T': 500, 'cosine_s': 0.0028603454172866564, 'lambda_pdg': 0.6138695136975176, 'lambda_zplane': 0.7516324881646445, 'lambda_charge': 0.0011645038388071924, 'gamma_end': 0.06961559624169517, 'gamma_start': 0.00010116074791515541, 'grad_clip': 1.5093805171908894, 'pct_start': 0.19413894955354316, 'div_factor': 18.13475566576764, 'use_asinh': False}.
+  Trial  12 | Epoch  1/10 | train=10.31587 | val=4.65505 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  2/10 | train=5.27188 | val=3.08027 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  3/10 | train=2.43774 | val=2.26425 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  4/10 | train=2.31608 | val=2.22031 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  5/10 | train=2.28153 | val=2.15167 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  6/10 | train=2.22054 | val=2.17284 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  7/10 | train=2.18787 | val=2.15193 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  8/10 | train=2.11515 | val=2.04763 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  12 | Epoch  9/10 | train=2.08782 | val=2.05508 | VRAM alloc=0.31GB reserved=22.73GB
+                                                        12%|█▏        | 12/100 [8:22:55<44:33:29, 1822.83s/it] 13%|█▎        | 13/100 [8:22:55<71:13:10, 2947.02s/it]  Trial  12 | Epoch 10/10 | train=2.04762 | val=2.01377 | VRAM alloc=0.25GB reserved=22.73GB
+  Trial 12 | best_val=2.01377 | peak_score=0.12996
+[I 2026-03-22 21:51:17,837] Trial 12 finished with values: [2.013772739813878, 0.12995900626653614] and parameters: {'lr': 0.0005334868269028834, 'batch_size': 16, 'd_model': 512, 'nhead': 2, 'num_layers': 5, 'dropout': 0.24920339787224272, 'T': 500, 'cosine_s': 0.002640841874532887, 'lambda_pdg': 0.6080003010106214, 'lambda_zplane': 0.6590590408415083, 'lambda_charge': 0.0011354904631561814, 'gamma_end': 0.11696063817706509, 'gamma_start': 0.00010438334476817147, 'grad_clip': 1.5049368779024883, 'pct_start': 0.1922498920490722, 'div_factor': 16.77577543647475, 'use_asinh': False}.
+  Trial  13 | Epoch  1/10 | train=9.95757 | val=2.68768 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  2/10 | train=2.62391 | val=2.53331 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  3/10 | train=2.52172 | val=2.35134 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  4/10 | train=2.44506 | val=2.63768 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  5/10 | train=2.38573 | val=2.44249 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  6/10 | train=2.30872 | val=2.16003 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  7/10 | train=2.22232 | val=2.18888 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  8/10 | train=2.15743 | val=2.06810 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial  13 | Epoch  9/10 | train=2.12251 | val=2.03114 | VRAM alloc=0.31GB reserved=22.73GB
+                                                        13%|█▎        | 13/100 [9:01:41<71:13:10, 2947.02s/it] 14%|█▍        | 14/100 [9:01:41<65:54:53, 2759.23s/it]  Trial  13 | Epoch 10/10 | train=2.11598 | val=2.05129 | VRAM alloc=0.31GB reserved=22.73GB
+  Trial 13 | best_val=2.03114 | peak_score=0.10265
+[I 2026-03-22 22:30:03,130] Trial 13 finished with values: [2.031144106388092, 0.10264609512814288] and parameters: {'lr': 0.0006628996249925484, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.1575972555286947, 'T': 500, 'cosine_s': 0.0022213863651893923, 'lambda_pdg': 0.7634473742118997, 'lambda_zplane': 0.8244023202742665, 'lambda_charge': 0.0021476105221816173, 'gamma_end': 0.11041523338962131, 'gamma_start': 0.00010188712315550388, 'grad_clip': 2.259276454610931, 'pct_start': 0.16691648626633582, 'div_factor': 12.978889769452367, 'use_asinh': False}.
+  Trial  14 | Epoch  1/10 | train=21.08843 | val=3.14748 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  2/10 | train=2.77797 | val=2.39402 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  3/10 | train=2.46472 | val=2.34874 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  4/10 | train=2.35722 | val=2.25597 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  5/10 | train=2.30677 | val=2.38192 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  6/10 | train=2.22022 | val=2.04545 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  7/10 | train=2.16261 | val=2.07534 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  8/10 | train=2.09953 | val=2.03828 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial  14 | Epoch  9/10 | train=2.09462 | val=1.95199 | VRAM alloc=0.38GB reserved=22.73GB
+                                                        14%|█▍        | 14/100 [9:38:11<65:54:53, 2759.23s/it] 15%|█▌        | 15/100 [9:38:11<61:06:06, 2587.84s/it]  Trial  14 | Epoch 10/10 | train=2.07573 | val=2.00870 | VRAM alloc=0.38GB reserved=22.73GB
+  Trial 14 | best_val=1.95199 | peak_score=0.09606
+[I 2026-03-22 23:06:33,783] Trial 14 finished with values: [1.9519929199507742, 0.0960645540037312] and parameters: {'lr': 0.0006819483074111643, 'batch_size': 64, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.15846298716068077, 'T': 500, 'cosine_s': 0.0018482107771481166, 'lambda_pdg': 0.4703031303023939, 'lambda_zplane': 0.40010747011410674, 'lambda_charge': 0.0021565741545652123, 'gamma_end': 0.08812734018336717, 'gamma_start': 0.0003818791057774684, 'grad_clip': 2.1691029825084995, 'pct_start': 0.16691423034675182, 'div_factor': 13.591179388238688, 'use_asinh': False}.
+  Trial  15 | Epoch  1/10 | train=29.93076 | val=3.78591 | VRAM alloc=0.58GB reserved=22.74GB
+  Trial  15 | Epoch  2/10 | train=3.67758 | val=3.25518 | VRAM alloc=0.58GB reserved=22.74GB
+  Trial  15 | Epoch  3/10 | train=3.04446 | val=2.89210 | VRAM alloc=0.58GB reserved=22.74GB
+  Trial  15 | Epoch  4/10 | train=2.89317 | val=2.71743 | VRAM alloc=0.58GB reserved=22.74GB
+  Trial  15 | Epoch  5/10 | train=2.86638 | val=2.88445 | VRAM alloc=0.58GB reserved=22.74GB
+  Trial  15 | Epoch  6/10 | train=2.77880 | val=2.48980 | VRAM alloc=0.21GB reserved=22.74GB
+  Trial  15 | Epoch  7/10 | train=2.97470 | val=2.23593 | VRAM alloc=0.21GB reserved=22.74GB
+  Trial  15 | Epoch  8/10 | train=2.28649 | val=2.20201 | VRAM alloc=0.21GB reserved=22.74GB
+  Trial  15 | Epoch  9/10 | train=2.20553 | val=2.04113 | VRAM alloc=0.21GB reserved=22.74GB
+                                                        15%|█▌        | 15/100 [10:50:40<61:06:06, 2587.84s/it] 16%|█▌        | 16/100 [10:50:40<72:44:48, 3117.72s/it]  Trial  15 | Epoch 10/10 | train=2.12491 | val=2.06783 | VRAM alloc=0.21GB reserved=22.74GB
+  Trial 15 | best_val=2.04113 | peak_score=0.06562
+[I 2026-03-23 00:19:02,007] Trial 15 finished with values: [2.041130781173706, 0.06561517619893203] and parameters: {'lr': 0.0007106534325711933, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 4, 'dropout': 0.14477016788512626, 'T': 500, 'cosine_s': 0.005767060224024439, 'lambda_pdg': 0.05666777088414898, 'lambda_zplane': 0.4412538307959235, 'lambda_charge': 0.007255122532994642, 'gamma_end': 0.05543194409990873, 'gamma_start': 0.0003928979993083532, 'grad_clip': 1.5290625109409501, 'pct_start': 0.1670035932891053, 'div_factor': 21.04908381988251, 'use_asinh': False}.
+  Trial  16 | Epoch  1/10 | train=250.41052 | val=9.53446 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  2/10 | train=12.55736 | val=8.53923 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  3/10 | train=8.83762 | val=8.68373 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  4/10 | train=8.59226 | val=8.54165 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  5/10 | train=8.42307 | val=7.89545 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  6/10 | train=8.44047 | val=7.51641 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  7/10 | train=8.45241 | val=8.25955 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  8/10 | train=7.42859 | val=3.53585 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial  16 | Epoch  9/10 | train=3.97153 | val=2.66322 | VRAM alloc=0.41GB reserved=22.74GB
+/work/submit/anton100/msci-project/FCC-BB-GenAI/particle_diffusion_sinh_zplane.py:793: RuntimeWarning: overflow encountered in exp
+  E    = np.exp(logE)
+                                                         16%|█▌        | 16/100 [12:03:07<72:44:48, 3117.72s/it] 17%|█▋        | 17/100 [12:03:07<80:24:33, 3487.63s/it]  Trial  16 | Epoch 10/10 | train=2.68700 | val=2.61614 | VRAM alloc=0.41GB reserved=22.74GB
+  Trial 16 | best_val=2.61614 | peak_score=0.22525
+[I 2026-03-23 01:31:29,911] Trial 16 finished with values: [2.616139621445627, 0.22525208891388604] and parameters: {'lr': 0.0006766457493137689, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 4, 'dropout': 0.13195789141282763, 'T': 500, 'cosine_s': 0.005916066368885871, 'lambda_pdg': 0.10599490872243023, 'lambda_zplane': 0.2790238428426416, 'lambda_charge': 0.08126965329592198, 'gamma_end': 0.060154404875936845, 'gamma_start': 0.000741351126445908, 'grad_clip': 1.5399444989516409, 'pct_start': 0.11891395663921145, 'div_factor': 21.267877730496746, 'use_asinh': False}.
+                                                         17%|█▋        | 17/100 [12:03:16<80:24:33, 3487.63s/it] 18%|█▊        | 18/100 [12:03:16<55:37:46, 2442.27s/it]  Trial 17 OOM during train (batch_size=64, d_model=512, T=500) — returning worst case.
+[I 2026-03-23 01:31:38,672] Trial 17 finished with values: [inf, inf] and parameters: {'lr': 0.0007354469927581695, 'batch_size': 64, 'd_model': 512, 'nhead': 8, 'num_layers': 4, 'dropout': 0.09614556866092297, 'T': 500, 'cosine_s': 0.005799219856839269, 'lambda_pdg': 0.05222508012232123, 'lambda_zplane': 0.600762189144179, 'lambda_charge': 0.010218124924457422, 'gamma_end': 0.29497325093155596, 'gamma_start': 0.0013463493172977295, 'grad_clip': 1.7172088053041525, 'pct_start': 0.15263857003944198, 'div_factor': 22.68023625829081, 'use_asinh': False}.
+  Trial  18 | Epoch  1/10 | train=97.56868 | val=9.23763 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  2/10 | train=9.06229 | val=7.25003 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  3/10 | train=7.59510 | val=5.58052 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  4/10 | train=5.67273 | val=4.13670 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  5/10 | train=3.95131 | val=3.53502 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  6/10 | train=3.21189 | val=2.77964 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  7/10 | train=2.83507 | val=2.72106 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  8/10 | train=2.62545 | val=2.42013 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial  18 | Epoch  9/10 | train=2.55932 | val=2.35615 | VRAM alloc=0.56GB reserved=21.82GB
+                                                         18%|█▊        | 18/100 [12:57:54<55:37:46, 2442.27s/it] 19%|█▉        | 19/100 [12:57:54<60:35:37, 2693.06s/it]  Trial  18 | Epoch 10/10 | train=2.40552 | val=2.31236 | VRAM alloc=0.56GB reserved=21.82GB
+  Trial 18 | best_val=2.31236 | peak_score=0.06009
+[I 2026-03-23 02:26:15,957] Trial 18 finished with values: [2.3123574112400864, 0.06009480028485881] and parameters: {'lr': 0.000598572153369327, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 3, 'dropout': 0.17601392040547975, 'T': 500, 'cosine_s': 0.01896939586921713, 'lambda_pdg': 0.5592727895013256, 'lambda_zplane': 0.10049801337895437, 'lambda_charge': 0.007918311211912577, 'gamma_end': 0.25696997838180113, 'gamma_start': 0.0002430190518242993, 'grad_clip': 2.0767333764797846, 'pct_start': 0.11549816584699389, 'div_factor': 8.272359365342114, 'use_asinh': False}.
+  Trial  19 | Epoch  1/10 | train=85.08587 | val=8.53344 | VRAM alloc=0.72GB reserved=21.84GB
+  Trial  19 | Epoch  2/10 | train=8.14477 | val=7.25394 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial  19 | Epoch  3/10 | train=7.39913 | val=5.28915 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial  19 | Epoch  4/10 | train=4.89891 | val=4.48009 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial  19 | Epoch  5/10 | train=3.83262 | val=3.11841 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial  19 | Epoch  6/10 | train=3.09691 | val=2.71165 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial  19 | Epoch  7/10 | train=2.78532 | val=3.32805 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial  19 | Epoch  8/10 | train=2.65682 | val=2.42985 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial  19 | Epoch  9/10 | train=2.46766 | val=2.31563 | VRAM alloc=0.72GB reserved=21.85GB
+                                                         19%|█▉        | 19/100 [13:52:36<60:35:37, 2693.06s/it] 20%|██        | 20/100 [13:52:36<63:46:41, 2870.02s/it]  Trial  19 | Epoch 10/10 | train=2.38668 | val=2.30117 | VRAM alloc=0.72GB reserved=21.85GB
+  Trial 19 | best_val=2.30117 | peak_score=0.08343
+[I 2026-03-23 03:20:58,426] Trial 19 finished with values: [2.301169680826592, 0.08342759194294286] and parameters: {'lr': 0.0005085347873440578, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 3, 'dropout': 0.1840241904695416, 'T': 500, 'cosine_s': 0.01772911660337336, 'lambda_pdg': 0.5119600891812285, 'lambda_zplane': 0.11245882421306347, 'lambda_charge': 0.007500340852039033, 'gamma_end': 0.24702964660855986, 'gamma_start': 0.00025961420509495146, 'grad_clip': 2.447375220444027, 'pct_start': 0.11245636400026851, 'div_factor': 8.304816071896532, 'use_asinh': False}.
+  Trial  20 | Epoch  1/10 | train=58.64097 | val=10.56476 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  2/10 | train=10.80002 | val=7.80609 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  3/10 | train=11.89575 | val=10.56623 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  4/10 | train=6.01878 | val=5.85036 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  5/10 | train=4.28301 | val=4.04918 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  6/10 | train=3.53995 | val=3.16496 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  7/10 | train=3.10836 | val=2.91249 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  8/10 | train=2.82786 | val=2.64223 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial  20 | Epoch  9/10 | train=2.84822 | val=2.65614 | VRAM alloc=0.87GB reserved=21.87GB
+/work/submit/anton100/msci-project/FCC-BB-GenAI/particle_diffusion_sinh_zplane.py:783: RuntimeWarning: overflow encountered in sinh
+  u_xy = np.sinh(u_transformed[:, :2]) * ASINH_SCALE_XY
+/work/submit/anton100/msci-project/FCC-BB-GenAI/particle_diffusion_sinh_zplane.py:82: RuntimeWarning: invalid value encountered in divide
+  uhat = u / (umag + 1e-12)
+                                                         20%|██        | 20/100 [14:47:17<63:46:41, 2870.02s/it] 21%|██        | 21/100 [14:47:17<65:41:20, 2993.42s/it]  Trial  20 | Epoch 10/10 | train=2.63622 | val=2.51000 | VRAM alloc=0.87GB reserved=21.87GB
+  Trial 20 | best_val=2.51000 | peak_score=0.24030
+[I 2026-03-23 04:15:39,545] Trial 20 finished with values: [2.510004390369762, 0.24030334651933444] and parameters: {'lr': 0.0005831659726883792, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 3, 'dropout': 0.13950947962718918, 'T': 500, 'cosine_s': 0.014500625703662333, 'lambda_pdg': 0.4274152745962513, 'lambda_zplane': 0.4224515185528794, 'lambda_charge': 0.013788572728791993, 'gamma_end': 0.25941843706957657, 'gamma_start': 0.0004902626865888818, 'grad_clip': 2.043812990012032, 'pct_start': 0.10706785622171522, 'div_factor': 15.159340321501562, 'use_asinh': True, 'asinh_scale_xy': 0.3273434053503216}.
+  Trial  21 | Epoch  1/10 | train=64.28902 | val=3.74979 | VRAM alloc=1.07GB reserved=22.53GB
+  Trial  21 | Epoch  2/10 | train=3.20842 | val=3.02428 | VRAM alloc=1.07GB reserved=22.53GB
+  Trial  21 | Epoch  3/10 | train=2.76444 | val=2.64944 | VRAM alloc=1.07GB reserved=22.53GB
+  Trial  21 | Epoch  4/10 | train=2.65487 | val=2.76316 | VRAM alloc=1.07GB reserved=22.53GB
+  Trial  21 | Epoch  5/10 | train=2.61836 | val=2.45127 | VRAM alloc=1.07GB reserved=22.53GB
+  Trial  21 | Epoch  6/10 | train=2.62680 | val=2.45594 | VRAM alloc=1.07GB reserved=22.53GB
+  Trial  21 | Epoch  7/10 | train=2.44247 | val=2.15829 | VRAM alloc=1.07GB reserved=22.53GB
+  Trial  21 | Epoch  8/10 | train=2.16876 | val=2.08727 | VRAM alloc=1.07GB reserved=22.54GB
+  Trial  21 | Epoch  9/10 | train=2.06731 | val=1.96286 | VRAM alloc=1.07GB reserved=22.54GB
+                                                         21%|██        | 21/100 [15:59:34<65:41:20, 2993.42s/it] 22%|██▏       | 22/100 [15:59:34<73:35:26, 3396.50s/it]  Trial  21 | Epoch 10/10 | train=2.04903 | val=1.98526 | VRAM alloc=1.07GB reserved=22.54GB
+  Trial 21 | best_val=1.96286 | peak_score=0.22311
+[I 2026-03-23 05:27:56,028] Trial 21 finished with values: [1.9628638570958918, 0.2231114883308689] and parameters: {'lr': 0.000616187453075159, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 4, 'dropout': 0.17138504850403435, 'T': 500, 'cosine_s': 0.04953505039065978, 'lambda_pdg': 0.9698299718720627, 'lambda_zplane': 0.5760795973403434, 'lambda_charge': 0.005621772844464259, 'gamma_end': 0.08370892946467434, 'gamma_start': 0.00019132345546370806, 'grad_clip': 1.6171316216892928, 'pct_start': 0.17811501502835045, 'div_factor': 19.996371757409637, 'use_asinh': False}.
+  Trial  22 | Epoch  1/10 | train=214.46259 | val=14.27679 | VRAM alloc=1.27GB reserved=22.56GB
+  Trial  22 | Epoch  2/10 | train=18.51177 | val=11.79027 | VRAM alloc=1.27GB reserved=22.56GB
+  Trial  22 | Epoch  3/10 | train=10.84683 | val=9.02274 | VRAM alloc=0.21GB reserved=22.56GB
+  Trial  22 | Epoch  4/10 | train=8.76125 | val=8.48662 | VRAM alloc=0.21GB reserved=22.56GB
+  Trial  22 | Epoch  5/10 | train=12.07813 | val=10.53345 | VRAM alloc=0.21GB reserved=22.56GB
+  Trial  22 | Epoch  6/10 | train=11.49828 | val=7.27084 | VRAM alloc=0.21GB reserved=22.56GB
+  Trial  22 | Epoch  7/10 | train=8.39615 | val=6.02630 | VRAM alloc=0.21GB reserved=22.56GB
+  Trial  22 | Epoch  8/10 | train=6.72852 | val=20.31881 | VRAM alloc=0.21GB reserved=22.56GB
+  Trial  22 | Epoch  9/10 | train=7.02634 | val=3.69503 | VRAM alloc=0.21GB reserved=22.56GB
+                                                         22%|██▏       | 22/100 [17:11:55<73:35:26, 3396.50s/it] 23%|██▎       | 23/100 [17:11:55<78:42:52, 3680.17s/it]  Trial  22 | Epoch 10/10 | train=3.50167 | val=3.20664 | VRAM alloc=0.21GB reserved=22.56GB
+  Trial 22 | best_val=3.20664 | peak_score=0.05691
+[I 2026-03-23 06:40:17,830] Trial 22 finished with values: [3.206636855096528, 0.05690751163283908] and parameters: {'lr': 0.0007677429705078651, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 4, 'dropout': 0.10790246202332784, 'T': 500, 'cosine_s': 0.0041431944797105606, 'lambda_pdg': 0.6052345481681485, 'lambda_zplane': 0.22975986853243793, 'lambda_charge': 0.06907646101912483, 'gamma_end': 0.0534966657158088, 'gamma_start': 0.0004123630058538847, 'grad_clip': 2.4346905157816714, 'pct_start': 0.1340262320285372, 'div_factor': 24.6843791519305, 'use_asinh': False}.
+  Trial  23 | Epoch  1/10 | train=153.90700 | val=14.55154 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  2/10 | train=11.93984 | val=8.14724 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  3/10 | train=9.32238 | val=6.79020 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  4/10 | train=6.43417 | val=6.48141 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  5/10 | train=4.47832 | val=3.40415 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  6/10 | train=3.42121 | val=2.78186 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  7/10 | train=2.83143 | val=2.65308 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  8/10 | train=2.62119 | val=3.20408 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial  23 | Epoch  9/10 | train=2.57698 | val=2.35168 | VRAM alloc=0.36GB reserved=22.56GB
+                                                         23%|██▎       | 23/100 [18:06:50<78:42:52, 3680.17s/it] 24%|██▍       | 24/100 [18:06:50<75:14:50, 3564.35s/it]  Trial  23 | Epoch 10/10 | train=2.42325 | val=2.34645 | VRAM alloc=0.36GB reserved=22.56GB
+  Trial 23 | best_val=2.34645 | peak_score=0.07147
+[I 2026-03-23 07:35:12,002] Trial 23 finished with values: [2.346447417230317, 0.07147228148237461] and parameters: {'lr': 0.0008062604525507179, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 3, 'dropout': 0.11888857822810986, 'T': 500, 'cosine_s': 0.004276495022771028, 'lambda_pdg': 0.5545012727027931, 'lambda_zplane': 0.25893069995962614, 'lambda_charge': 0.01352126302385558, 'gamma_end': 0.24700581388557885, 'gamma_start': 0.00033700248306653294, 'grad_clip': 2.381724880173907, 'pct_start': 0.1269757742827889, 'div_factor': 11.065181582858642, 'use_asinh': False}.
+                                                         24%|██▍       | 24/100 [18:06:59<75:14:50, 3564.35s/it] 25%|██▌       | 25/100 [18:06:59<52:01:59, 2497.59s/it]  Trial 24 OOM during train (batch_size=64, d_model=512, T=500) — returning worst case.
+[I 2026-03-23 07:35:20,983] Trial 24 finished with values: [inf, inf] and parameters: {'lr': 0.0007352279635138786, 'batch_size': 64, 'd_model': 512, 'nhead': 8, 'num_layers': 2, 'dropout': 0.21146239055298646, 'T': 500, 'cosine_s': 0.012197250664264817, 'lambda_pdg': 0.7254802001743241, 'lambda_zplane': 0.2562393708200088, 'lambda_charge': 0.0061911899167896006, 'gamma_end': 0.15000816729661792, 'gamma_start': 0.000545934700325495, 'grad_clip': 2.029894146314598, 'pct_start': 0.14307147530210335, 'div_factor': 8.476473157790457, 'use_asinh': False}.
+  Trial  25 | Epoch  1/10 | train=127.35233 | val=8.97845 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  2/10 | train=11.10633 | val=5.26514 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  3/10 | train=19.29128 | val=8.86621 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  4/10 | train=16.44133 | val=5.83011 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  5/10 | train=10.59564 | val=3.34298 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  6/10 | train=3.13914 | val=2.85656 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  7/10 | train=2.78797 | val=2.63559 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  8/10 | train=2.80500 | val=2.72140 | VRAM alloc=0.55GB reserved=22.96GB
+  Trial  25 | Epoch  9/10 | train=2.62445 | val=2.52447 | VRAM alloc=0.55GB reserved=22.96GB
+                                                         25%|██▌       | 25/100 [18:56:42<52:01:59, 2497.59s/it] 26%|██▌       | 26/100 [18:56:42<54:20:05, 2643.32s/it]  Trial  25 | Epoch 10/10 | train=2.52261 | val=2.41836 | VRAM alloc=0.55GB reserved=22.96GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 14.61 GiB already allocated; 2.79 GiB free; 20.46 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 25 | best_val=2.41836 | peak_score=1.00000
+[I 2026-03-23 08:25:04,276] Trial 25 finished with values: [2.418356523369298, 1.0] and parameters: {'lr': 0.0019573054563101298, 'batch_size': 64, 'd_model': 512, 'nhead': 4, 'num_layers': 3, 'dropout': 0.18237086975849026, 'T': 500, 'cosine_s': 0.027813161129401055, 'lambda_pdg': 0.8349667624982229, 'lambda_zplane': 0.12595945416579335, 'lambda_charge': 0.004957393500204857, 'gamma_end': 0.269664056860411, 'gamma_start': 0.00021134349829252154, 'grad_clip': 2.457748391693156, 'pct_start': 0.1276504113880016, 'div_factor': 11.523328034072453, 'use_asinh': False}.
+  Trial  26 | Epoch  1/10 | train=1026.23240 | val=25.34008 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  2/10 | train=47.15772 | val=23.68858 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  3/10 | train=37.88321 | val=30.43037 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  4/10 | train=19.86105 | val=13.79989 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  5/10 | train=20.12261 | val=12.08153 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  6/10 | train=12.61172 | val=12.35965 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  7/10 | train=15.78460 | val=4.75908 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  8/10 | train=5.06373 | val=4.12438 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial  26 | Epoch  9/10 | train=3.84946 | val=3.47660 | VRAM alloc=0.76GB reserved=21.13GB
+                                                         26%|██▌       | 26/100 [20:19:26<54:20:05, 2643.32s/it] 27%|██▋       | 27/100 [20:19:26<67:43:17, 3339.69s/it]  Trial  26 | Epoch 10/10 | train=3.57066 | val=3.36983 | VRAM alloc=0.76GB reserved=21.13GB
+  Trial 26 | best_val=3.36983 | peak_score=0.35619
+[I 2026-03-23 09:47:48,695] Trial 26 finished with values: [3.36982984976335, 0.35619407957681215] and parameters: {'lr': 0.0005793459800204991, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 4, 'dropout': 0.14545788428719103, 'T': 1000, 'cosine_s': 0.04862875532405929, 'lambda_pdg': 0.5421982841497862, 'lambda_zplane': 0.33699038213876337, 'lambda_charge': 0.08706792310607987, 'gamma_end': 0.2215914383406884, 'gamma_start': 0.000885370433869607, 'grad_clip': 2.106318903802281, 'pct_start': 0.1081881465596449, 'div_factor': 8.980728908511793, 'use_asinh': True, 'asinh_scale_xy': 0.07041908672307146}.
+  Trial  27 | Epoch  1/10 | train=164.42595 | val=14.35696 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  2/10 | train=15.47123 | val=13.67865 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  3/10 | train=14.33100 | val=19.62965 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  4/10 | train=17.96226 | val=216.92691 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  5/10 | train=14.48472 | val=8.18997 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  6/10 | train=11.88709 | val=5.23312 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  7/10 | train=12.27646 | val=3.34512 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  8/10 | train=6.27595 | val=3.28778 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial  27 | Epoch  9/10 | train=3.58205 | val=3.23553 | VRAM alloc=0.91GB reserved=21.15GB
+                                                         27%|██▋       | 27/100 [21:14:07<67:43:17, 3339.69s/it] 28%|██▊       | 28/100 [21:14:07<66:26:27, 3322.05s/it]  Trial  27 | Epoch 10/10 | train=3.09953 | val=2.99992 | VRAM alloc=0.91GB reserved=21.15GB
+  Trial 27 | best_val=2.99992 | peak_score=0.08929
+[I 2026-03-23 10:42:29,569] Trial 27 finished with values: [2.999924471884063, 0.08929216228154374] and parameters: {'lr': 0.0007463019058890392, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 3, 'dropout': 0.0925732704420312, 'T': 500, 'cosine_s': 0.0010429594494735302, 'lambda_pdg': 0.3397680545747583, 'lambda_zplane': 0.5280609494574597, 'lambda_charge': 0.051292426605464396, 'gamma_end': 0.1503058682306208, 'gamma_start': 0.0002979179877744693, 'grad_clip': 1.889516769822079, 'pct_start': 0.1557806310029528, 'div_factor': 23.818632127312878, 'use_asinh': False}.
+  Trial  28 | Epoch  1/10 | train=69.44111 | val=16.00566 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  2/10 | train=13.06460 | val=9.27214 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  3/10 | train=8.56267 | val=12.24622 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  4/10 | train=13.25722 | val=3.37547 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  5/10 | train=7.40412 | val=4.15917 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  6/10 | train=3.44089 | val=3.57571 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  7/10 | train=3.12068 | val=2.84059 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  8/10 | train=2.90955 | val=2.89212 | VRAM alloc=1.02GB reserved=21.17GB
+  Trial  28 | Epoch  9/10 | train=2.78672 | val=2.53979 | VRAM alloc=1.02GB reserved=21.17GB
+                                                         28%|██▊       | 28/100 [21:52:12<66:26:27, 3322.05s/it] 29%|██▉       | 29/100 [21:52:12<59:22:46, 3010.79s/it]  Trial  28 | Epoch 10/10 | train=2.53440 | val=2.42505 | VRAM alloc=0.11GB reserved=21.17GB
+  Trial 28 | best_val=2.42505 | peak_score=0.14047
+[I 2026-03-23 11:20:34,132] Trial 28 finished with values: [2.4250459084144005, 0.14046934596613] and parameters: {'lr': 0.0010257310228088423, 'batch_size': 32, 'd_model': 512, 'nhead': 2, 'num_layers': 2, 'dropout': 0.16479809992276767, 'T': 500, 'cosine_s': 0.007318340606720765, 'lambda_pdg': 0.8070353016788737, 'lambda_zplane': 1.6201748724613487, 'lambda_charge': 0.011597142484627171, 'gamma_end': 0.22814871215730106, 'gamma_start': 0.0004318395617405938, 'grad_clip': 2.318138774911792, 'pct_start': 0.10086452838632969, 'div_factor': 14.111995689997588, 'use_asinh': False}.
+                                                         29%|██▉       | 29/100 [21:52:25<59:22:46, 3010.79s/it] 30%|███       | 30/100 [21:52:25<41:03:25, 2111.51s/it]  Trial 29 OOM during train (batch_size=64, d_model=512, T=500) — returning worst case.
+[I 2026-03-23 11:20:47,388] Trial 29 finished with values: [inf, inf] and parameters: {'lr': 0.0008737855571136163, 'batch_size': 64, 'd_model': 512, 'nhead': 4, 'num_layers': 4, 'dropout': 0.12593520035649924, 'T': 500, 'cosine_s': 0.020327653376874765, 'lambda_pdg': 0.47130751869513027, 'lambda_zplane': 0.5013542817722875, 'lambda_charge': 0.002989438048965626, 'gamma_end': 0.10971547514253074, 'gamma_start': 0.0005418403684036031, 'grad_clip': 1.965933239112628, 'pct_start': 0.139855076673419, 'div_factor': 9.845460092532718, 'use_asinh': False}.
+                                                         30%|███       | 30/100 [21:52:37<41:03:25, 2111.51s/it] 31%|███       | 31/100 [21:52:37<28:23:54, 1481.66s/it]  Trial 30 OOM during train (batch_size=64, d_model=512, T=1000) — returning worst case.
+[I 2026-03-23 11:20:59,414] Trial 30 finished with values: [inf, inf] and parameters: {'lr': 0.0005735789680337937, 'batch_size': 64, 'd_model': 512, 'nhead': 8, 'num_layers': 3, 'dropout': 0.10526053798700068, 'T': 1000, 'cosine_s': 0.003792138168639273, 'lambda_pdg': 0.60098708446139, 'lambda_zplane': 0.22317849779782795, 'lambda_charge': 0.020987835991049416, 'gamma_end': 0.2744030611642593, 'gamma_start': 0.0001625204084615004, 'grad_clip': 1.7736026139703196, 'pct_start': 0.11798035323412845, 'div_factor': 9.28449395997843, 'use_asinh': True, 'asinh_scale_xy': 0.06274261965532978}.
+  Trial  31 | Epoch  1/10 | train=33.10237 | val=4.40372 | VRAM alloc=0.31GB reserved=22.33GB
+  Trial  31 | Epoch  2/10 | train=4.66178 | val=6.19218 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial  31 | Epoch  3/10 | train=3.64656 | val=3.36822 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial  31 | Epoch  4/10 | train=3.40800 | val=3.13126 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial  31 | Epoch  5/10 | train=2.90052 | val=2.84543 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial  31 | Epoch  6/10 | train=2.67112 | val=2.54207 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial  31 | Epoch  7/10 | train=2.44127 | val=2.41936 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial  31 | Epoch  8/10 | train=2.28037 | val=2.30859 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial  31 | Epoch  9/10 | train=2.26719 | val=2.10674 | VRAM alloc=0.31GB reserved=22.34GB
+                                                         31%|███       | 31/100 [23:05:18<28:23:54, 1481.66s/it] 32%|███▏      | 32/100 [23:05:18<44:18:17, 2345.55s/it]  Trial  31 | Epoch 10/10 | train=2.18105 | val=2.15322 | VRAM alloc=0.31GB reserved=22.34GB
+  Trial 31 | best_val=2.10674 | peak_score=0.03766
+[I 2026-03-23 12:33:40,690] Trial 31 finished with values: [2.106743483832388, 0.03765652119161428] and parameters: {'lr': 0.0006363831045597474, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 4, 'dropout': 0.07284189723916132, 'T': 500, 'cosine_s': 0.0012662242651826354, 'lambda_pdg': 0.130091719483551, 'lambda_zplane': 0.6808009633128723, 'lambda_charge': 0.00733525362957714, 'gamma_end': 0.05057809868897166, 'gamma_start': 0.0006402024679365818, 'grad_clip': 1.7092277058721612, 'pct_start': 0.17882660175373524, 'div_factor': 18.009124630395952, 'use_asinh': False}.
+  Trial  32 | Epoch  1/10 | train=19.99420 | val=3.54583 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  2/10 | train=3.74272 | val=6.37384 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  3/10 | train=3.59640 | val=3.79552 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  4/10 | train=2.96128 | val=2.30970 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  5/10 | train=3.81200 | val=3.02254 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  6/10 | train=3.36985 | val=2.23230 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  7/10 | train=2.34489 | val=2.19206 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  8/10 | train=2.19744 | val=2.34143 | VRAM alloc=0.56GB reserved=22.36GB
+  Trial  32 | Epoch  9/10 | train=2.19509 | val=2.09400 | VRAM alloc=0.56GB reserved=22.36GB
+                                                         32%|███▏      | 32/100 [24:29:20<44:18:17, 2345.55s/it] 33%|███▎      | 33/100 [24:29:20<58:42:34, 3154.54s/it]  Trial  32 | Epoch 10/10 | train=2.04085 | val=1.99631 | VRAM alloc=0.56GB reserved=22.36GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 14.62 GiB already allocated; 4.25 GiB free; 19.00 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 32 | best_val=1.99631 | peak_score=1.00000
+[I 2026-03-23 13:57:42,842] Trial 32 finished with values: [1.9963073739638695, 1.0] and parameters: {'lr': 0.0006355494674705769, 'batch_size': 16, 'd_model': 512, 'nhead': 4, 'num_layers': 5, 'dropout': 0.07465894263015987, 'T': 500, 'cosine_s': 0.0010834953071019034, 'lambda_pdg': 0.12201439028449806, 'lambda_zplane': 0.9334464357629322, 'lambda_charge': 0.007289295129239063, 'gamma_end': 0.06897542383163884, 'gamma_start': 0.0009803025705871467, 'grad_clip': 1.6700552655717567, 'pct_start': 0.18254642624766637, 'div_factor': 18.267055033405622, 'use_asinh': False}.
+  Trial  33 | Epoch  1/10 | train=46.94399 | val=5.99276 | VRAM alloc=0.62GB reserved=19.06GB
+  Trial  33 | Epoch  2/10 | train=12.46012 | val=2.80510 | VRAM alloc=0.62GB reserved=19.06GB
+  Trial  33 | Epoch  3/10 | train=2.73821 | val=2.71413 | VRAM alloc=0.62GB reserved=19.06GB
+  Trial  33 | Epoch  4/10 | train=2.66977 | val=2.55236 | VRAM alloc=0.62GB reserved=19.06GB
+  Trial  33 | Epoch  5/10 | train=2.64518 | val=2.42426 | VRAM alloc=0.07GB reserved=19.06GB
+  Trial  33 | Epoch  6/10 | train=2.53831 | val=2.19426 | VRAM alloc=0.07GB reserved=19.06GB
+  Trial  33 | Epoch  7/10 | train=2.49710 | val=2.19214 | VRAM alloc=0.07GB reserved=19.06GB
+  Trial  33 | Epoch  8/10 | train=2.24896 | val=2.14507 | VRAM alloc=0.07GB reserved=19.06GB
+  Trial  33 | Epoch  9/10 | train=2.12350 | val=2.06727 | VRAM alloc=0.07GB reserved=19.06GB
+                                                         33%|███▎      | 33/100 [25:11:42<58:42:34, 3154.54s/it] 34%|███▍      | 34/100 [25:11:42<54:27:41, 2970.63s/it]  Trial  33 | Epoch 10/10 | train=2.07938 | val=2.05435 | VRAM alloc=0.07GB reserved=19.06GB
+  Trial 33 | best_val=2.05435 | peak_score=0.35665
+[I 2026-03-23 14:40:04,360] Trial 33 finished with values: [2.0543521679364716, 0.3566526340822611] and parameters: {'lr': 0.0015112532572096901, 'batch_size': 32, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.08066184028790023, 'T': 1000, 'cosine_s': 0.0002679928244566625, 'lambda_pdg': 0.2706369759655558, 'lambda_zplane': 0.7292292606206641, 'lambda_charge': 0.004770000878266654, 'gamma_end': 0.09665463547955029, 'gamma_start': 0.0021355937851197755, 'grad_clip': 1.606196484040371, 'pct_start': 0.17792288229706751, 'div_factor': 16.806207196873657, 'use_asinh': True, 'asinh_scale_xy': 0.019777422235721976}.
+  Trial  34 | Epoch  1/10 | train=18.24640 | val=3.68131 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  2/10 | train=3.47615 | val=3.12612 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  3/10 | train=3.18285 | val=2.75748 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  4/10 | train=2.66787 | val=2.48296 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  5/10 | train=2.50370 | val=2.34494 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  6/10 | train=2.33058 | val=2.24180 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  7/10 | train=2.13639 | val=2.04438 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  8/10 | train=2.17406 | val=2.05140 | VRAM alloc=0.27GB reserved=19.06GB
+  Trial  34 | Epoch  9/10 | train=2.06082 | val=1.94849 | VRAM alloc=0.27GB reserved=19.06GB
+                                                         34%|███▍      | 34/100 [26:18:39<54:27:41, 2970.63s/it] 35%|███▌      | 35/100 [26:18:39<59:18:23, 3284.67s/it]  Trial  34 | Epoch 10/10 | train=2.00428 | val=1.97941 | VRAM alloc=0.27GB reserved=19.06GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 19.36 GiB already allocated; 89.44 MiB free; 23.16 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 34 | best_val=1.94849 | peak_score=1.00000
+[I 2026-03-23 15:47:01,794] Trial 34 finished with values: [1.9484901189804078, 1.0] and parameters: {'lr': 0.0009402634493736242, 'batch_size': 32, 'd_model': 512, 'nhead': 4, 'num_layers': 4, 'dropout': 0.06636750440908827, 'T': 500, 'cosine_s': 0.0008531770282418589, 'lambda_pdg': 0.13269027434456956, 'lambda_zplane': 0.9217819871907962, 'lambda_charge': 0.0028453814810127866, 'gamma_end': 0.07113783899876114, 'gamma_start': 0.000577350565093714, 'grad_clip': 1.7992867449568397, 'pct_start': 0.19810960274143796, 'div_factor': 19.422126939582512, 'use_asinh': False}.
+  Trial  35 | Epoch  1/10 | train=9.18019 | val=2.62908 | VRAM alloc=0.33GB reserved=23.22GB
+  Trial  35 | Epoch  2/10 | train=2.41346 | val=2.21554 | VRAM alloc=0.33GB reserved=23.23GB
+  Trial  35 | Epoch  3/10 | train=2.28706 | val=2.17470 | VRAM alloc=0.33GB reserved=23.23GB
+  Trial  35 | Epoch  4/10 | train=2.23566 | val=2.14256 | VRAM alloc=0.33GB reserved=23.23GB
+  Trial  35 | Epoch  5/10 | train=2.21106 | val=2.16442 | VRAM alloc=0.33GB reserved=23.23GB
+  Trial  35 | Epoch  6/10 | train=2.15237 | val=2.09068 | VRAM alloc=0.33GB reserved=23.23GB
+  Trial  35 | Epoch  7/10 | train=2.11434 | val=2.00071 | VRAM alloc=0.33GB reserved=23.23GB
+  Trial  35 | Epoch  8/10 | train=2.07289 | val=2.03203 | VRAM alloc=0.33GB reserved=23.23GB
+  Trial  35 | Epoch  9/10 | train=2.03802 | val=1.93755 | VRAM alloc=0.06GB reserved=23.23GB
+                                                         35%|███▌      | 35/100 [26:58:59<59:18:23, 3284.67s/it] 36%|███▌      | 36/100 [26:58:59<53:46:55, 3025.25s/it]  Trial  35 | Epoch 10/10 | train=2.03039 | val=1.96209 | VRAM alloc=0.06GB reserved=23.23GB
+  Trial 35 | best_val=1.93755 | peak_score=0.10974
+[I 2026-03-23 16:27:21,710] Trial 35 finished with values: [1.9375506465251628, 0.10974250218922552] and parameters: {'lr': 0.0006639995229421017, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.22809154866682255, 'T': 500, 'cosine_s': 0.0017420389474403109, 'lambda_pdg': 0.16243931491858773, 'lambda_zplane': 0.8002688551464648, 'lambda_charge': 0.001610242564847894, 'gamma_end': 0.08949746319784165, 'gamma_start': 0.000639320858459098, 'grad_clip': 1.624195202074448, 'pct_start': 0.1687598991776999, 'div_factor': 16.552788703832107, 'use_asinh': False}.
+  Trial  36 | Epoch  1/10 | train=7.20002 | val=2.59368 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  2/10 | train=2.51984 | val=2.35125 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  3/10 | train=2.40499 | val=2.29873 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  4/10 | train=2.34823 | val=2.35717 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  5/10 | train=2.32124 | val=2.26283 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  6/10 | train=2.27072 | val=2.21226 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  7/10 | train=2.21882 | val=2.11730 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  8/10 | train=2.17797 | val=2.09471 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial  36 | Epoch  9/10 | train=2.14520 | val=2.04773 | VRAM alloc=0.13GB reserved=23.23GB
+                                                         36%|███▌      | 36/100 [27:37:59<53:46:55, 3025.25s/it] 37%|███▋      | 37/100 [27:37:59<49:20:38, 2819.66s/it]  Trial  36 | Epoch 10/10 | train=2.13864 | val=2.06906 | VRAM alloc=0.13GB reserved=23.23GB
+  Trial 36 | best_val=2.04773 | peak_score=0.10619
+[I 2026-03-23 17:06:21,670] Trial 36 finished with values: [2.0477343091597926, 0.10619280638391757] and parameters: {'lr': 0.0006706433108890333, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.23477457964338863, 'T': 500, 'cosine_s': 0.0014851483155334127, 'lambda_pdg': 0.17588154432719966, 'lambda_zplane': 1.980449133622269, 'lambda_charge': 0.0014403170190204764, 'gamma_end': 0.09975636645318106, 'gamma_start': 0.0011005744314825793, 'grad_clip': 1.6052701741245732, 'pct_start': 0.18670214002963506, 'div_factor': 17.031406586645492, 'use_asinh': False}.
+  Trial  37 | Epoch  1/10 | train=9.21756 | val=2.44555 | VRAM alloc=0.19GB reserved=7.11GB
+  Trial  37 | Epoch  2/10 | train=2.30689 | val=2.16565 | VRAM alloc=0.19GB reserved=7.11GB
+  Trial  37 | Epoch  3/10 | train=2.18310 | val=2.11461 | VRAM alloc=0.19GB reserved=7.11GB
+  Trial  37 | Epoch  4/10 | train=2.14467 | val=2.00809 | VRAM alloc=0.19GB reserved=7.11GB
+  Trial  37 | Epoch  5/10 | train=2.10873 | val=2.03296 | VRAM alloc=0.19GB reserved=7.11GB
+  Trial  37 | Epoch  6/10 | train=2.08796 | val=2.02987 | VRAM alloc=0.06GB reserved=7.11GB
+  Trial  37 | Epoch  7/10 | train=2.05652 | val=2.04073 | VRAM alloc=0.06GB reserved=7.11GB
+  Trial  37 | Epoch  8/10 | train=2.02737 | val=1.89670 | VRAM alloc=0.06GB reserved=7.11GB
+  Trial  37 | Epoch  9/10 | train=1.97243 | val=1.88513 | VRAM alloc=0.06GB reserved=7.11GB
+                                                         37%|███▋      | 37/100 [28:21:46<49:20:38, 2819.66s/it] 38%|███▊      | 38/100 [28:21:46<47:33:54, 2761.84s/it]  Trial  37 | Epoch 10/10 | train=1.97792 | val=1.93657 | VRAM alloc=0.06GB reserved=7.11GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.42 GiB already allocated; 249.44 MiB free; 23.01 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 37 | best_val=1.88513 | peak_score=1.00000
+[I 2026-03-23 17:50:08,608] Trial 37 finished with values: [1.8851282495718735, 1.0] and parameters: {'lr': 0.0005092087369150489, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 5, 'dropout': 0.222118116512956, 'T': 1000, 'cosine_s': 0.000579567568754744, 'lambda_pdg': 0.05822542501367507, 'lambda_zplane': 0.8324957738205754, 'lambda_charge': 0.0017728756361159986, 'gamma_end': 0.05047854552651864, 'gamma_start': 0.0019113909034554116, 'grad_clip': 2.989381371957275, 'pct_start': 0.1732543941362651, 'div_factor': 20.973894449313374, 'use_asinh': False}.
+  Trial  38 | Epoch  1/10 | train=9.25116 | val=3.30239 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  2/10 | train=2.63236 | val=2.37556 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  3/10 | train=2.45456 | val=2.35265 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  4/10 | train=2.36378 | val=2.08171 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  5/10 | train=2.26712 | val=2.15664 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  6/10 | train=2.19861 | val=2.13706 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  7/10 | train=2.13480 | val=2.04371 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  8/10 | train=2.11657 | val=2.00245 | VRAM alloc=0.13GB reserved=23.07GB
+  Trial  38 | Epoch  9/10 | train=2.08752 | val=1.99549 | VRAM alloc=0.13GB reserved=23.07GB
+                                                         38%|███▊      | 38/100 [29:05:36<47:33:54, 2761.84s/it] 39%|███▉      | 39/100 [29:05:36<46:07:35, 2722.22s/it]  Trial  38 | Epoch 10/10 | train=2.09938 | val=2.04886 | VRAM alloc=0.13GB reserved=23.07GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.24 GiB already allocated; 949.44 MiB free; 22.32 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 38 | best_val=1.99549 | peak_score=1.00000
+[I 2026-03-23 18:33:58,390] Trial 38 finished with values: [1.9954908967018128, 1.0] and parameters: {'lr': 0.000541435975408713, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 5, 'dropout': 0.22228140535257807, 'T': 1000, 'cosine_s': 0.00043854871528733373, 'lambda_pdg': 0.30425342803023914, 'lambda_zplane': 0.8322819246091092, 'lambda_charge': 0.0015754137268156286, 'gamma_end': 0.122141887459708, 'gamma_start': 0.0021489239390138602, 'grad_clip': 2.9764729407723376, 'pct_start': 0.17345770003477884, 'div_factor': 14.794070670571369, 'use_asinh': False}.
+  Trial  39 | Epoch  1/10 | train=12.76094 | val=6.55240 | VRAM alloc=0.19GB reserved=22.39GB
+  Trial  39 | Epoch  2/10 | train=4.73558 | val=2.88966 | VRAM alloc=0.19GB reserved=22.39GB
+  Trial  39 | Epoch  3/10 | train=2.76116 | val=2.39843 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  39 | Epoch  4/10 | train=2.45948 | val=2.14515 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  39 | Epoch  5/10 | train=2.27816 | val=2.10229 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  39 | Epoch  6/10 | train=2.17841 | val=2.05812 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  39 | Epoch  7/10 | train=2.09971 | val=2.00044 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  39 | Epoch  8/10 | train=2.07877 | val=1.96652 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  39 | Epoch  9/10 | train=2.04905 | val=1.95632 | VRAM alloc=0.06GB reserved=22.39GB
+                                                         39%|███▉      | 39/100 [29:49:46<46:07:35, 2722.22s/it] 40%|████      | 40/100 [29:49:46<45:00:37, 2700.63s/it]  Trial  39 | Epoch 10/10 | train=2.06197 | val=2.01037 | VRAM alloc=0.06GB reserved=22.39GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.17 GiB already allocated; 1013.44 MiB free; 22.26 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 39 | best_val=1.95632 | peak_score=1.00000
+[I 2026-03-23 19:18:08,621] Trial 39 finished with values: [1.9563231853338388, 1.0] and parameters: {'lr': 0.000509544983567645, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 5, 'dropout': 0.19416594578506535, 'T': 1000, 'cosine_s': 0.0007184804329723577, 'lambda_pdg': 0.15734120847946736, 'lambda_zplane': 1.222016118182776, 'lambda_charge': 0.0021922056668250687, 'gamma_end': 0.06966576082813465, 'gamma_start': 0.0033590962208231994, 'grad_clip': 2.8302696111462664, 'pct_start': 0.19881710361072305, 'div_factor': 18.152038945918846, 'use_asinh': False}.
+  Trial  40 | Epoch  1/10 | train=5.88179 | val=2.52642 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  2/10 | train=2.43680 | val=2.33114 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  3/10 | train=2.34509 | val=2.37023 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  4/10 | train=2.31577 | val=2.14284 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  5/10 | train=2.23947 | val=2.17516 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  6/10 | train=2.18968 | val=2.06842 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  7/10 | train=2.14144 | val=2.08695 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  8/10 | train=2.11432 | val=2.00223 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  40 | Epoch  9/10 | train=2.07846 | val=1.99477 | VRAM alloc=0.13GB reserved=22.33GB
+                                                         40%|████      | 40/100 [30:33:54<45:00:37, 2700.63s/it] 41%|████      | 41/100 [30:33:54<44:00:07, 2684.87s/it]  Trial  40 | Epoch 10/10 | train=2.08651 | val=2.04553 | VRAM alloc=0.13GB reserved=22.33GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.24 GiB already allocated; 951.44 MiB free; 22.32 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 40 | best_val=1.99477 | peak_score=1.00000
+[I 2026-03-23 20:02:16,737] Trial 40 finished with values: [1.994766709437737, 1.0] and parameters: {'lr': 0.0011076986823033387, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 5, 'dropout': 0.2226526837412443, 'T': 1000, 'cosine_s': 0.00028815019601325504, 'lambda_pdg': 0.22418382494481037, 'lambda_zplane': 1.0294197835456576, 'lambda_charge': 0.0010277893853469818, 'gamma_end': 0.12988484348944723, 'gamma_start': 0.001734456290572185, 'grad_clip': 2.598000501401108, 'pct_start': 0.15356893392618726, 'div_factor': 16.326424316286232, 'use_asinh': False}.
+  Trial  41 | Epoch  1/10 | train=7.90260 | val=4.71818 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  2/10 | train=3.37387 | val=2.45187 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  3/10 | train=2.41168 | val=2.17800 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  4/10 | train=2.23690 | val=1.98899 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  5/10 | train=2.24995 | val=2.09927 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  6/10 | train=2.14549 | val=2.01970 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  7/10 | train=2.04690 | val=1.95320 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  8/10 | train=2.02810 | val=1.90633 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  41 | Epoch  9/10 | train=1.99435 | val=1.89581 | VRAM alloc=0.06GB reserved=22.39GB
+                                                         41%|████      | 41/100 [31:18:02<44:00:07, 2684.87s/it] 42%|████▏     | 42/100 [31:18:02<43:04:41, 2673.82s/it]  Trial  41 | Epoch 10/10 | train=2.00527 | val=1.95045 | VRAM alloc=0.06GB reserved=22.39GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.17 GiB already allocated; 1003.44 MiB free; 22.27 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 41 | best_val=1.89581 | peak_score=1.00000
+[I 2026-03-23 20:46:24,770] Trial 41 finished with values: [1.8958106242693387, 1.0] and parameters: {'lr': 0.0006202887118724788, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 5, 'dropout': 0.23655792018916244, 'T': 1000, 'cosine_s': 0.0013940124011968885, 'lambda_pdg': 0.05200015543816204, 'lambda_zplane': 0.7447976661552783, 'lambda_charge': 0.0013868475435212756, 'gamma_end': 0.05106980841406246, 'gamma_start': 0.0006804376549977396, 'grad_clip': 1.661446694386096, 'pct_start': 0.17355971512790894, 'div_factor': 20.220173036316087, 'use_asinh': False}.
+  Trial  42 | Epoch  1/10 | train=12.79595 | val=13.34809 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  42 | Epoch  2/10 | train=5.39561 | val=6.83328 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  42 | Epoch  3/10 | train=3.14804 | val=2.71718 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  42 | Epoch  4/10 | train=2.66241 | val=2.22292 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  42 | Epoch  5/10 | train=2.26351 | val=2.09092 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  42 | Epoch  6/10 | train=2.20745 | val=2.03257 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  42 | Epoch  7/10 | train=2.13464 | val=2.06094 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  42 | Epoch  8/10 | train=2.08362 | val=2.00873 | VRAM alloc=0.06GB reserved=22.33GB
+  Trial  42 | Epoch  9/10 | train=2.06323 | val=1.97448 | VRAM alloc=0.06GB reserved=22.33GB
+                                                         42%|████▏     | 42/100 [32:02:19<43:04:41, 2673.82s/it] 43%|████▎     | 43/100 [32:02:19<42:15:06, 2668.54s/it]  Trial  42 | Epoch 10/10 | train=2.04643 | val=1.96159 | VRAM alloc=0.06GB reserved=22.33GB
+  Trial 42 | best_val=1.96159 | peak_score=0.12709
+[I 2026-03-23 21:30:40,998] Trial 42 finished with values: [1.9615926870932945, 0.1270905645380741] and parameters: {'lr': 0.0007029566455211211, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.22010819171724977, 'T': 1000, 'cosine_s': 0.0005637696623230119, 'lambda_pdg': 0.17098710699389688, 'lambda_zplane': 0.6843564674208793, 'lambda_charge': 0.0018514257912868766, 'gamma_end': 0.0793281563500628, 'gamma_start': 0.0006869363275242262, 'grad_clip': 1.556063759394842, 'pct_start': 0.1587460386644788, 'div_factor': 21.418999218037307, 'use_asinh': False}.
+  Trial  43 | Epoch  1/10 | train=15.20861 | val=5.40628 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  2/10 | train=4.84301 | val=3.88277 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  3/10 | train=2.65888 | val=2.23228 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  4/10 | train=2.46247 | val=2.08891 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  5/10 | train=2.33092 | val=2.09133 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  6/10 | train=2.19691 | val=2.08755 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  7/10 | train=2.09126 | val=2.01363 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  8/10 | train=2.06543 | val=1.95067 | VRAM alloc=0.13GB reserved=22.33GB
+  Trial  43 | Epoch  9/10 | train=2.02825 | val=1.93771 | VRAM alloc=0.13GB reserved=22.33GB
+                                                         43%|████▎     | 43/100 [32:46:27<42:15:06, 2668.54s/it] 44%|████▍     | 44/100 [32:46:27<41:24:56, 2662.43s/it]  Trial  43 | Epoch 10/10 | train=2.03559 | val=1.98129 | VRAM alloc=0.13GB reserved=22.33GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.24 GiB already allocated; 949.44 MiB free; 22.32 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 43 | best_val=1.93771 | peak_score=1.00000
+[I 2026-03-23 22:14:49,169] Trial 43 finished with values: [1.9377077194360586, 1.0] and parameters: {'lr': 0.0005572522442250334, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 5, 'dropout': 0.1968606973187176, 'T': 500, 'cosine_s': 0.0026218690570369465, 'lambda_pdg': 0.09230083974339412, 'lambda_zplane': 1.0190360791216988, 'lambda_charge': 0.003534751693948956, 'gamma_end': 0.06473025675333832, 'gamma_start': 0.00013304772576888178, 'grad_clip': 1.8410484805432021, 'pct_start': 0.1464966668051083, 'div_factor': 18.762529553069466, 'use_asinh': False}.
+  Trial  44 | Epoch  1/10 | train=13.08718 | val=10.32665 | VRAM alloc=0.19GB reserved=22.39GB
+  Trial  44 | Epoch  2/10 | train=6.01271 | val=2.67552 | VRAM alloc=0.19GB reserved=22.39GB
+  Trial  44 | Epoch  3/10 | train=2.56883 | val=2.44063 | VRAM alloc=0.19GB reserved=22.39GB
+  Trial  44 | Epoch  4/10 | train=2.45699 | val=2.34955 | VRAM alloc=0.19GB reserved=22.39GB
+  Trial  44 | Epoch  5/10 | train=2.40813 | val=2.50401 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  44 | Epoch  6/10 | train=2.33385 | val=2.05884 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  44 | Epoch  7/10 | train=2.20739 | val=2.06237 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  44 | Epoch  8/10 | train=2.11907 | val=2.04477 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial  44 | Epoch  9/10 | train=2.08134 | val=1.99385 | VRAM alloc=0.06GB reserved=22.39GB
+                                                         44%|████▍     | 44/100 [33:30:39<41:24:56, 2662.43s/it] 45%|████▌     | 45/100 [33:30:39<40:37:46, 2659.39s/it]  Trial  44 | Epoch 10/10 | train=2.06802 | val=1.97839 | VRAM alloc=0.06GB reserved=22.39GB
+  Trial 44 | best_val=1.97839 | peak_score=0.11971
+[I 2026-03-23 22:59:01,446] Trial 44 finished with values: [1.9783886891144973, 0.11970555971425445] and parameters: {'lr': 0.0005021625529564121, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.24894394436290962, 'T': 1000, 'cosine_s': 0.0014245910644772528, 'lambda_pdg': 0.07804489049456738, 'lambda_zplane': 0.8218266239911018, 'lambda_charge': 0.0032259612642741476, 'gamma_end': 0.09055725866231334, 'gamma_start': 0.0033578945755251438, 'grad_clip': 1.723017699739541, 'pct_start': 0.1858599196322914, 'div_factor': 16.110363846951383, 'use_asinh': False}.
+  Trial  45 | Epoch  1/10 | train=107.33327 | val=5.43907 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  2/10 | train=5.98360 | val=5.01585 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  3/10 | train=5.45342 | val=3.71518 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  4/10 | train=5.58262 | val=4.68132 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  5/10 | train=5.05343 | val=3.27886 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  6/10 | train=3.24758 | val=2.37988 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  7/10 | train=2.69428 | val=3.26453 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  8/10 | train=2.39664 | val=2.18335 | VRAM alloc=0.11GB reserved=22.39GB
+  Trial  45 | Epoch  9/10 | train=2.25234 | val=2.15018 | VRAM alloc=0.11GB reserved=22.39GB
+                                                         45%|████▌     | 45/100 [34:23:26<40:37:46, 2659.39s/it] 46%|████▌     | 46/100 [34:23:26<42:10:21, 2811.52s/it]  Trial  45 | Epoch 10/10 | train=2.22421 | val=2.10967 | VRAM alloc=0.11GB reserved=22.39GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.19 GiB already allocated; 5.98 GiB free; 17.28 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 45 | best_val=2.10967 | peak_score=1.00000
+[I 2026-03-23 23:51:47,931] Trial 45 finished with values: [2.109671506514916, 1.0] and parameters: {'lr': 0.0006516203681557232, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 4, 'dropout': 0.21050843741966774, 'T': 500, 'cosine_s': 0.0003974692940488513, 'lambda_pdg': 0.2581475462732663, 'lambda_zplane': 1.1671841391119675, 'lambda_charge': 0.03263143919549628, 'gamma_end': 0.07737628425380053, 'gamma_start': 0.004413839986479263, 'grad_clip': 1.9389652696924533, 'pct_start': 0.0524226360639552, 'div_factor': 17.33315325862923, 'use_asinh': False}.
+  Trial  46 | Epoch  1/10 | train=11.36953 | val=26.93395 | VRAM alloc=0.18GB reserved=17.34GB
+  Trial  46 | Epoch  2/10 | train=5.28409 | val=2.78706 | VRAM alloc=0.18GB reserved=17.34GB
+  Trial  46 | Epoch  3/10 | train=3.04177 | val=2.47198 | VRAM alloc=0.06GB reserved=17.34GB
+  Trial  46 | Epoch  4/10 | train=2.31319 | val=2.19932 | VRAM alloc=0.06GB reserved=17.34GB
+  Trial  46 | Epoch  5/10 | train=2.23410 | val=2.14217 | VRAM alloc=0.06GB reserved=17.34GB
+  Trial  46 | Epoch  6/10 | train=2.19631 | val=2.01783 | VRAM alloc=0.06GB reserved=17.34GB
+  Trial  46 | Epoch  7/10 | train=2.14886 | val=1.99681 | VRAM alloc=0.06GB reserved=17.34GB
+  Trial  46 | Epoch  8/10 | train=2.09503 | val=2.10922 | VRAM alloc=0.06GB reserved=17.34GB
+  Trial  46 | Epoch  9/10 | train=2.06962 | val=1.98764 | VRAM alloc=0.06GB reserved=17.34GB
+                                                         46%|████▌     | 46/100 [35:07:27<42:10:21, 2811.52s/it] 47%|████▋     | 47/100 [35:07:27<40:38:20, 2760.39s/it]  Trial  46 | Epoch 10/10 | train=2.04777 | val=1.96584 | VRAM alloc=0.06GB reserved=17.34GB
+  Trial 46 | best_val=1.96584 | peak_score=0.13451
+[I 2026-03-24 00:35:49,028] Trial 46 finished with values: [1.9658408018258902, 0.13451218598597384] and parameters: {'lr': 0.0008305462161073002, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.24087545891541337, 'T': 1000, 'cosine_s': 0.00016538113315690055, 'lambda_pdg': 0.201477906320859, 'lambda_zplane': 0.887636229827116, 'lambda_charge': 0.0023913415862535374, 'gamma_end': 0.05338635659503941, 'gamma_start': 0.0008945957195394955, 'grad_clip': 1.5088903607201942, 'pct_start': 0.1637558383594879, 'div_factor': 27.4361856133988, 'use_asinh': True, 'asinh_scale_xy': 0.13300585175336246}.
+  Trial  47 | Epoch  1/10 | train=13.36117 | val=2.65595 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  2/10 | train=2.55824 | val=2.36533 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  3/10 | train=2.45339 | val=2.33307 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  4/10 | train=2.38620 | val=2.21370 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  5/10 | train=2.36293 | val=2.14892 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  6/10 | train=2.31665 | val=2.12701 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  7/10 | train=2.23488 | val=2.06486 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  8/10 | train=2.14727 | val=2.01117 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial  47 | Epoch  9/10 | train=2.07171 | val=1.94953 | VRAM alloc=0.13GB reserved=17.34GB
+                                                         47%|████▋     | 47/100 [35:46:13<40:38:20, 2760.39s/it] 48%|████▊     | 48/100 [35:46:13<37:59:36, 2630.31s/it]  Trial  47 | Epoch 10/10 | train=2.04225 | val=1.96601 | VRAM alloc=0.13GB reserved=17.34GB
+  Trial 47 | best_val=1.94953 | peak_score=0.15928
+[I 2026-03-24 01:14:35,823] Trial 47 finished with values: [1.9495326078855075, 0.15927950775794167] and parameters: {'lr': 0.0007135516975879552, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.22341254828270316, 'T': 500, 'cosine_s': 0.0032059479036470567, 'lambda_pdg': 0.6755268609521344, 'lambda_zplane': 0.6267981032617739, 'lambda_charge': 0.004086024923330135, 'gamma_end': 0.06249460688453845, 'gamma_start': 0.001293394372515626, 'grad_clip': 2.799607736494763, 'pct_start': 0.1921354510479504, 'div_factor': 20.596972825360478, 'use_asinh': False}.
+  Trial  48 | Epoch  1/10 | train=8.09397 | val=3.67635 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  2/10 | train=3.88304 | val=2.50875 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  3/10 | train=2.58282 | val=2.36934 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  4/10 | train=2.45745 | val=2.32286 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  5/10 | train=2.31513 | val=2.24235 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  6/10 | train=2.25449 | val=2.16819 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  7/10 | train=2.19293 | val=2.17939 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  8/10 | train=2.17924 | val=2.10020 | VRAM alloc=0.05GB reserved=17.34GB
+  Trial  48 | Epoch  9/10 | train=2.13907 | val=2.11668 | VRAM alloc=0.05GB reserved=17.34GB
+                                                         48%|████▊     | 48/100 [36:21:39<37:59:36, 2630.31s/it] 49%|████▉     | 49/100 [36:21:39<35:06:58, 2478.80s/it]  Trial  48 | Epoch 10/10 | train=2.14217 | val=2.07500 | VRAM alloc=0.05GB reserved=17.34GB
+  Peak score failed: CUDA out of memory. Tried to allocate 5.04 GiB (GPU 0; 23.60 GiB total capacity; 17.16 GiB already allocated; 1.00 GiB free; 22.25 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 48 | best_val=2.07500 | peak_score=1.00000
+[I 2026-03-24 01:50:01,100] Trial 48 finished with values: [2.0749969060604387, 1.0] and parameters: {'lr': 0.0007855877537490174, 'batch_size': 16, 'd_model': 256, 'nhead': 4, 'num_layers': 4, 'dropout': 0.20436295308425856, 'T': 500, 'cosine_s': 0.0008264934492364652, 'lambda_pdg': 0.38150216850569774, 'lambda_zplane': 0.7218614728849051, 'lambda_charge': 0.00137685365228636, 'gamma_end': 0.19380964887067326, 'gamma_start': 0.0006243801800368326, 'grad_clip': 2.724744200169816, 'pct_start': 0.16973830379241345, 'div_factor': 22.770027587824348, 'use_asinh': False}.
+  Trial  49 | Epoch  1/10 | train=15.41071 | val=3.09403 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  2/10 | train=2.79272 | val=2.50797 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  3/10 | train=2.53863 | val=2.33558 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  4/10 | train=2.48513 | val=2.24822 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  5/10 | train=2.43065 | val=2.47040 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  6/10 | train=2.36536 | val=2.13544 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  7/10 | train=2.28734 | val=2.13469 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  8/10 | train=2.20337 | val=2.11803 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial  49 | Epoch  9/10 | train=2.20543 | val=2.15350 | VRAM alloc=0.12GB reserved=22.32GB
+                                                         49%|████▉     | 49/100 [36:58:49<35:06:58, 2478.80s/it] 50%|█████     | 50/100 [36:58:49<33:23:32, 2404.24s/it]  Trial  49 | Epoch 10/10 | train=2.16550 | val=2.11784 | VRAM alloc=0.12GB reserved=22.32GB
+  Trial 49 | best_val=2.11784 | peak_score=0.10740
+[I 2026-03-24 02:27:11,373] Trial 49 finished with values: [2.1178431565944966, 0.10739874300941696] and parameters: {'lr': 0.0006138302521657567, 'batch_size': 32, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.22908457251131997, 'T': 500, 'cosine_s': 0.001991209225102293, 'lambda_pdg': 0.921299445361495, 'lambda_zplane': 0.9939798609950177, 'lambda_charge': 0.0018997323959880914, 'gamma_end': 0.09823169749542142, 'gamma_start': 0.0018513530959300506, 'grad_clip': 1.698720045819068, 'pct_start': 0.1794217777197747, 'div_factor': 15.436181876129421, 'use_asinh': False}.
+  Trial  50 | Epoch  1/10 | train=10.35107 | val=5.58462 | VRAM alloc=0.16GB reserved=22.37GB
+  Trial  50 | Epoch  2/10 | train=3.89639 | val=2.76720 | VRAM alloc=0.05GB reserved=22.37GB
+  Trial  50 | Epoch  3/10 | train=2.48752 | val=2.24703 | VRAM alloc=0.05GB reserved=22.37GB
+  Trial  50 | Epoch  4/10 | train=2.20801 | val=2.12754 | VRAM alloc=0.05GB reserved=22.37GB
+  Trial  50 | Epoch  5/10 | train=2.11943 | val=2.10494 | VRAM alloc=0.05GB reserved=22.37GB
+  Trial  50 | Epoch  6/10 | train=2.11031 | val=2.07369 | VRAM alloc=0.05GB reserved=22.37GB
+  Trial  50 | Epoch  7/10 | train=2.08421 | val=2.05561 | VRAM alloc=0.05GB reserved=22.37GB
+  Trial  50 | Epoch  8/10 | train=2.06501 | val=2.09087 | VRAM alloc=0.05GB reserved=22.37GB
+  Trial  50 | Epoch  9/10 | train=2.05407 | val=2.04948 | VRAM alloc=0.05GB reserved=22.37GB
+                                                         50%|█████     | 50/100 [37:51:56<33:23:32, 2404.24s/it] 51%|█████     | 51/100 [37:51:56<35:55:11, 2639.02s/it]  Trial  50 | Epoch 10/10 | train=2.05909 | val=2.02994 | VRAM alloc=0.05GB reserved=22.37GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.12 GiB already allocated; 6.04 GiB free; 17.21 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 50 | best_val=2.02994 | peak_score=1.00000
+[I 2026-03-24 03:20:18,191] Trial 50 finished with values: [2.029941132435432, 1.0] and parameters: {'lr': 0.0005463748528065858, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 4, 'dropout': 0.05017716498137839, 'T': 1000, 'cosine_s': 0.0010692213400310855, 'lambda_pdg': 0.3206809390839178, 'lambda_zplane': 0.4905849456356357, 'lambda_charge': 0.0025666850238238474, 'gamma_end': 0.16141516141541962, 'gamma_start': 0.000782659463602753, 'grad_clip': 2.5488242446568403, 'pct_start': 0.15973562625954504, 'div_factor': 14.042241108473615, 'use_asinh': True, 'asinh_scale_xy': 0.4994728082184649}.
+  Trial  51 | Epoch  1/10 | train=8.50570 | val=4.26636 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  2/10 | train=3.87587 | val=2.49954 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  3/10 | train=2.72778 | val=2.18202 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  4/10 | train=2.26396 | val=2.50987 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  5/10 | train=2.16074 | val=2.07086 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  6/10 | train=2.12118 | val=2.04512 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  7/10 | train=2.09316 | val=2.00921 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  8/10 | train=2.05001 | val=1.98133 | VRAM alloc=0.11GB reserved=17.28GB
+  Trial  51 | Epoch  9/10 | train=2.01880 | val=1.92729 | VRAM alloc=0.11GB reserved=17.28GB
+                                                         51%|█████     | 51/100 [38:31:10<35:55:11, 2639.02s/it] 52%|█████▏    | 52/100 [38:31:10<34:02:50, 2553.55s/it]  Trial  51 | Epoch 10/10 | train=2.01266 | val=1.95116 | VRAM alloc=0.06GB reserved=17.28GB
+  Trial 51 | best_val=1.92729 | peak_score=0.10952
+[I 2026-03-24 03:59:32,321] Trial 51 finished with values: [1.9272906963641827, 0.10951511151915036] and parameters: {'lr': 0.0006804555462965548, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.15953105490400252, 'T': 500, 'cosine_s': 0.0019895355215443443, 'lambda_pdg': 0.13200758539655, 'lambda_zplane': 0.8332461522849992, 'lambda_charge': 0.0012113274842223967, 'gamma_end': 0.08101853917600747, 'gamma_start': 0.0003822141258229168, 'grad_clip': 2.173547609581987, 'pct_start': 0.17017557953691118, 'div_factor': 19.161477062259408, 'use_asinh': False}.
+  Trial  52 | Epoch  1/10 | train=7.02309 | val=2.62855 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  2/10 | train=2.53975 | val=2.36618 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  3/10 | train=2.38225 | val=2.34185 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  4/10 | train=2.32439 | val=2.28775 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  5/10 | train=2.31933 | val=2.20018 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  6/10 | train=2.28229 | val=2.17308 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  7/10 | train=2.24704 | val=2.20450 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  8/10 | train=2.18005 | val=2.08285 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial  52 | Epoch  9/10 | train=2.15930 | val=2.08536 | VRAM alloc=0.09GB reserved=17.28GB
+                                                         52%|█████▏    | 52/100 [38:47:03<34:02:50, 2553.55s/it] 53%|█████▎    | 53/100 [38:47:03<27:04:16, 2073.54s/it]  Trial  52 | Epoch 10/10 | train=2.14148 | val=2.07182 | VRAM alloc=0.09GB reserved=17.28GB
+  Trial 52 | best_val=2.07182 | peak_score=0.11668
+[I 2026-03-24 04:15:25,829] Trial 52 finished with values: [2.0718175117786113, 0.11668193151126646] and parameters: {'lr': 0.0012862135653405617, 'batch_size': 32, 'd_model': 256, 'nhead': 2, 'num_layers': 2, 'dropout': 0.15268789001302702, 'T': 500, 'cosine_s': 0.0030098813004787025, 'lambda_pdg': 0.44878811550620856, 'lambda_zplane': 1.4034863106708482, 'lambda_charge': 0.0011958964682247078, 'gamma_end': 0.07931565348073497, 'gamma_start': 0.00035753705636797886, 'grad_clip': 2.167208596034203, 'pct_start': 0.14971186096064187, 'div_factor': 19.12556111177819, 'use_asinh': True, 'asinh_scale_xy': 0.017616524587671205}.
+  Trial  53 | Epoch  1/10 | train=6.89814 | val=2.41180 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  2/10 | train=2.34001 | val=2.20633 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  3/10 | train=2.27789 | val=2.19138 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  4/10 | train=2.23406 | val=2.20513 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  5/10 | train=2.20996 | val=2.14626 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  6/10 | train=2.16415 | val=2.07705 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  7/10 | train=2.11850 | val=2.04743 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  8/10 | train=2.07453 | val=2.01386 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial  53 | Epoch  9/10 | train=2.04784 | val=1.97139 | VRAM alloc=0.15GB reserved=17.32GB
+                                                         53%|█████▎    | 53/100 [39:26:24<27:04:16, 2073.54s/it] 54%|█████▍    | 54/100 [39:26:24<27:35:40, 2159.57s/it]  Trial  53 | Epoch 10/10 | train=2.04502 | val=1.99402 | VRAM alloc=0.15GB reserved=17.32GB
+  Trial 53 | best_val=1.97139 | peak_score=0.09301
+[I 2026-03-24 04:54:46,145] Trial 53 finished with values: [1.971389572436993, 0.09301116178120383] and parameters: {'lr': 0.0014255182962982216, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.13638444822246282, 'T': 500, 'cosine_s': 0.005379655341313327, 'lambda_pdg': 0.9156734646860689, 'lambda_zplane': 0.3972520524590405, 'lambda_charge': 0.0010377391863036693, 'gamma_end': 0.10732794696709422, 'gamma_start': 0.0004243888279728525, 'grad_clip': 2.1728076477978826, 'pct_start': 0.07861151590743853, 'div_factor': 17.62539134472518, 'use_asinh': False}.
+  Trial  54 | Epoch  1/10 | train=6.41190 | val=2.46790 | VRAM alloc=0.21GB reserved=17.38GB
+  Trial  54 | Epoch  2/10 | train=2.41475 | val=2.22662 | VRAM alloc=0.21GB reserved=17.38GB
+  Trial  54 | Epoch  3/10 | train=2.30479 | val=2.21105 | VRAM alloc=0.06GB reserved=17.38GB
+  Trial  54 | Epoch  4/10 | train=2.24846 | val=2.28181 | VRAM alloc=0.06GB reserved=17.38GB
+  Trial  54 | Epoch  5/10 | train=2.20773 | val=2.28740 | VRAM alloc=0.06GB reserved=17.38GB
+  Trial  54 | Epoch  6/10 | train=2.16103 | val=2.13086 | VRAM alloc=0.06GB reserved=17.38GB
+  Trial  54 | Epoch  7/10 | train=2.11536 | val=2.07398 | VRAM alloc=0.06GB reserved=17.38GB
+  Trial  54 | Epoch  8/10 | train=2.08820 | val=2.03523 | VRAM alloc=0.06GB reserved=17.38GB
+  Trial  54 | Epoch  9/10 | train=2.08031 | val=1.98224 | VRAM alloc=0.06GB reserved=17.38GB
+                                                         54%|█████▍    | 54/100 [40:32:26<27:35:40, 2159.57s/it] 55%|█████▌    | 55/100 [40:32:26<33:45:11, 2700.25s/it]  Trial  54 | Epoch 10/10 | train=2.07462 | val=2.02232 | VRAM alloc=0.06GB reserved=17.38GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.14 GiB already allocated; 6.02 GiB free; 17.23 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 54 | best_val=1.98224 | peak_score=1.00000
+[I 2026-03-24 06:00:47,987] Trial 54 finished with values: [1.9822419056525598, 1.0] and parameters: {'lr': 0.0006980224940765003, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 5, 'dropout': 0.1113781754159929, 'T': 500, 'cosine_s': 0.0017123628822140555, 'lambda_pdg': 0.09221470622269318, 'lambda_zplane': 1.6774834439980368, 'lambda_charge': 0.0012541093838473994, 'gamma_end': 0.09026649800496475, 'gamma_start': 0.00027909552343663706, 'grad_clip': 2.224287301666522, 'pct_start': 0.1725661539907743, 'div_factor': 29.964609475984275, 'use_asinh': True, 'asinh_scale_xy': 0.1505501330839475}.
+  Trial  55 | Epoch  1/10 | train=10.01257 | val=4.02616 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  2/10 | train=6.37870 | val=2.81569 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  3/10 | train=2.59416 | val=2.42034 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  4/10 | train=2.47648 | val=2.24408 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  5/10 | train=2.40601 | val=2.25125 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  6/10 | train=2.27786 | val=2.24243 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  7/10 | train=2.23059 | val=2.15410 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  8/10 | train=2.18150 | val=2.11816 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial  55 | Epoch  9/10 | train=2.13095 | val=2.03203 | VRAM alloc=0.13GB reserved=17.29GB
+                                                         55%|█████▌    | 55/100 [41:11:06<33:45:11, 2700.25s/it] 56%|█████▌    | 56/100 [41:11:06<31:36:31, 2586.18s/it]  Trial  55 | Epoch 10/10 | train=2.11860 | val=2.05493 | VRAM alloc=0.13GB reserved=17.29GB
+  Trial 55 | best_val=2.03203 | peak_score=0.10652
+[I 2026-03-24 06:39:27,983] Trial 55 finished with values: [2.032028709925138, 0.10651537855628682] and parameters: {'lr': 0.0008991800765367942, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.16046963354728766, 'T': 500, 'cosine_s': 0.00214213134147107, 'lambda_pdg': 0.37488846230696826, 'lambda_zplane': 1.109170959990494, 'lambda_charge': 0.0018924270974767575, 'gamma_end': 0.12900800374343727, 'gamma_start': 0.00037413971963964313, 'grad_clip': 2.3220476354447888, 'pct_start': 0.16468001245592193, 'div_factor': 21.705959390726687, 'use_asinh': False}.
+  Trial  56 | Epoch  1/10 | train=66.58017 | val=3.47186 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  2/10 | train=7.84317 | val=3.43771 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  3/10 | train=3.71791 | val=3.20054 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  4/10 | train=3.28993 | val=3.16291 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  5/10 | train=3.31068 | val=3.11157 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  6/10 | train=3.19287 | val=3.13921 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  7/10 | train=3.27997 | val=2.68869 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  8/10 | train=3.21509 | val=2.37039 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial  56 | Epoch  9/10 | train=2.33900 | val=2.04351 | VRAM alloc=0.06GB reserved=17.33GB
+                                                         56%|█████▌    | 56/100 [41:41:04<31:36:31, 2586.18s/it] 57%|█████▋    | 57/100 [41:41:04<28:04:08, 2349.96s/it]  Trial  56 | Epoch 10/10 | train=2.09595 | val=1.99109 | VRAM alloc=0.06GB reserved=17.33GB
+  Trial 56 | best_val=1.99109 | peak_score=0.08191
+[I 2026-03-24 07:09:26,763] Trial 56 finished with values: [1.9910927424064049, 0.08191291439462184] and parameters: {'lr': 0.0017704535924917616, 'batch_size': 32, 'd_model': 256, 'nhead': 2, 'num_layers': 4, 'dropout': 0.08490788644550912, 'T': 500, 'cosine_s': 0.008118910938034817, 'lambda_pdg': 0.6433869009264139, 'lambda_zplane': 0.8962659604891978, 'lambda_charge': 0.016993495990593056, 'gamma_end': 0.06007438992606281, 'gamma_start': 0.00022536185124792026, 'grad_clip': 2.1244057938070635, 'pct_start': 0.18735044939247314, 'div_factor': 24.54771024013334, 'use_asinh': False}.
+  Trial  57 | Epoch  1/10 | train=11.32581 | val=2.95570 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  2/10 | train=2.89241 | val=2.84252 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  3/10 | train=2.72318 | val=2.57510 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  4/10 | train=2.61817 | val=2.31653 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  5/10 | train=2.35318 | val=2.27987 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  6/10 | train=2.40080 | val=2.25134 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  7/10 | train=2.31260 | val=2.26561 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  8/10 | train=2.26541 | val=2.17241 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial  57 | Epoch  9/10 | train=2.19555 | val=2.12653 | VRAM alloc=0.11GB reserved=17.33GB
+                                                         57%|█████▋    | 57/100 [42:11:00<28:04:08, 2349.96s/it] 58%|█████▊    | 58/100 [42:11:00<25:28:36, 2183.72s/it]  Trial  57 | Epoch 10/10 | train=2.18015 | val=2.10223 | VRAM alloc=0.11GB reserved=17.33GB
+  Trial 57 | best_val=2.10223 | peak_score=0.07926
+[I 2026-03-24 07:39:22,601] Trial 57 finished with values: [2.1022270716153657, 0.07926219345274327] and parameters: {'lr': 0.0017849463357545953, 'batch_size': 32, 'd_model': 256, 'nhead': 2, 'num_layers': 4, 'dropout': 0.08287257404111308, 'T': 500, 'cosine_s': 0.0006411122034786517, 'lambda_pdg': 0.7249673371229703, 'lambda_zplane': 0.8541075925349388, 'lambda_charge': 0.0016774400488744888, 'gamma_end': 0.17228466045329108, 'gamma_start': 0.0004640351246489134, 'grad_clip': 2.9036059152482325, 'pct_start': 0.18833960269286168, 'div_factor': 24.85151675930826, 'use_asinh': False}.
+  Trial  58 | Epoch  1/10 | train=43.67306 | val=7.42239 | VRAM alloc=0.15GB reserved=17.33GB
+  Trial  58 | Epoch  2/10 | train=9.54490 | val=5.81857 | VRAM alloc=0.15GB reserved=17.33GB
+  Trial  58 | Epoch  3/10 | train=5.20250 | val=2.97195 | VRAM alloc=0.15GB reserved=17.33GB
+  Trial  58 | Epoch  4/10 | train=3.49137 | val=2.54963 | VRAM alloc=0.15GB reserved=17.33GB
+  Trial  58 | Epoch  5/10 | train=2.53415 | val=2.35160 | VRAM alloc=0.15GB reserved=17.33GB
+  Trial  58 | Epoch  6/10 | train=2.30567 | val=2.31344 | VRAM alloc=0.05GB reserved=17.33GB
+  Trial  58 | Epoch  7/10 | train=2.18471 | val=2.07690 | VRAM alloc=0.05GB reserved=17.33GB
+  Trial  58 | Epoch  8/10 | train=2.12748 | val=2.08430 | VRAM alloc=0.05GB reserved=17.33GB
+  Trial  58 | Epoch  9/10 | train=2.10137 | val=2.06328 | VRAM alloc=0.05GB reserved=17.33GB
+                                                         58%|█████▊    | 58/100 [43:03:38<25:28:36, 2183.72s/it] 59%|█████▉    | 59/100 [43:03:38<28:11:58, 2476.07s/it]  Trial  58 | Epoch 10/10 | train=2.09565 | val=2.02860 | VRAM alloc=0.05GB reserved=17.33GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.12 GiB already allocated; 6.03 GiB free; 17.22 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 58 | best_val=2.02860 | peak_score=1.00000
+[I 2026-03-24 08:32:00,817] Trial 58 finished with values: [2.0285976629990796, 1.0] and parameters: {'lr': 0.0008477192841375995, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 4, 'dropout': 0.06191105991068392, 'T': 500, 'cosine_s': 0.001174288485916999, 'lambda_pdg': 0.13833820047917933, 'lambda_zplane': 0.5925889271252949, 'lambda_charge': 0.01754609113991153, 'gamma_end': 0.17558704689166263, 'gamma_start': 0.00030448340664168786, 'grad_clip': 2.1277417562256704, 'pct_start': 0.18328620615602742, 'div_factor': 22.71189666145822, 'use_asinh': True, 'asinh_scale_xy': 0.014976545933561826}.
+  Trial  59 | Epoch  1/10 | train=70.84403 | val=6.01220 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  2/10 | train=5.11324 | val=5.49423 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  3/10 | train=5.14260 | val=4.19800 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  4/10 | train=4.85587 | val=3.24145 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  5/10 | train=3.00754 | val=2.52011 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  6/10 | train=2.57097 | val=2.87472 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  7/10 | train=2.92871 | val=3.50510 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  8/10 | train=2.45030 | val=2.24437 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial  59 | Epoch  9/10 | train=2.28285 | val=2.23118 | VRAM alloc=0.11GB reserved=17.27GB
+                                                         59%|█████▉    | 59/100 [43:37:48<28:11:58, 2476.07s/it] 60%|██████    | 60/100 [43:37:48<26:05:19, 2347.99s/it]  Trial  59 | Epoch 10/10 | train=2.23886 | val=2.17915 | VRAM alloc=0.11GB reserved=17.27GB
+  Trial 59 | best_val=2.17915 | peak_score=0.13454
+[I 2026-03-24 09:06:09,957] Trial 59 finished with values: [2.1791531746204083, 0.13454291732932483] and parameters: {'lr': 0.0007748848962437979, 'batch_size': 32, 'd_model': 256, 'nhead': 2, 'num_layers': 4, 'dropout': 0.0955768707485225, 'T': 1000, 'cosine_s': 0.010434750832049047, 'lambda_pdg': 0.25827835993376524, 'lambda_zplane': 0.9559728092560547, 'lambda_charge': 0.010342811484172834, 'gamma_end': 0.20114151130893027, 'gamma_start': 0.00020283976717495858, 'grad_clip': 2.0316676844939883, 'pct_start': 0.16084508717826104, 'div_factor': 20.681276529829606, 'use_asinh': False}.
+                                                         60%|██████    | 60/100 [43:37:57<26:05:19, 2347.99s/it] 61%|██████    | 61/100 [43:37:57<17:50:08, 1646.38s/it]  Trial 60 OOM during train (batch_size=64, d_model=512, T=500) — returning worst case.
+[I 2026-03-24 09:06:19,249] Trial 60 finished with values: [inf, inf] and parameters: {'lr': 0.0006283982904332789, 'batch_size': 64, 'd_model': 512, 'nhead': 2, 'num_layers': 5, 'dropout': 0.19078877471158845, 'T': 500, 'cosine_s': 0.00048547017443356704, 'lambda_pdg': 0.6539264945019265, 'lambda_zplane': 1.2376475366796225, 'lambda_charge': 0.008730386120357016, 'gamma_end': 0.14667610368387335, 'gamma_start': 0.00012475234114850577, 'grad_clip': 2.3540784223130453, 'pct_start': 0.13724714791560233, 'div_factor': 19.24795544625721, 'use_asinh': False}.
+  Trial  61 | Epoch  1/10 | train=6.70414 | val=2.43189 | VRAM alloc=0.16GB reserved=22.77GB
+  Trial  61 | Epoch  2/10 | train=2.30217 | val=2.11465 | VRAM alloc=0.16GB reserved=22.77GB
+  Trial  61 | Epoch  3/10 | train=2.18607 | val=2.08824 | VRAM alloc=0.16GB reserved=22.77GB
+  Trial  61 | Epoch  4/10 | train=2.13603 | val=2.06076 | VRAM alloc=0.16GB reserved=22.77GB
+  Trial  61 | Epoch  5/10 | train=2.11502 | val=2.08157 | VRAM alloc=0.16GB reserved=22.77GB
+  Trial  61 | Epoch  6/10 | train=2.09585 | val=2.00260 | VRAM alloc=0.16GB reserved=22.77GB
+  Trial  61 | Epoch  7/10 | train=2.07655 | val=2.02206 | VRAM alloc=0.06GB reserved=22.77GB
+  Trial  61 | Epoch  8/10 | train=2.02730 | val=1.96573 | VRAM alloc=0.06GB reserved=22.77GB
+  Trial  61 | Epoch  9/10 | train=2.00141 | val=1.91817 | VRAM alloc=0.06GB reserved=22.77GB
+                                                         61%|██████    | 61/100 [44:16:41<17:50:08, 1646.38s/it] 62%|██████▏   | 62/100 [44:16:41<19:31:24, 1849.58s/it]  Trial  61 | Epoch 10/10 | train=1.99650 | val=1.93935 | VRAM alloc=0.06GB reserved=22.77GB
+  Trial 61 | best_val=1.91817 | peak_score=0.09122
+[I 2026-03-24 09:45:02,975] Trial 61 finished with values: [1.918173753298246, 0.09122006595596366] and parameters: {'lr': 0.0005930396699473831, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 5, 'dropout': 0.1715317043469718, 'T': 500, 'cosine_s': 0.0026468080368582778, 'lambda_pdg': 0.20469761606347536, 'lambda_zplane': 1.0667504257381502, 'lambda_charge': 0.0012449730727053792, 'gamma_end': 0.06380017532320262, 'gamma_start': 0.0004938850087530491, 'grad_clip': 2.2450822987580663, 'pct_start': 0.177923647713447, 'div_factor': 23.86741450673328, 'use_asinh': False}.
+  Trial  62 | Epoch  1/10 | train=4.18941 | val=2.38410 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  2/10 | train=2.32834 | val=2.13719 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  3/10 | train=2.26706 | val=2.17719 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  4/10 | train=2.22165 | val=2.13486 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  5/10 | train=2.19766 | val=2.09402 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  6/10 | train=2.16705 | val=2.16355 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  7/10 | train=2.13528 | val=2.03393 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  8/10 | train=2.10478 | val=2.05206 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial  62 | Epoch  9/10 | train=2.10133 | val=2.02499 | VRAM alloc=0.09GB reserved=22.77GB
+                                                         62%|██████▏   | 62/100 [44:33:19<19:31:24, 1849.58s/it] 63%|██████▎   | 63/100 [44:33:19<16:23:11, 1594.36s/it]  Trial  62 | Epoch 10/10 | train=2.07117 | val=2.01804 | VRAM alloc=0.09GB reserved=22.77GB
+  Trial 62 | best_val=2.01804 | peak_score=0.11066
+[I 2026-03-24 10:01:41,824] Trial 62 finished with values: [2.018037277001601, 0.11066071249867226] and parameters: {'lr': 0.0005842573699231262, 'batch_size': 16, 'd_model': 256, 'nhead': 2, 'num_layers': 2, 'dropout': 0.147352388706925, 'T': 500, 'cosine_s': 0.005018676988144055, 'lambda_pdg': 0.4132852318086556, 'lambda_zplane': 1.3157220340325888, 'lambda_charge': 0.0010166366283942093, 'gamma_end': 0.059542013376998576, 'gamma_start': 0.0004950945468283195, 'grad_clip': 2.2672563907530052, 'pct_start': 0.07165020058264875, 'div_factor': 26.509281762979903, 'use_asinh': True, 'asinh_scale_xy': 0.030137594379349895}.
+  Trial  63 | Epoch  1/10 | train=8.32161 | val=3.82363 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  2/10 | train=2.71608 | val=2.09229 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  3/10 | train=2.15960 | val=2.01768 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  4/10 | train=2.07798 | val=1.99928 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  5/10 | train=2.05149 | val=1.96380 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  6/10 | train=2.01038 | val=2.00490 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  7/10 | train=1.98437 | val=1.94003 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  8/10 | train=1.96552 | val=1.90404 | VRAM alloc=0.15GB reserved=22.77GB
+  Trial  63 | Epoch  9/10 | train=1.96575 | val=1.86164 | VRAM alloc=0.06GB reserved=22.77GB
+                                                         63%|██████▎   | 63/100 [45:38:45<16:23:11, 1594.36s/it] 64%|██████▍   | 64/100 [45:38:45<22:56:19, 2293.87s/it]  Trial  63 | Epoch 10/10 | train=1.96454 | val=1.90433 | VRAM alloc=0.06GB reserved=22.77GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 22.21 GiB already allocated; 185.44 MiB free; 23.07 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 63 | best_val=1.86164 | peak_score=1.00000
+[I 2026-03-24 11:07:07,886] Trial 63 finished with values: [1.8616364607444176, 1.0] and parameters: {'lr': 0.0005227324954306555, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 5, 'dropout': 0.1690366397905109, 'T': 500, 'cosine_s': 0.007315784026743424, 'lambda_pdg': 0.21555901351516782, 'lambda_zplane': 1.1069182005882026, 'lambda_charge': 0.001240197794317502, 'gamma_end': 0.0504861554800771, 'gamma_start': 0.0005331153950796762, 'grad_clip': 2.483015938136937, 'pct_start': 0.09382237861581616, 'div_factor': 24.598261416938346, 'use_asinh': False}.
+  Trial  64 | Epoch  1/10 | train=32.57163 | val=5.31197 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  2/10 | train=3.86799 | val=2.80707 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  3/10 | train=2.44125 | val=2.10324 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  4/10 | train=2.15240 | val=2.04988 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  5/10 | train=2.08284 | val=1.99775 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  6/10 | train=2.04341 | val=2.04492 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  7/10 | train=2.02073 | val=1.97043 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  8/10 | train=2.00587 | val=1.94475 | VRAM alloc=0.13GB reserved=23.13GB
+  Trial  64 | Epoch  9/10 | train=2.00614 | val=1.89824 | VRAM alloc=0.13GB reserved=23.13GB
+                                                         64%|██████▍   | 64/100 [46:44:12<22:56:19, 2293.87s/it] 65%|██████▌   | 65/100 [46:44:12<27:03:49, 2783.70s/it]  Trial  64 | Epoch 10/10 | train=2.00400 | val=1.93921 | VRAM alloc=0.13GB reserved=23.13GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 12.20 GiB already allocated; 949.44 MiB free; 22.32 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 64 | best_val=1.89824 | peak_score=1.00000
+[I 2026-03-24 12:12:34,510] Trial 64 finished with values: [1.8982431219174312, 1.0] and parameters: {'lr': 0.0005953922057750136, 'batch_size': 16, 'd_model': 256, 'nhead': 8, 'num_layers': 5, 'dropout': 0.17873233569924538, 'T': 500, 'cosine_s': 0.007313796540673446, 'lambda_pdg': 0.19868189422299148, 'lambda_zplane': 1.0847228070480608, 'lambda_charge': 0.006754904518892216, 'gamma_end': 0.07400497634706185, 'gamma_start': 0.0005150749132203613, 'grad_clip': 2.403673237660322, 'pct_start': 0.08541898942688042, 'div_factor': 24.796261430097978, 'use_asinh': False}.
+                                                         65%|██████▌   | 65/100 [46:44:20<27:03:49, 2783.70s/it] 66%|██████▌   | 66/100 [46:44:20<18:25:35, 1951.05s/it]  Trial 65 OOM during train (batch_size=64, d_model=512, T=500) — returning worst case.
+[I 2026-03-24 12:12:42,705] Trial 65 finished with values: [inf, inf] and parameters: {'lr': 0.0005648176819683574, 'batch_size': 64, 'd_model': 512, 'nhead': 8, 'num_layers': 5, 'dropout': 0.16959897317762204, 'T': 500, 'cosine_s': 0.007306801462339036, 'lambda_pdg': 0.2389298633297764, 'lambda_zplane': 1.1888885069911097, 'lambda_charge': 0.05860623721719332, 'gamma_end': 0.06269565647098062, 'gamma_start': 0.0005762755734668443, 'grad_clip': 2.531561026162821, 'pct_start': 0.0505718361044209, 'div_factor': 23.975712902343016, 'use_asinh': False}.
+                                                         66%|██████▌   | 66/100 [46:44:30<18:25:35, 1951.05s/it] 67%|██████▋   | 67/100 [46:44:30<12:32:41, 1368.54s/it]  Trial 66 OOM during train (batch_size=32, d_model=256, T=500) — returning worst case.
+[I 2026-03-24 12:12:52,047] Trial 66 finished with values: [inf, inf] and parameters: {'lr': 0.0005306446698774648, 'batch_size': 32, 'd_model': 256, 'nhead': 8, 'num_layers': 5, 'dropout': 0.12044519488242345, 'T': 500, 'cosine_s': 0.003319863950338049, 'lambda_pdg': 0.2855844453750207, 'lambda_zplane': 1.2694794026635514, 'lambda_charge': 0.015674530855796932, 'gamma_end': 0.06690899333845571, 'gamma_start': 0.0004004094183121945, 'grad_clip': 2.4843286127147426, 'pct_start': 0.19601429713041413, 'div_factor': 28.83010804691924, 'use_asinh': True, 'asinh_scale_xy': 0.010294182243375676}.
+  Trial  67 | Epoch  1/10 | train=43.31366 | val=7.55434 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  2/10 | train=8.44169 | val=6.02977 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  3/10 | train=12.69848 | val=10.52435 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  4/10 | train=17.94049 | val=11.03417 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  5/10 | train=15.28344 | val=14.83189 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  6/10 | train=10.00638 | val=4.00774 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  7/10 | train=5.43687 | val=74.51529 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  8/10 | train=7.77683 | val=2.49185 | VRAM alloc=0.28GB reserved=22.67GB
+  Trial  67 | Epoch  9/10 | train=2.91857 | val=2.32680 | VRAM alloc=0.16GB reserved=22.67GB
+                                                         67%|██████▋   | 67/100 [47:48:37<12:32:41, 1368.54s/it] 68%|██████▊   | 68/100 [47:48:37<18:46:26, 2112.08s/it]  Trial  67 | Epoch 10/10 | train=2.34965 | val=2.26206 | VRAM alloc=0.16GB reserved=22.67GB
+  Peak score failed: CUDA out of memory. Tried to allocate 10.07 GiB (GPU 0; 23.60 GiB total capacity; 14.21 GiB already allocated; 1.67 GiB free; 21.58 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+  Trial 67 | best_val=2.26206 | peak_score=1.00000
+[I 2026-03-24 13:16:59,051] Trial 67 finished with values: [2.262055915135604, 1.0] and parameters: {'lr': 0.0012209082419606533, 'batch_size': 16, 'd_model': 512, 'nhead': 8, 'num_layers': 3, 'dropout': 0.056362495864407475, 'T': 500, 'cosine_s': 0.002525975200047066, 'lambda_pdg': 0.331863482465919, 'lambda_zplane': 1.5316531453116684, 'lambda_charge': 0.030477427110227027, 'gamma_end': 0.08261355864276287, 'gamma_start': 0.0008100412834080645, 'grad_clip': 2.296954166562357, 'pct_start': 0.09512946466903356, 'div_factor': 26.816238202558008, 'use_asinh': False}.
+  Trial  68 | Epoch  1/10 | train=84.22587 | val=4.79978 | VRAM alloc=0.36GB reserved=21.61GB
+[2026-03-24T13:28:37.006] error: *** JOB 4746743 ON submit21-1 CANCELLED AT 2026-03-24T13:28:37 DUE TO TIME LIMIT ***

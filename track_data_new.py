@@ -30,7 +30,7 @@ for f in tqdm(FILES, desc="Reading .pairs", unit="event"):
 
         # keep only raw kinematics + vertex
         d = np.loadtxt(f, dtype=np.float32, ndmin=2)
-        d = d[:, :8]
+        d = d[:, :7]
 
         all_events.append(d)
 

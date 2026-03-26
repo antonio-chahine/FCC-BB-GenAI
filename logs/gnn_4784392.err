@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/gnn_classifier.py", line 193, in <module>
+    gen_events  = load_events(os.path.join(BASE, args.gen_subdir, 'generated_events.npy'))
+  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/gnn_classifier.py", line 49, in load_events
+    arr = np.load(path, allow_pickle=True)
+  File "/work/submit/anton100/msci-project/venv/lib64/python3.9/site-packages/numpy/lib/npyio.py", line 405, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge_extradata/T_250/generated_events.npy'
+Traceback (most recent call last):
+  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/gnn_classifier.py", line 220, in <module>
+    graphs = torch.load(CACHE, weights_only=False)
+  File "/work/submit/anton100/msci-project/venv/lib64/python3.9/site-packages/torch/serialization.py", line 771, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/work/submit/anton100/msci-project/venv/lib64/python3.9/site-packages/torch/serialization.py", line 270, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/work/submit/anton100/msci-project/venv/lib64/python3.9/site-packages/torch/serialization.py", line 251, in __init__
+    super(_open_file, self).__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '/work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge_extradata/T_250/event_graphs.pt'

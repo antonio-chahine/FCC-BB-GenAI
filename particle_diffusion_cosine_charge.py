@@ -127,8 +127,8 @@ def beta_unsquash_np(beta: np.ndarray, eps: float = 1e-6) -> np.ndarray:
 # ============================================================
 @dataclass
 class CFG:
-    data_path: str = "guineapig_raw_trimmed.npy"
-    outdir: str = "new_39"
+    data_path: str = "/work/submit/anton100/msci-project/FCC-BB-GenAI/extra_data_7col.npy"
+    outdir: str = "/work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_extradata/T_250"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     
     max_particles: int = 1300

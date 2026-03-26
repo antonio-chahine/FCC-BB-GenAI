@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/hyperparam_tune_cosine_charge_t2.py", line 24, in <module>
-    from particle_diffusion_new import (
-ModuleNotFoundError: No module named 'particle_diffusion_new'

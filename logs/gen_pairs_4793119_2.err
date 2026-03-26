@@ -1,0 +1,11 @@
+/var/spool/slurmd/job4793122/slurm_script: line 17: /ceph/submit/data/user/a/anton100/bb_pairs/generated_pairs: No such file or directory
+/var/spool/slurmd/job4793122/slurm_script: line 43: conda: command not found
+mkdir: cannot create directory ‘’: No such file or directory
+Traceback (most recent call last):
+  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/generate_pairs.py", line 485, in <module>
+    main()
+  File "/work/submit/anton100/msci-project/FCC-BB-GenAI/generate_pairs.py", line 438, in main
+    os.makedirs(args.pairsdir, exist_ok=True)
+  File "/usr/lib64/python3.9/os.py", line 225, in makedirs
+    mkdir(name, mode)
+FileNotFoundError: [Errno 2] No such file or directory: ''

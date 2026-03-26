@@ -11,12 +11,16 @@
 source /work/submit/anton100/msci-project/venv/bin/activate
 cd /work/submit/anton100/msci-project/FCC-BB-GenAI
 
-T_DIR=T_sweep_cosine_charge/T_500
+T_DIR=T_sweep_cosine_extradata/T_250
+
+# add this before Step 1
+echo ">>> Clearing old graph cache..."
+rm -f /work/submit/anton100/msci-project/FCC-BB-GenAI/$T_DIR/event_graphs.pt
 
 # ── Step 1: build graph cache ──────────────────────────────────────────────
 echo ""
 echo ">>> Building graph cache..."
-python gnn_classifier.py --data \
+python gnn_classifier_momentum.py --data \
     --gen-subdir $T_DIR \
     --max-events 5000 \
     --k 8
@@ -24,7 +28,7 @@ python gnn_classifier.py --data \
 # ── Step 2: run classifier + ablation ─────────────────────────────────────
 echo ""
 echo ">>> Running GNN classifier + feature ablation..."
-python gnn_classifier.py --run \
+python gnn_classifier_momentum.py --run \
     --gen-subdir $T_DIR \
     --epochs 15 \
     --batch-size 64 \

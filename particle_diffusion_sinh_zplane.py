@@ -232,8 +232,11 @@ class MCPDataset(Dataset):
             logE = np.log(Eabs)
 
             u = beta_unsquash_np(beta)
-            # asinh transform on u_x, u_y to help model learn sharp beta_x/y peak
-            u_xy = np.arcsinh(u[:, :2] / ASINH_SCALE_XY)
+            # asinh transform on u_x, u_y (skipped if ASINH_SCALE_XY is None)
+            if ASINH_SCALE_XY is not None:
+                u_xy = np.arcsinh(u[:, :2] / ASINH_SCALE_XY)
+            else:
+                u_xy = u[:, :2]
             u_z  = u[:, 2:3]
             u_transformed = np.concatenate([u_xy, u_z], axis=1)
 
@@ -775,8 +778,11 @@ def _decode_batch(x_norm_batch, pdg_idx_batch, zplane_idx_batch, Ks, meta):
         pos_xy     = cont[:, 4:6]   # x, y
         z_residual = cont[:, 6]     # residual z relative to assigned plane
 
-        # invert asinh on u_x, u_y
-        u_xy = np.sinh(u_transformed[:, :2]) * ASINH_SCALE_XY
+        # invert asinh on u_x, u_y (skipped if ASINH_SCALE_XY is None)
+        if ASINH_SCALE_XY is not None:
+            u_xy = np.sinh(u_transformed[:, :2]) * ASINH_SCALE_XY
+        else:
+            u_xy = u_transformed[:, :2]
         u_z  = u_transformed[:, 2:3]
         u = np.concatenate([u_xy, u_z], axis=1)
 

@@ -6,18 +6,18 @@
 #SBATCH --constraint=nvidia_a30
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-gpu=8
-#SBATCH --mem=32G
+#SBATCH --mem=64G
 #SBATCH --time=24:00:00
 
-T_VALUES=(25 50 100 250 500 1000)
+T_VALUES=(50 100 250 500)
 T=${T_VALUES[$SLURM_ARRAY_TASK_ID]}
 
 source /work/submit/anton100/msci-project/venv/bin/activate
 cd /work/submit/anton100/msci-project/FCC-BB-GenAI
 
-SCRIPT=particle_diffusion_snr.py
+SCRIPT=particle_diffusion_cosine_charge_zplane.py
 DATA=guineapig_raw_trimmed.npy
-OUTDIR=/work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_snr/T_${T}
+OUTDIR=/work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_charge_zplane_ksbest/T_${T}
 
 echo "=== T=${T} (array task ${SLURM_ARRAY_TASK_ID}) ==="
 
@@ -26,7 +26,7 @@ python $SCRIPT train \
     --data_path $DATA \
     --outdir $OUTDIR \
     --T $T \
-    --epochs 70
+    --epochs 50
 
 echo "--- SAMPLING ---"
 python $SCRIPT sample \

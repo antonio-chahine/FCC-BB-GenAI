@@ -1,0 +1,40 @@
+>>> Clearing old graph cache...
+
+>>> Building graph cache...
+Building graphs: 5000 real + 5000 generated
+  10000 graphs built  (0 skipped)
+  Saved to /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_extradata/T_250/event_graphs.pt
+
+>>> Running GNN classifier + feature ablation...
+
+Device: cuda
+Loaded 10000 graphs
+  Class balance — real: 5000  generated: 5000
+
+── Full model (all features) ──
+  Full AUC = 0.6755
+  Saved  /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_extradata/T_250/gnn_roc.png
+
+── Feature ablation ──
+  Drop E       :  AUC = 0.6741  (drop = +0.0014)
+  Drop px      :  AUC = 0.6775  (drop = -0.0019)
+  Drop py      :  AUC = 0.6704  (drop = +0.0052)
+  Drop pz      :  AUC = 0.6743  (drop = +0.0012)
+  Drop betax   :  AUC = 0.6763  (drop = -0.0008)
+  Drop betay   :  AUC = 0.6757  (drop = -0.0001)
+  Drop betaz   :  AUC = 0.6809  (drop = -0.0053)
+  Saved  /work/submit/anton100/msci-project/FCC-BB-GenAI/T_sweep_cosine_extradata/T_250/gnn_feature_ablation.png
+
+==================================================
+Full model AUC : 0.6755
+==================================================
+Feature importance (by AUC drop):
+  py      : +0.0052
+  E       : +0.0014
+  pz      : +0.0012
+  betay   : -0.0001
+  betax   : -0.0008
+  px      : -0.0019
+  betaz   : -0.0053
+
+Note: AUC~0.5 = indistinguishable, AUC~1.0 = easily separated
